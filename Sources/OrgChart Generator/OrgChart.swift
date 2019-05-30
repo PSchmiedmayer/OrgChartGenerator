@@ -34,7 +34,7 @@ enum OrgChartError: Error {
 struct OrgChart {
     let title: String
     let teams: [Team]
-    let management: [Management]
+    let crossTeamRoles: [CrossTeamRole]
     
     init(fromDirectory orgChartDirectory: URL) throws {
         guard orgChartDirectory.hasDirectoryPath else {
@@ -46,8 +46,43 @@ struct OrgChart {
         let teamsDirectory = orgChartDirectory.appendingPathComponent("Teams", isDirectory: true)
         self.teams = try teamsDirectory.content().map(Team.init)
         
-        let managementDirectory = orgChartDirectory.appendingPathComponent("Management", isDirectory: true)
-        self.management = try managementDirectory.content().map(Management.init)
+        let crossTeamRolesDirectory = orgChartDirectory.appendingPathComponent("CrossTeamRoles", isDirectory: true)
+        self.crossTeamRoles = try crossTeamRolesDirectory.content().map(CrossTeamRole.init)
+    }
+}
+
+struct OrgChartLeafContent {
+    let title: String
+    let topLeft: Box?
+    let topRight: Box?
+    let teamStyles: [(logo: URL, background: Background)]
+    let rows: [(heading: String?, teamMembers: [[Member]], management: Box?)]
+    
+    init(_ orgChart: OrgChart) {
+        self.title = orgChart.title
+        self.topLeft = orgChart.crossTeamRoles.first(where: { $0.position == .topLeft })?.box
+        self.topRight = orgChart.crossTeamRoles.first(where: { $0.position == .topRight })?.box
+        self.teamStyles = orgChart.teams.map({ ($0.logo, $0.background) })
+        let positions = Set(orgChart.teams.flatMap({ $0.members.keys }))
+        self.rows = positions.map({ position in
+            let crossTeamRole = orgChart.crossTeamRoles.first(where: { $0.position == position })
+            let managementBox = crossTeamRole.flatMap({ Box(title: $0.title, background: $0.background, members: $0.management) })
+            return (heading: crossTeamRole?.heading,
+                    teamMembers: orgChart.teams.map({ $0.members[position] ?? [] }),
+                    management: managementBox)
+        })
+    }
+}
+
+struct Box {
+    let title: String?
+    let background: Background
+    let members: [Member]
+}
+
+extension CrossTeamRole {
+    var box: Box {
+        return Box(title: title, background: background, members: management)
     }
 }
 
@@ -56,7 +91,7 @@ extension OrgChart: CustomStringConvertible {
         return #"""
         Orgchart: "\#(title)"
         Management:
-        \#(management.map({ $0.description }).joined(separator: "\n"))
+        \#(crossTeamRoles.map({ $0.description }).joined(separator: "\n"))
         Teams:
         \#(teams.map({ $0.description }).joined(separator: "\n"))
         """#
@@ -177,11 +212,12 @@ extension Position: CustomStringConvertible {
     }
 }
 
-struct Management: Equatable, Hashable {
-    let roleName: String
+struct CrossTeamRole: Equatable, Hashable {
+    let title: String
+    let heading: String?
     let position: Position
     let background: Background
-    private(set) var members: [Member]
+    private(set) var management: [Member]
     
     init(fromDirectory directory: URL) throws {
         let information = directory.extractInformation()
@@ -189,10 +225,11 @@ struct Management: Equatable, Hashable {
             throw OrgChartError.impossibleToExtractInformation(directory.lastPathComponent)
         }
         
+        self.title = information.name
+        self.heading = information.role
         self.position = position
-        self.roleName = information.name
         self.background = Background(information.role)
-        self.members = []
+        self.management = []
         
         try directory.content().forEach({ fileURL in
             guard !fileURL.hasDirectoryPath else {
@@ -200,11 +237,11 @@ struct Management: Equatable, Hashable {
             }
             let memberInformation = fileURL.extractInformation()
             
-            members.append(Member(name: memberInformation.name, picture: fileURL, role: memberInformation.role ?? self.roleName))
+            management.append(Member(name: memberInformation.name, picture: fileURL, role: memberInformation.role))
         })
     }
     
-    static func == (lhs: Management, rhs: Management) -> Bool {
+    static func == (lhs: CrossTeamRole, rhs: CrossTeamRole) -> Bool {
         return lhs.position == rhs.position
     }
     
@@ -213,12 +250,12 @@ struct Management: Equatable, Hashable {
     }
 }
 
-extension Management: CustomStringConvertible {
+extension CrossTeamRole: CustomStringConvertible {
     var description: String {
         return #"""
-            Role: "\#(roleName)"
+            Cross Project Role: "\#(title)"
                 Position: "\#(position)" - Background: \#(background.description)
-                Members: \#(members)
+                Management: \#(management)
         """#
     }
 }
