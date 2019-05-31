@@ -8,7 +8,7 @@
 import AppKit
 
 struct Background {
-    static let clear = Background(.clear)
+    static let white = Background(.white)
     
     let color: NSColor
     

@@ -23,7 +23,7 @@ struct CrossTeamRole: Equatable, Hashable {
         self.title = information.name
         self.heading = information.role
         self.position = position
-        self.background = (try? information.role.flatMap(Background.init(hexString:))) ?? .clear
+        self.background = (try? information.role.flatMap(Background.init(hexString:))) ?? .white
         self.management = []
         
         try directory.content().forEach({ fileURL in
