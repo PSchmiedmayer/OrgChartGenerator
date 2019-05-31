@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link rel="stylesheet" href="OrgChart.css">
+<title>#(title)</title>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td colspan="50">
+                    <header>
+                        #if(topLeft) {
+                            <div class="graybox">
+                                <h3>#(topLeft.title)</h3>
+                                #for(member in topLeft.members) {
+                                    <p>
+                                        <span class="face">
+                                            <img src="#(member.picture)">
+                                        </span>
+                                        <span class="caption">
+                                            <span class="name">#(member.name)</span>
+                                            #(member.role)
+                                        </span>
+                                    </p>
+                                }
+                            </div>
+                        }
+                        <h1>#(title)</h1>
+                        #if(topRight) {
+                            <div class="graybox">
+                                <h3>#(topLeft.title)</h3>
+                                #for(member in topRight.members) {
+                                    <p>
+                                        <span class="face">
+                                            <img src="#(member.picture)">
+                                        </span>
+                                        <span class="caption">
+                                            <span class="name">#(member.name)</span>
+                                            #(member.role)
+                                        </span>
+                                    </p>
+                                }
+                            </div>
+                        }
+                    </header>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="logo">
+                #for(teamStyle in teamStyles) {
+                    <td>
+                        <img src="#(teamStyle.logo)" style="height: 100px;">
+                    </td>
+                }
+            </tr>
+            #for(row in rows) {
+                <tr>
+                    #for(teamMembers in row.teamMembers) {
+                        #if(row.heading) {
+                            <td>
+                                <h2>#(row.heading)</h2>
+                            </td>
+                        }
+                        <td>
+                            #for(teamMember in teamMembers) {
+                                <p>
+                                    <span class="face">
+                                        <img src="#(teamMember.picture)">
+                                    </span>
+                                    <span class="caption">
+                                        <span class="name">
+                                            #(teamMember.name)
+                                        </span>
+                                        #(teamMember.role)
+                                    </span>
+                                </p>
+                            }
+                        </td>
+                    }
+                    #if(row.management) {
+                        #for(member in row.management.members) {
+                            <td>
+                                <p>
+                                    <span class="face">
+                                        <img src="#(member.picture)">
+                                    </span>
+                                    <span class="caption">
+                                        <span class="name">
+                                            #(member.name)
+                                        </span>
+                                        #(member.role)
+                                    </span>
+                                </p>
+                            </td>
+                        }
+                        <td class="overlay">
+                            <span class="graybox">
+                                <h3>#(row.management.title)</h3>
+                            </span>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

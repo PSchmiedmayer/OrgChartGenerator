@@ -6,19 +6,14 @@
 //
 
 import Foundation
-import Leaf
 
 final class Generator {
-    enum Constants {
-        static let orgChartName = "OrgChart"
-    }
-    
     static func generateOrgChart(in path: String, version: String, completion: ((Error?) -> ())?) {
         let url = URL(fileURLWithPath: path, isDirectory: true)
         
         do {
             let orgChart = try OrgChart(fromDirectory: url)
-            log.info(orgChart.description)
+            try OrgChartHTMLRenderer.renderHTMLOrgChart(orgChart, in: url)
             
             completion?(nil)
         } catch {
