@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Leaf
 
 final class Generator {
     enum Constants {
@@ -17,7 +18,8 @@ final class Generator {
         
         do {
             let orgChart = try OrgChart(fromDirectory: url)
-            log.info("\(orgChart.description)")
+            log.info(orgChart.description)
+            
             completion?(nil)
         } catch {
             completion?(error)

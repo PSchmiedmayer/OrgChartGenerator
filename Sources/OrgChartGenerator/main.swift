@@ -2,8 +2,7 @@ import Utility
 import Logging
 import Foundation
 
-var log = Logger(label: "com.schmiedmayer.orgChartGenerator")
-log.logLevel = .info
+var log = PrintLogger()
 
 private let parser = ArgumentParser(usage: "-p <path>",
                                     overview: "🗂 OrgChart Generator - Generate an OrgChart from the given directory structure.")
@@ -19,10 +18,6 @@ private let versionOption = parser.add(option: "--version",
                                        kind: String.self,
                                        usage: "The version of the OrgChart, can e.g. be printed on the OrgChart",
                                        completion: nil)
-private let verboseOption = parser.add(option: "--verbose",
-                                       kind: Bool.self,
-                                       usage: "Verbose logging output",
-                                       completion: nil)
 
 // The first argument specifies the path of the executable file
 private let arguments = Array(CommandLine.arguments.dropFirst()) // Drop first and convert to Array<String>
@@ -33,9 +28,6 @@ do {
     }
     
     let version = result.get(versionOption) ?? ""
-    if result.get(verboseOption) ?? false {
-        log.logLevel = .debug
-    }
     
     Generator.generateOrgChart(in: path, version: version) { error in
         defer {
@@ -44,7 +36,7 @@ do {
         
         if let error = error {
             if let orgChartError = error as? OrgChartError {
-                log.error("\(orgChartError.localizedDescription)")
+                log.error(orgChartError.localizedDescription)
             } else {
                 log.error("\(error)")
             }
