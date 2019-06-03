@@ -142,16 +142,28 @@ tr.logo td::before {
     border-top-width: 2px !important;
 }
 
-.graybox {
+.box {
     position: relative;
 	padding: 5px 12px;
-    background: rgba(0, 0, 0, .1);
-    border: solid rgba(0, 0, 0, .5);
     border-width: 1px 3px;
 }
 
-.graybox p {
-    width: 250px;
+#if(topLeft) {
+    .topLeft {
+        background: #(topLeft.background)19;
+        border: solid #(topLeft.background)7F;
+    \}
+}
+
+#if(topRight) {
+    .topRight {
+        background: #(topRight.background)19;
+        border: solid #(topRight.background)7F;
+    \}
+}
+
+.box p {
+    width: 270px;
 }
 
 td.overlay {
@@ -211,6 +223,8 @@ td.overlay > * > * {
         width: calc(100% - 3px);
     \}
 }
+
+
 </style>
 </head>
 <body>
@@ -220,7 +234,7 @@ td.overlay > * > * {
                 <td colspan="100">
                     <header>
                         #if(topLeft) {
-                            <div class="graybox">
+                            <div class="box topLeft">
                                 <h3>#(topLeft.title)</h3>
                                 #for(member in topLeft.members) {
                                     <p>
@@ -238,7 +252,7 @@ td.overlay > * > * {
                         }
                         <h1>#(title)</h1>
                         #if(topRight) {
-                            <div class="graybox">
+                            <div class="box topRight">
                                 <h3>#(topLeft.title)</h3>
                                 #for(member in topRight.members) {
                                     <p>
@@ -313,7 +327,11 @@ td.overlay > * > * {
                             </td>
                         }
                         <td class="overlay">
-                            <span class="graybox">
+                            #if(row.background && row.background != "#FFFFFF") {
+                                <span class="box" style="background: #(row.background)19; border: solid #(row.background)7F;">
+                            } else {
+                                <span class="box">
+                            }
                                 <h3>#(row.management.title)</h3>
                             </span>
                         </td>

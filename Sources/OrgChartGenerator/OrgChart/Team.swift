@@ -54,7 +54,7 @@ struct Team {
         
         try self.init(name: teamName,
                       logo: logoURL,
-                      background: logoURL.extractInformation().role.flatMap(Background.init(hexString:)) ?? .white,
+                      background: logoURL.extractInformation().color ?? .white,
                       members: members)
     }
 }

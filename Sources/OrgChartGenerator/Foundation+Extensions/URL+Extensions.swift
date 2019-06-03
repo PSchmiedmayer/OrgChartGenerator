@@ -30,11 +30,11 @@ extension URL {
      - name: The name of the entity extracted from the URL as described by the logic in the discussion section.
      - role: The role of the entity extracted from the URL as described by the logic in the discussion section.
      */
-    func extractInformation() -> (position: Position?, name: String, role: String?) {
+    func extractInformation() -> (position: Position?, name: String, role: String?, color: Background?) {
         let lastPathComponent = self.deletingPathExtension().lastPathComponent
-        var components = lastPathComponent.split(whereSeparator: { $0 == "_" })
+        var components = lastPathComponent.split(omittingEmptySubsequences: false, whereSeparator: { $0 == "_" })
         
-        assert(components.count > 0 && components.count <= 3)
+        assert(components.count > 0 && components.count <= 4)
         
         // Extract the POSITION
         var position: Position? = nil
@@ -48,9 +48,17 @@ extension URL {
         let name: String = components.first.flatMap(String.init) ?? lastPathComponent
         components.removeFirst()
         
-        let role = components.first.flatMap(String.init)
+        var background: Background? = nil
+        do {
+            background = try components.last.flatMap(Background.init(hexString:))
+            if background != nil {
+                components.removeLast()
+            }
+        } catch { }
         
-        return (position, name, role)
+        let role = components.last.flatMap(String.init)
+        
+        return (position, name, role, background)
     }
     
     func content() throws -> [URL] {

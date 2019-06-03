@@ -13,6 +13,7 @@ struct OrgChartLeafContext: Codable {
     
     struct Row: Codable {
         let heading: String?
+        let background: Background?
         let teamMembers: [[OrgChartLeafContext.Member]]
         let management: Box?
     }
@@ -49,6 +50,7 @@ struct OrgChartLeafContext: Codable {
                     members: $0.management.map({ $0.member }))
             })
             return Row(heading: crossTeamRole?.heading,
+                       background: crossTeamRole?.background,
                        teamMembers: orgChart.teams.map({ $0.members[position].map({ $0.map({ $0.member }) }) ?? [] }),
                        management: managementBox)
         })
