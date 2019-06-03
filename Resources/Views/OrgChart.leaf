@@ -218,7 +218,7 @@ td.overlay > * > * {
     <table>
         <thead>
             <tr>
-                <td colspan="50">
+                <td colspan="100">
                     <header>
                         #if(topLeft) {
                             <div class="graybox">
@@ -268,13 +268,17 @@ td.overlay > * > * {
                 }
             </tr>
             #for(row in rows) {
-                <tr>
-                    #for(teamMembers in row.teamMembers) {
-                        #if(row.heading) {
+                #if(row.heading) {
+                    <tr>
+                        #for(teamMembers in row.teamMembers) {
                             <td>
                                 <h2>#(row.heading)</h2>
                             </td>
                         }
+                    </tr>
+                }
+                <tr>
+                    #for(teamMembers in row.teamMembers) {
                         <td>
                             #for(teamMember in teamMembers) {
                                 <p>

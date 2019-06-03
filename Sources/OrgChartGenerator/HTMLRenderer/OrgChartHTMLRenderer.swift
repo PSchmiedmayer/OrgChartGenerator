@@ -14,24 +14,10 @@ final class OrgChartHTMLRenderer {
     }
     
     static func renderHTMLOrgChart(_ orgChart: OrgChart, in url: URL) throws {
+        // Setup Vapor Services
         var services = Services()
-        
-        services.register(DirectoryConfig.detect())
-        
-        // BlockingIOThreadPool
-        let sharedThreadPool = BlockingIOThreadPool(numberOfThreads: 1)
-        sharedThreadPool.start()
-        services.register(sharedThreadPool)
-        
-        // DirectoryConfig
-        services.register(ViewRenderer.self) { container -> PlaintextRenderer in
-            let dir = try container.make(DirectoryConfig.self)
-            print(dir.workDir)
-            return PlaintextRenderer.init(viewsDir: dir.workDir, on: container)
-        }
-        
-        // Leaf
         try services.register(LeafProvider())
+        services.register(DirectoryConfig.detect())
         
         // Setup Vapor Application
         let app = try Application(config: Config.default(),
