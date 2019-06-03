@@ -80,7 +80,7 @@ tbody td::before {
 p {
     display: inline-block;
     vertical-align: middle;
-    width: calc(100% - 10px);
+    min-width: 250px;
     height: 60px;
     padding: 10px 5px;
 }
@@ -96,7 +96,8 @@ p > span.caption {
     display: inline-block;
     vertical-align: middle;
     margin-left: 70px;
-    font-weight: 300
+    font-weight: 300;
+    width: calc(100% - 90px)
 }
 
 span.name {
@@ -150,12 +151,11 @@ tr.logo td::before {
 }
 
 .graybox p {
-    width: 230px;
+    width: 250px;
 }
 
 td.overlay {
-    width: 120px;
-    min-width: 120px;
+    min-width: 150px;
     position: initial;
     vertical-align: top;
 }
@@ -192,8 +192,7 @@ td.overlay > * > * {
     tbody td:nth-child(#(index + 1)) {
         padding: 10px;
         padding-left: 13px;
-        width: 380px;
-        min-width: 360px;
+        min-width: 320px;
     \}
 
     tbody td:nth-child(#(index + 1)) p {
