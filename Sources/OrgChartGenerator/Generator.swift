@@ -8,16 +8,21 @@
 import Foundation
 
 final class Generator {
-    static func generateOrgChart(in path: String, version: String, completion: ((Error?) -> ())?) {
+    enum Constants {
+        static let orgChartName = "OrgChart"
+    }
+    
+    static func generateOrgChart(in path: String, version: String, completion: ((OrgChartError?) -> ())?) {
         let url = URL(fileURLWithPath: path, isDirectory: true)
         
         do {
             let orgChart = try OrgChart(fromDirectory: url)
             try OrgChartHTMLRenderer.renderHTMLOrgChart(orgChart, in: url)
-            
-            completion?(nil)
-        } catch {
+            PDFRenderer.renderHTMLOrgChart(foundInURL: url, completion: completion)
+        } catch let error as OrgChartError {
             completion?(error)
+        } catch {
+            completion?(OrgChartError.unknownError(error.localizedDescription))
         }
     }
 }

@@ -13,6 +13,8 @@ enum OrgChartError: Error {
     case impossibleTeamPosition(Position)
     case impossibleToExtractInformation(String)
     case noLogo(named: String, at: URL)
+    case couldNotWriteData(to: URL)
+    case unknownError(String)
     
     var localizedDescription: String {
         switch self {
@@ -26,6 +28,10 @@ enum OrgChartError: Error {
             return "Can't extract the nescessary information from \"\(pathComponent)\""
         case let .noLogo(name, url):
             return "The Generator expected a logo with the name \(name) at (\(url))."
+        case let .couldNotWriteData(url):
+            return "Could not write data to (\(url))."
+        case let .unknownError(description):
+            return "Unkown orgChart Generator Error: (\(description))."
         }
     }
 }

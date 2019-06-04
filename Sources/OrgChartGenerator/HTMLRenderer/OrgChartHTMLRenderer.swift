@@ -8,11 +8,7 @@
 import Vapor
 import Leaf
 
-final class OrgChartHTMLRenderer {
-    enum Constants {
-        static let orgChartName = "OrgChart"
-    }
-    
+final class OrgChartHTMLRenderer {    
     static func renderHTMLOrgChart(_ orgChart: OrgChart, in url: URL) throws {
         // Setup Vapor Services
         var services = Services()
@@ -27,7 +23,12 @@ final class OrgChartHTMLRenderer {
         // Setup Vapor Application
         let context = OrgChartLeafContext(orgChart)
         let leafRenderer = try app.make(LeafRenderer.self)
-        let view = try leafRenderer.render("OrgChart", context).wait()
-        try view.data.write(to: url.appendingPathComponent("OrgChart.html", isDirectory: false), options: .atomic)
+        let view = try leafRenderer.render(Generator.Constants.orgChartName, context).wait()
+        let htmlURL = url.appendingPathComponent("\(Generator.Constants.orgChartName).html", isDirectory: false)
+        do {
+            try view.data.write(to: htmlURL, options: .atomic)
+        } catch {
+            throw OrgChartError.couldNotWriteData(to: htmlURL)
+        }
     }
 }

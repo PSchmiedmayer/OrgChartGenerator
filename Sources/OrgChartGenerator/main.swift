@@ -35,11 +35,7 @@ do {
         }
         
         if let error = error {
-            if let orgChartError = error as? OrgChartError {
-                log.error(orgChartError.localizedDescription)
-            } else {
-                log.error("\(error)")
-            }
+            log.error(error.localizedDescription)
             return
         }
         
