@@ -8,63 +8,44 @@
 import Foundation
 import WebKit
 
-class PDFRenderer: NSObject, WebFrameLoadDelegate {
-    private static let webView = WKWebView()
-    private static var webViewDelegate: WebViewDelegate?
+final class PDFRenderer: NSObject, WebFrameLoadDelegate {
+    private static let webView = WebView()
+    private static let webFrameHandler = WebFrameHandler()
     
-    private final class WebViewDelegate: NSObject, WKNavigationDelegate {
-        private var completion: (Data) -> ()
+    private final class WebFrameHandler: NSObject, WebFrameLoadDelegate {
+        var callback: ((WebView) -> ())? = nil
         
-        init(_ webView: WKWebView, completion: @escaping (Data) -> ()) {
-            self.completion = completion
-            
-            super.init()
-            
-            webView.navigationDelegate = self
-        }
-        
-        deinit {
-            print("Removed!")
-        }
-        
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-            webView.evaluateJavaScript("document.readyState", completionHandler: { (complete, error) in
-                if complete != nil {
-                    webView.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
-                        webView.evaluateJavaScript("document.body.scrollWidth", completionHandler: { (width, error) in
-                            let height = height as! CGFloat
-                            let width = width as! CGFloat
-                            webView.frame.size = CGSize(width: width, height: height)
-                            webView.takeSnapshot(with: nil, completionHandler: { image, _ in
-                                self.completion(image!.pngData!)
-                            })
-                        })
-                    })
-                }
-                
-            })
-        }
-    }
-    
-    static func renderHTMLOrgChart(foundInURL url: URL, completion: ((OrgChartError?) -> ())?) {
-        webViewDelegate = WebViewDelegate(webView) { data in
-            let pngURL = url.appendingPathComponent("\(Generator.Constants.orgChartName).png", isDirectory: false)
-            do {
-                try data.write(to: pngURL, options: .atomic)
-                completion?(nil)
-            } catch {
-                completion?(OrgChartError.couldNotWriteData(to: pngURL))
+        func webView(_ sender: WebView, didFinishLoadFor frame: WebFrame!) {
+            if sender.stringByEvaluatingJavaScript(from: "document.readyState") == "complete" {
+                sender.frameLoadDelegate = nil
+                callback?(sender)
+                callback = nil
             }
         }
-        
-        webView.loadFileURL(url.appendingPathComponent("\(Generator.Constants.orgChartName).html", isDirectory: false),
-                            allowingReadAccessTo: url)
     }
-}
-
-extension NSImage {
-    var pngData: Data? {
-        guard let tiffRepresentation = tiffRepresentation, let bitmapImage = NSBitmapImageRep(data: tiffRepresentation) else { return nil }
-        return bitmapImage.representation(using: .png, properties: [:])
+    
+    static func render(html: String, baseURL url: URL, completion: ((OrgChartError?) -> ())?) {
+        webView.frameLoadDelegate = webFrameHandler
+        webFrameHandler.callback = { webView in
+            guard let height = Double(webView.stringByEvaluatingJavaScript(from: "document.body.scrollHeight")),
+                  let width = Double(webView.stringByEvaluatingJavaScript(from: "document.body.scrollWidth")) else {
+                return
+            }
+            
+            let printOpts: [NSPrintInfo.AttributeKey : Any] = [
+                NSPrintInfo.AttributeKey.jobDisposition: NSPrintInfo.JobDisposition.save,
+                NSPrintInfo.AttributeKey.jobSavingURL: url.appendingPathComponent("\(Generator.Constants.orgChartName).pdf", isDirectory: false)
+            ]
+            
+            let printInfo: NSPrintInfo = NSPrintInfo(dictionary: printOpts)
+            printInfo.paperSize = CGSize(width: width, height: height)
+            
+            let printOp: NSPrintOperation = NSPrintOperation(view: webView.mainFrame.frameView.documentView, printInfo: printInfo)
+            
+            printOp.showsPrintPanel = false
+            printOp.showsProgressPanel = false
+            printOp.run()
+        }
+        webView.mainFrame.loadHTMLString(html, baseURL: url)
     }
 }

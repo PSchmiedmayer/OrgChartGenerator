@@ -17,8 +17,11 @@ final class Generator {
         
         do {
             let orgChart = try OrgChart(fromDirectory: url)
-            try OrgChartHTMLRenderer.renderHTMLOrgChart(orgChart, in: url)
-            PDFRenderer.renderHTMLOrgChart(foundInURL: url, completion: completion)
+            let htmlData = try OrgChartHTMLRenderer.renderHTMLOrgChart(orgChart, in: url)
+            guard let htmlString = String(data: htmlData, encoding: .utf8) else {
+                throw OrgChartError.unknownError("Could not decode HTML data to String")
+            }
+            PDFRenderer.render(html: htmlString, baseURL: url, completion: completion)
         } catch let error as OrgChartError {
             completion?(error)
         } catch {

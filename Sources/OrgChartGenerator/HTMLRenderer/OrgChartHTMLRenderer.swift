@@ -9,7 +9,7 @@ import Vapor
 import Leaf
 
 final class OrgChartHTMLRenderer {    
-    static func renderHTMLOrgChart(_ orgChart: OrgChart, in url: URL) throws {
+    static func renderHTMLOrgChart(_ orgChart: OrgChart, in url: URL) throws -> Data {
         // Setup Vapor Services
         var services = Services()
         try services.register(LeafProvider())
@@ -30,5 +30,6 @@ final class OrgChartHTMLRenderer {
         } catch {
             throw OrgChartError.couldNotWriteData(to: htmlURL)
         }
+        return view.data
     }
 }
