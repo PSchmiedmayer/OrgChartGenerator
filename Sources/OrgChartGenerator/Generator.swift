@@ -13,12 +13,17 @@ final class Generator {
         static let orgChartName = "OrgChart"
     }
     
-    static func generateOrgChart(in path: String, version: String, completion: ((GeneratorError?) -> ())?) {
+    static func generateOrgChart(in path: String, imageSize: Int, compressionRate: Double, completion: ((GeneratorError?) -> ())?) {
         let url = URL(fileURLWithPath: path, isDirectory: true)
         
         do {
             let orgChart = try OrgChart(fromDirectory: url)
+            
+            let tempURL = url.appendingPathComponent(".pictures/", isDirectory: true)
+            try FaceCrop.crop(orgChart, tempURL: tempURL, imageSize: imageSize, compression: compressionRate)
+            
             let htmlData = try OrgChartHTMLRenderer.renderHTMLOrgChart(orgChart, in: url)
+            
             guard let htmlString = String(data: htmlData, encoding: .utf8) else {
                 throw GeneratorError.unknownError("Could not decode HTML data to String")
             }

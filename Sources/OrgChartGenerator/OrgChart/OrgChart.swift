@@ -9,10 +9,10 @@
 import Foundation
 import AppKit
 
-struct OrgChart {
+final class OrgChart {
     let title: String
-    let teams: [Team]
-    let crossTeamRoles: [CrossTeamRole]
+    var teams: [Team]
+    var crossTeamRoles: [CrossTeamRole]
     
     init(fromDirectory orgChartDirectory: URL) throws {
         guard orgChartDirectory.hasDirectoryPath else {

@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct CrossTeamRole: Equatable, Hashable {
+final class CrossTeamRole: Equatable, Hashable {
     let title: String
     let heading: String?
     let position: Position
     let background: Background
-    private(set) var management: [Member]
+    var management: [Member]
     
     init(fromDirectory directory: URL) throws {
         let information = try directory.extractInformation()

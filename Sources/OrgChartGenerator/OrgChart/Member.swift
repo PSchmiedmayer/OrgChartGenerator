@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct Member: Codable {
+final class Member: Codable {
     let name: String
-    let picture: URL
+    var picture: URL
     let cropImage: Bool
     let role: String?
     

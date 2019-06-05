@@ -8,11 +8,11 @@
 
 import Foundation
 
-struct Team {
+final class Team {
     let name: String
     let logo: URL
     let background: Background
-    let members: [Position: [Member]]
+    var members: [Position: [Member]]
     
     init(name: String, logo: URL, background: Background, members: [Position: [Member]]) throws {
         for position in members.keys {
@@ -27,7 +27,7 @@ struct Team {
         self.members = members
     }
     
-    init(fromDirectory directory: URL) throws {
+    convenience init(fromDirectory directory: URL) throws {
         // Name
         let teamName = try directory.extractInformation().name
         

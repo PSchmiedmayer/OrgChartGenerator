@@ -21,11 +21,16 @@ private let pathOption = parser.add(option: "--path",
                                     kind: String.self,
                                     usage: "The root folder of the directory structure that should be used to generate the OrgChart",
                                     completion: .filename)
-private let versionOption = parser.add(option: "--version",
-                                       shortName: "-v",
-                                       kind: String.self,
-                                       usage: "The version of the OrgChart, can e.g. be printed on the OrgChart",
-                                       completion: nil)
+private let imageSizeOption = parser.add(option: "--imageSize",
+                                         shortName: "-i",
+                                         kind: Int.self,
+                                         usage: "The size of the quadratic images in the OrgChart should be cropped at. The default value is 500 pixels",
+                                         completion: nil)
+private let compressionRateOption = parser.add(option: "--compressionRate",
+                                               shortName: "-c",
+                                               kind: Int.self,
+                                               usage: "The compresssion rate (1-100) that should be applied to the JEPG images that are rendered in the OrgChart. The default value is 60%",
+                                               completion: nil)
 
 // The first argument specifies the path of the executable file
 private let arguments = Array(CommandLine.arguments.dropFirst()) // Drop first and convert to Array<String>
@@ -34,10 +39,14 @@ do {
     guard let path = result.get(pathOption) else {
         throw ArgumentParserError.expectedValue(option: "--path")
     }
+    let imageSize = result.get(imageSizeOption) ?? 500
+    let compressionRate = result.get(compressionRateOption) ?? 60
+    guard 1...100 ~= compressionRate else {
+        throw ArgumentParserError.expectedValue(option: "--compressionRate must be between 1 and 100")
+    }
     
-    let version = result.get(versionOption) ?? ""
     
-    Generator.generateOrgChart(in: path, version: version) { error in
+    Generator.generateOrgChart(in: path, imageSize: imageSize, compressionRate: Double(compressionRate)/100.0) { error in
         defer {
             exit(0)
         }

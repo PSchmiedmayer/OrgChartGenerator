@@ -34,7 +34,6 @@ final class ImageProcessor {
     static func process(image: NSImage, withTransformations transformations: [ImageTransformationType] = []) -> NSImage {
         
         let progress = Progress(totalUnitCount: Int64(transformations.count))
-        currentProgress?.addChild(progress, withPendingUnitCount: 1)
         
         var image = image
         transformations.first.map({ transformationType in

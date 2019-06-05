@@ -15,6 +15,7 @@ enum GeneratorError: Error {
     case impossibleToExtractInformation(String)
     case noLogo(named: String, at: URL)
     case couldNotWriteData(to: URL)
+    case couldNotReadData(from: URL)
     case unknownError(String)
     
     var localizedDescription: String {
@@ -31,6 +32,8 @@ enum GeneratorError: Error {
             return "The Generator expected a logo with the name \(name) at (\(url))."
         case let .couldNotWriteData(url):
             return "Could not write data to (\(url))."
+        case let .couldNotReadData(url):
+            return "Could not read data from (\(url)), the file was either moved or the generator has not sufficient accress."
         case let .unknownError(description):
             return "Unkown orgChart Generator Error: (\(description))."
         }
