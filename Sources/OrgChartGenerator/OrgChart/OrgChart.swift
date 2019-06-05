@@ -3,6 +3,7 @@
 //  OrgChart Generator
 //
 //  Created by Paul Schmiedmayer on 5/17/19.
+//  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
 import Foundation
@@ -15,10 +16,10 @@ struct OrgChart {
     
     init(fromDirectory orgChartDirectory: URL) throws {
         guard orgChartDirectory.hasDirectoryPath else {
-            throw OrgChartError.notADirectory(orgChartDirectory)
+            throw GeneratorError.notADirectory(orgChartDirectory)
         }
         
-        self.title = orgChartDirectory.extractInformation().name
+        self.title = try orgChartDirectory.extractInformation().name
         
         let teamsDirectory = orgChartDirectory.appendingPathComponent("Teams", isDirectory: true)
         self.teams = try teamsDirectory.content().map(Team.init)

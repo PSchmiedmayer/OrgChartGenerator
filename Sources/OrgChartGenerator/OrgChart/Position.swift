@@ -3,6 +3,7 @@
 //  OrgChartGenerator
 //
 //  Created by Paul Schmiedmayer on 5/31/19.
+//  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
 /// - Tag: Position
@@ -17,7 +18,7 @@ enum Position: Equatable, Hashable {
         case "topright": self = .topRight
         default:
             guard let row = Int(stringRepresentation) else {
-                throw OrgChartError.unknownPosition(stringRepresentation.description)
+                throw GeneratorError.unknownPosition(stringRepresentation.description)
             }
             self = .row(row)
         }

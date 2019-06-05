@@ -3,9 +3,18 @@
 //  OrgChartGenerator
 //
 //  Created by Paul Schmiedmayer on 5/31/19.
+//  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
 import Foundation
+
+struct Information {
+    let position: Position?
+    let name: String
+    let role: String?
+    let color: Background?
+    let cropImage: Bool
+}
 
 extension URL {
     /**
@@ -30,42 +39,57 @@ extension URL {
      - name: The name of the entity extracted from the URL as described by the logic in the discussion section.
      - role: The role of the entity extracted from the URL as described by the logic in the discussion section.
      */
-    func extractInformation() -> (position: Position?, name: String, role: String?, color: Background?) {
+    func extractInformation() throws -> Information {
         let lastPathComponent = self.deletingPathExtension().lastPathComponent
-        var components = lastPathComponent.split(omittingEmptySubsequences: false, whereSeparator: { $0 == "_" })
         
-        assert(components.count > 0 && components.count <= 4)
+        var imageComponents = lastPathComponent.split(omittingEmptySubsequences: false, whereSeparator: { $0 == "^" })
+        guard imageComponents.count > 0 && imageComponents.count <= 2 else {
+            throw GeneratorError.impossibleToExtractInformation("Unexpected number of components \(imageComponents.count) when splitting \(self.lastPathComponent) to extract the image components.")
+        }
+        
+        var cropImage = true
+        if imageComponents.count == 2 {
+            if imageComponents.last?.lowercased() == "nocrop" {
+                cropImage = false
+            }
+            imageComponents.removeLast()
+        }
+        
+        var informationComponents = imageComponents.first!.split(omittingEmptySubsequences: false, whereSeparator: { $0 == "_" })
+        guard informationComponents.count > 0 && informationComponents.count <= 4 else {
+            throw GeneratorError.impossibleToExtractInformation("Unexpected number of components \(imageComponents.count) when splitting \(self.lastPathComponent) to extract the information components.")
+        }
         
         // Extract the POSITION
         var position: Position? = nil
         do {
-            if components.count > 1, let potentialPosition = components.first {
+            if informationComponents.count > 1, let potentialPosition = informationComponents.first {
                 position = try Position(potentialPosition)
-                components.removeFirst()
+                informationComponents.removeFirst()
             }
         } catch { }
         
-        let name: String = components.first.flatMap(String.init) ?? lastPathComponent
-        components.removeFirst()
+        let name: String = informationComponents.first.flatMap(String.init) ?? lastPathComponent
+        informationComponents.removeFirst()
         
-        var background: Background? = nil
+        var color: Background? = nil
         do {
-            background = try components.last.flatMap(Background.init(hexString:))
-            if background != nil {
-                components.removeLast()
+            color = try informationComponents.last.flatMap(Background.init(hexString:))
+            if color != nil {
+                informationComponents.removeLast()
             }
         } catch { }
         
-        let role = components.last.flatMap(String.init)
+        let role = informationComponents.last.flatMap(String.init)
         
-        return (position, name, role, background)
+        return Information(position: position, name: name, role: role, color: color, cropImage: cropImage)
     }
     
     func content() throws -> [URL] {
         guard let directoryEnumerator = FileManager.default.enumerator(at: self,
                                                                        includingPropertiesForKeys: [.isDirectoryKey],
                                                                        options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants]) else {
-                                                                        throw OrgChartError.notADirectory(self)
+                                                                        throw GeneratorError.notADirectory(self)
         }
         
         return directoryEnumerator.compactMap({ $0 as? URL }).sorted(by: { $0.absoluteString < $1.absoluteString })

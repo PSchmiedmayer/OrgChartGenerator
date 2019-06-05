@@ -3,6 +3,7 @@
 //  OrgChartGenerator
 //
 //  Created by Paul Schmiedmayer on 5/31/19.
+//  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
 import AppKit

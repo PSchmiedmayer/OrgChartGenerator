@@ -3,6 +3,7 @@
 //  OrgChartGenerator
 //
 //  Created by Paul Schmiedmayer on 5/31/19.
+//  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
 import Foundation
@@ -10,11 +11,13 @@ import Foundation
 struct Member: Codable {
     let name: String
     let picture: URL
+    let cropImage: Bool
     let role: String?
     
-    init(name: String, picture: URL, role: String? = nil) {
+    init(name: String, picture: URL, cropImage: Bool = true, role: String? = nil) {
         self.name = name
         self.picture = picture
+        self.cropImage = cropImage
         self.role = role
     }
 }
@@ -31,7 +34,7 @@ extension Member: CustomStringConvertible {
 extension Dictionary where Key == Position, Value == [Member] {
     mutating func append(member: Member, at position: Position) throws {
         guard case .row(_) = position else {
-            throw OrgChartError.impossibleTeamPosition(position)
+            throw GeneratorError.impossibleTeamPosition(position)
         }
         
         if self[position] == nil {
@@ -45,9 +48,12 @@ extension Dictionary where Key == Position, Value == [Member] {
             guard !fileURL.hasDirectoryPath else {
                 return
             }
-            let memberInformation = fileURL.extractInformation()
+            let memberInformation = try fileURL.extractInformation()
             
-            try append(member: Member(name: memberInformation.name, picture: fileURL, role: memberInformation.role ?? role),
+            try append(member: Member(name: memberInformation.name,
+                                      picture: fileURL,
+                                      cropImage: memberInformation.cropImage,
+                                      role: memberInformation.role ?? role),
                        at: position)
         })
     }

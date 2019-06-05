@@ -3,6 +3,7 @@
 //  OrgChartGenerator
 //
 //  Created by Paul Schmiedmayer on 6/4/19.
+//  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
 import Foundation
@@ -24,7 +25,7 @@ final class PDFRenderer: NSObject, WebFrameLoadDelegate {
         }
     }
     
-    static func render(html: String, baseURL url: URL, completion: ((OrgChartError?) -> ())?) {
+    static func render(html: String, baseURL url: URL, completion: ((GeneratorError?) -> ())?) {
         webView.frameLoadDelegate = webFrameHandler
         webFrameHandler.callback = { webView, frame in
             let printOpts: [NSPrintInfo.AttributeKey : Any] = [

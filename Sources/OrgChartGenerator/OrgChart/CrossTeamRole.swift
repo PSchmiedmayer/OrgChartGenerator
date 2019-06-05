@@ -3,6 +3,7 @@
 //  OrgChartGenerator
 //
 //  Created by Paul Schmiedmayer on 5/31/19.
+//  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
 import Foundation
@@ -15,9 +16,9 @@ struct CrossTeamRole: Equatable, Hashable {
     private(set) var management: [Member]
     
     init(fromDirectory directory: URL) throws {
-        let information = directory.extractInformation()
+        let information = try directory.extractInformation()
         guard let position = information.position else {
-            throw OrgChartError.impossibleToExtractInformation(directory.lastPathComponent)
+            throw GeneratorError.impossibleToExtractInformation(directory.lastPathComponent)
         }
         
         self.title = information.name
@@ -30,9 +31,12 @@ struct CrossTeamRole: Equatable, Hashable {
             guard !fileURL.hasDirectoryPath else {
                 return
             }
-            let memberInformation = fileURL.extractInformation()
+            let memberInformation = try fileURL.extractInformation()
             
-            management.append(Member(name: memberInformation.name, picture: fileURL, role: memberInformation.role))
+            management.append(Member(name: memberInformation.name,
+                                     picture: fileURL,
+                                     cropImage: memberInformation.cropImage,
+                                     role: memberInformation.role))
         })
     }
     

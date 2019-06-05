@@ -3,6 +3,7 @@
 //  OrgChartGenerator
 //
 //  Created by Paul Schmiedmayer on 5/31/19.
+//  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
 import Foundation
@@ -16,7 +17,7 @@ struct Team {
     init(name: String, logo: URL, background: Background, members: [Position: [Member]]) throws {
         for position in members.keys {
             guard case .row(_) = position else {
-                throw OrgChartError.impossibleTeamPosition(position)
+                throw GeneratorError.impossibleTeamPosition(position)
             }
         }
         
@@ -28,27 +29,31 @@ struct Team {
     
     init(fromDirectory directory: URL) throws {
         // Name
-        let teamName = directory.extractInformation().name
+        let teamName = try directory.extractInformation().name
         
         // Logo
         var content = try directory.content()
-        guard let logoURL = content.first(where: { $0.extractInformation().name == teamName }) else {
-            throw OrgChartError.noLogo(named: teamName, at: directory)
+        guard let logoURL = try? content.first(where: { try $0.extractInformation().name == teamName }) else {
+            throw GeneratorError.noLogo(named: teamName, at: directory)
         }
         content.removeAll(where: { $0 == logoURL })
         
         // Members
         var members: [Position: [Member]] = [:]
         for teamMembersURL in content {
-            let information = teamMembersURL.extractInformation()
+            let information = try teamMembersURL.extractInformation()
             guard let position = information.position else {
-                throw OrgChartError.impossibleToExtractInformation(teamMembersURL.lastPathComponent)
+                throw GeneratorError.impossibleToExtractInformation(teamMembersURL.lastPathComponent)
             }
             
             if teamMembersURL.hasDirectoryPath {
                 try members.appendMembers(inDirectory: teamMembersURL, atPosition: position, withDefaultRole: information.role)
             } else {
-                try members.append(member: Member(name: information.name, picture: teamMembersURL, role: information.role), at: position)
+                try members.append(member: Member(name: information.name,
+                                                  picture: teamMembersURL,
+                                                  cropImage: information.cropImage,
+                                                  role: information.role),
+                                   at: position)
             }
         }
         

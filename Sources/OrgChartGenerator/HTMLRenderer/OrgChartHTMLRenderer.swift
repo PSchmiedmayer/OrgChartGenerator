@@ -3,6 +3,7 @@
 //  OrgChartGenerator
 //
 //  Created by Paul Schmiedmayer on 5/31/19.
+//  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
 import Vapor
@@ -28,7 +29,7 @@ final class OrgChartHTMLRenderer {
         do {
             try view.data.write(to: htmlURL, options: .atomic)
         } catch {
-            throw OrgChartError.couldNotWriteData(to: htmlURL)
+            throw GeneratorError.couldNotWriteData(to: htmlURL)
         }
         return view.data
     }

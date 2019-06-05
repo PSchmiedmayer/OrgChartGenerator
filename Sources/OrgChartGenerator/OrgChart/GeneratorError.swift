@@ -1,13 +1,14 @@
 //
-//  OrgChartError.swift
+//  GeneratorError.swift
 //  OrgChartGenerator
 //
 //  Created by Paul Schmiedmayer on 5/31/19.
+//  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
 import Foundation
 
-enum OrgChartError: Error {
+enum GeneratorError: Error {
     case notADirectory(URL)
     case unknownPosition(String)
     case impossibleTeamPosition(Position)
