@@ -11,7 +11,7 @@ import Vision
 
 class CropSquareCenteredOnFaceTransformation {
     static func process(_ image: NSImage, completion: @escaping (NSImage) -> ()) {
-        // autoreleasepool{
+        autoreleasepool{
             guard let ciImage = image.ciImage else {
                 completion(image)
                 return
@@ -47,6 +47,6 @@ class CropSquareCenteredOnFaceTransformation {
                 print("Could not detect face: \(error)")
                 completion(image)
             }
-        // }
+        }
     }
 }

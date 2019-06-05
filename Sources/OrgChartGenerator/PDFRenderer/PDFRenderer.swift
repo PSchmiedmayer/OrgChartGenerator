@@ -19,6 +19,7 @@ final class PDFRenderer: NSObject, WebFrameLoadDelegate {
         func webView(_ sender: WebView, didFinishLoadFor frame: WebFrame!) {
             if sender.stringByEvaluatingJavaScript(from: "document.readyState") == "complete" {
                 sender.frameLoadDelegate = nil
+                sender.preferences.shouldPrintBackgrounds = true
                 callback?(sender, frame)
                 callback = nil
             }
