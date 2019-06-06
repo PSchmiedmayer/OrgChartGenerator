@@ -132,7 +132,8 @@ tr.logo td {
     padding: 0 !important;
     padding-top: 20px !important;
     padding-bottom: 10px !important;
-    padding-left: 3px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
     vertical-align: middle;
     text-align: center;
 }
@@ -163,11 +164,11 @@ tr.logo td::before {
 }
 
 .box p {
-    width: 270px;
+    max-width: 270px;
 }
 
 td.overlay {
-    min-width: 150px;
+    min-width: 100px;
     position: initial;
     vertical-align: top;
 }
@@ -204,7 +205,7 @@ td.overlay > * > * {
     tbody td:nth-child(#(index + 1)) {
         padding: 10px;
         padding-left: 13px;
-        min-width: 320px;
+        min-width: 250px;
     \}
 
     tbody td:nth-child(#(index + 1)) p {
@@ -253,7 +254,7 @@ td.overlay > * > * {
                         <h1>#(title)</h1>
                         #if(topRight) {
                             <div class="box topRight">
-                                <h3>#(topLeft.title)</h3>
+                                <h3>#(topRight.title)</h3>
                                 #for(member in topRight.members) {
                                     <p>
                                         <span class="face">

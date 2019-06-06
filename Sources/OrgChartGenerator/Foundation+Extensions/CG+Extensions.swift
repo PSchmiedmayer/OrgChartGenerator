@@ -25,8 +25,8 @@ extension CGRect {
             return self.origin + self.size / CGFloat(2.0)
         }
         set {
-            self.origin = CGPoint(x: center.x - size.width/2.0,
-                                  y: center.y - size.height/2.0)
+            self.origin = CGPoint(x: newValue.x - size.width/2.0,
+                                  y: newValue.y - size.height/2.0)
         }
     }
 }
