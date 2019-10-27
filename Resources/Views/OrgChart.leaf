@@ -164,7 +164,7 @@ tr.logo td::before {
 }
 
 .box p {
-    max-width: 270px;
+    width: 270px;
 }
 
 td.overlay {

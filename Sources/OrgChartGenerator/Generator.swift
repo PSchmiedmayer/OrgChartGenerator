@@ -19,7 +19,12 @@ final class Generator {
         do {
             let orgChart = try OrgChart(fromDirectory: url)
             
-            let tempURL = url.appendingPathComponent(".pictures/", isDirectory: true)
+            let tempURL = url.appendingPathComponent(".pictures", isDirectory: true)
+            try FileManager.default.removeItem(at: tempURL)
+            try FileManager.default.createDirectory(at: tempURL,
+                                                    withIntermediateDirectories: true,
+                                                    attributes: nil)
+            
             try FaceCrop.crop(orgChart, tempURL: tempURL, imageSize: imageSize, compression: compressionRate)
             
             let htmlData = try OrgChartHTMLRenderer.renderHTMLOrgChart(orgChart, in: url)

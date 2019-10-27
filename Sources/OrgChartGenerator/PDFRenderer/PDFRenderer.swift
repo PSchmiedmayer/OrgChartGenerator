@@ -48,6 +48,8 @@ final class PDFRenderer: NSObject, WebFrameLoadDelegate {
             printOp.showsPrintPanel = false
             printOp.showsProgressPanel = false
             printOp.run()
+            
+            completion?(nil)
         }
         webView.mainFrame.loadHTMLString(html, baseURL: url)
     }

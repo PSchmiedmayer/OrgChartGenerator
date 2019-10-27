@@ -30,7 +30,8 @@ final class FaceCrop {
             
             let outputFileType: FileType = .jpeg
             member.picture = tempURL?.appendingPathComponent("\(UUID()).\(outputFileType)", isDirectory: false) ?? member.picture
-            try image.imageData(as: outputFileType, withCompressionFactor: compression).write(to: member.picture, options: .atomic)
+            let imageData = image.imageData(as: outputFileType, withCompressionFactor: compression)
+            try imageData.write(to: member.picture, options: .atomic)
             
             progress.completedUnitCount += 1
             return member
