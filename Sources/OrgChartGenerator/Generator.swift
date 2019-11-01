@@ -20,7 +20,7 @@ final class Generator {
             let orgChart = try OrgChart(fromDirectory: url)
             
             let tempURL = url.appendingPathComponent(".pictures", isDirectory: true)
-            try FileManager.default.removeItem(at: tempURL)
+            try? FileManager.default.removeItem(at: tempURL)
             try FileManager.default.createDirectory(at: tempURL,
                                                     withIntermediateDirectories: true,
                                                     attributes: nil)
