@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import XCTest
 
 final class FaceCrop {
     static func crop(_ orgChart: OrgChart, tempURL: URL?, imageSize: Int, compression: Double) throws {
@@ -37,16 +38,46 @@ final class FaceCrop {
             return member
         }
         
-        orgChart.teams = try orgChart.teams.map({ team in
-            team.members = Dictionary(uniqueKeysWithValues: try team.members.map({ position, members in
-                return (position, try members.map(transform))
-            }))
-            return team
+        var transformedTeams: [Int: Result<Team, Error>] = [:]
+        DispatchQueue.concurrentPerform(iterations: orgChart.teams.count, execute: { index in
+            do {
+                let team = orgChart.teams[index]
+                team.members = Dictionary(uniqueKeysWithValues: try team.members.map({ position, members in
+                    return (position, try members.map(transform))
+                }))
+                transformedTeams[index] = .success(team)
+            } catch {
+                transformedTeams[index] = .failure(error)
+            }
         })
-        
-        orgChart.crossTeamRoles = try orgChart.crossTeamRoles.map({ crossTeamRole in
-            crossTeamRole.management = try crossTeamRole.management.map(transform)
-            return crossTeamRole
+
+        for (index, result) in transformedTeams {
+            switch result {
+            case let .success(team):
+                orgChart.teams[index] = team
+            case let .failure(error):
+                throw error
+            }
+        }
+
+        var transformedCrossTeamRole: [Int: Result<CrossTeamRole, Error>] = [:]
+        DispatchQueue.concurrentPerform(iterations: orgChart.crossTeamRoles.count, execute: { index in
+            do {
+                let crossTeamRole = orgChart.crossTeamRoles[index]
+                crossTeamRole.management = try crossTeamRole.management.map(transform)
+                transformedCrossTeamRole[index] = .success(crossTeamRole)
+            } catch {
+                transformedCrossTeamRole[index] = .failure(error)
+            }
         })
+
+        for (index, result) in transformedCrossTeamRole {
+            switch result {
+            case let .success(crossTeamRole):
+                orgChart.crossTeamRoles[index] = crossTeamRole
+            case let .failure(error):
+                throw error
+            }
+        }
     }
 }
