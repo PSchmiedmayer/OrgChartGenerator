@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import XCTest
 
 final class FaceCrop {
     static func crop(_ orgChart: OrgChart, tempURL: URL?, imageSize: Int, compression: Double) throws {
