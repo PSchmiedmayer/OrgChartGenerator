@@ -6,7 +6,7 @@
 //  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
-import Utility
+import SPMUtility
 import Logging
 import Foundation
 
