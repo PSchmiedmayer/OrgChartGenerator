@@ -10,7 +10,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/apple/swift-package-manager.git", from: "0.3.0"),
+        .package(url: "https://github.com/apple/swift-package-manager.git", from: "0.5.0"),
         .package(url: "https://github.com/vapor/vapor.git", from: "3.3.0"),
         .package(url: "https://github.com/vapor/leaf.git", from: "3.0.2"),
     ],
@@ -19,7 +19,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "OrgChartGenerator",
-            dependencies: ["Utility", "Vapor" ,"Leaf"]),
+            dependencies: ["SPMUtility", "Vapor" ,"Leaf"]),
         .testTarget(
             name: "OrgChartGeneratorTests",
             dependencies: ["OrgChartGenerator"]),

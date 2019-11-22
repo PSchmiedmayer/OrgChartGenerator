@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/vapor/core.git",
         "state": {
           "branch": null,
-          "revision": "2731f8ba0cf274a61c9bd6ab43550f692ffaf879",
-          "version": "3.9.0"
+          "revision": "18f2436bf7a6bc2224372c0885db2e0159af1649",
+          "version": "3.9.2"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/vapor/http.git",
         "state": {
           "branch": null,
-          "revision": "254a0a0cbf22a02b697a075a0d2ddbb448bb7c87",
-          "version": "3.2.0"
+          "revision": "3808ed0401379b6e9f4a053f03090ea9d658caa9",
+          "version": "3.2.1"
         }
       },
       {
@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/vapor/multipart.git",
         "state": {
           "branch": null,
-          "revision": "f919a01c4d10a281d6236a21b0b1d1759a72b8eb",
-          "version": "3.0.4"
+          "revision": "f063180d0b84832accd33194e06ed3c41f8609ac",
+          "version": "3.1.1"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/vapor/routing.git",
         "state": {
           "branch": null,
-          "revision": "626190ddd2bd9f967743b60ba6adaf90bbd2651c",
-          "version": "3.0.2"
+          "revision": "d76f339c9716785e5079af9d7075d28ff7da3d92",
+          "version": "3.1.0"
         }
       },
       {
@@ -80,6 +80,15 @@
           "branch": null,
           "revision": "fa5b5de62bd68bcde9a69933f31319e46c7275fb",
           "version": "1.0.2"
+        }
+      },
+      {
+        "package": "llbuild",
+        "repositoryURL": "https://github.com/apple/swift-llbuild.git",
+        "state": {
+          "branch": null,
+          "revision": "f73b84bc1525998e5e267f9d830c1411487ac65e",
+          "version": "0.2.0"
         }
       },
       {
@@ -123,8 +132,8 @@
         "repositoryURL": "https://github.com/apple/swift-package-manager.git",
         "state": {
           "branch": null,
-          "revision": "235aacc514cb81a6881364b0fedcb3dd083228f3",
-          "version": "0.3.0"
+          "revision": "9abcc2260438177cecd7cf5185b144d13e74122b",
+          "version": "0.5.0"
         }
       },
       {
@@ -132,8 +141,8 @@
         "repositoryURL": "https://github.com/vapor/template-kit.git",
         "state": {
           "branch": null,
-          "revision": "121ae51433df94cf6e15c09e1f1b0f7c77ff8d5c",
-          "version": "1.2.0"
+          "revision": "51405c83e95e8adb09565278a5e9b959c605e56c",
+          "version": "1.4.0"
         }
       },
       {
@@ -159,8 +168,8 @@
         "repositoryURL": "https://github.com/vapor/vapor.git",
         "state": {
           "branch": null,
-          "revision": "c86ada59b31c69f08a6abd4f776537cba48d5df6",
-          "version": "3.3.0"
+          "revision": "92a58a9a84e4330500b99fe355a94d29f67abe58",
+          "version": "3.3.1"
         }
       },
       {
