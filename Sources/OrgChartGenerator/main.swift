@@ -10,7 +10,6 @@ import SPMUtility
 import Logging
 import Foundation
 
-var log = PrintLogger()
 
 private let parser = ArgumentParser(usage: "-p <path>",
                                     overview: "🗂 OrgChart Generator - Generate an OrgChart from the given directory structure.")
@@ -52,7 +51,7 @@ do {
         }
         
         if let error = error {
-            log.error(error.localizedDescription)
+            print("‼️ \(error.localizedDescription)")
             return
         }
         

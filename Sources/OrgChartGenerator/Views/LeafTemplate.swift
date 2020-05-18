@@ -5,17 +5,13 @@
 //  Created by Paul Schmiedmayer on 11/4/19.
 //
 
-import Foundation
+import Leaf
 
 #warning("Replace the enum with the .leaf resources once SPM supports resouces: https://bugs.swift.org/browse/SR-2866")
 /// LeafTemplate
 /// Needed to be able to distribute the OrgChart Generator as a binary as resources are currently not bundled in binaries build using the SPM.
-enum LeafTemplate {
-    static var data: Data {
-        Data(html.utf8)
-    }
-    
-    private static let html: String = #"""
+class LeafTemplate: LeafFiles {
+    let html: String = #"""
     <!DOCTYPE html>
     <meta charset="utf-8">
     <title>#(title)</title>
@@ -167,19 +163,19 @@ enum LeafTemplate {
         border-width: 1px 3px;
     }
 
-    #if(topLeft) {
+    #if(topLeft):
         .topLeft {
             background: #(topLeft.background)19;
             border: solid #(topLeft.background)7F;
         \}
-    }
+    #endif
 
-    #if(topRight) {
+    #if(topRight):
         .topRight {
             background: #(topRight.background)19;
             border: solid #(topRight.background)7F;
         \}
-    }
+    #endif
 
     .box p {
         width: 270px;
@@ -219,7 +215,7 @@ enum LeafTemplate {
         text-align: right;
     }
 
-    #for(teamStyle in teamStyles) {
+    #for(teamStyle in teamStyles):
         tbody td:nth-child(#(index + 1)) {
             padding: 10px;
             padding-left: 13px;
@@ -241,7 +237,7 @@ enum LeafTemplate {
             border-left-width: 3px;
             width: calc(100% - 3px);
         \}
-    }
+    #endfor
 
 
     </style>
@@ -252,10 +248,10 @@ enum LeafTemplate {
                 <tr>
                     <td colspan="100">
                         <header>
-                            #if(topLeft) {
+                            #if(topLeft):
                                 <div class="box topLeft">
                                     <h3>#(topLeft.title)</h3>
-                                    #for(member in topLeft.members) {
+                                    #for(member in topLeft.members):
                                         <p>
                                             <span class="face">
                                                 <img src="#(member.picture)">
@@ -266,14 +262,14 @@ enum LeafTemplate {
                                                 #(member.role)
                                             </span>
                                         </p>
-                                    }
+                                    #endfor
                                 </div>
-                            }
+                            #endif
                             <h1>#(title)</h1>
-                            #if(topRight) {
+                            #if(topRight):
                                 <div class="box topRight">
                                     <h3>#(topRight.title)</h3>
-                                    #for(member in topRight.members) {
+                                    #for(member in topRight.members):
                                         <p>
                                             <span class="face">
                                                 <img src="#(member.picture)">
@@ -284,35 +280,35 @@ enum LeafTemplate {
                                                 #(member.role)
                                             </span>
                                         </p>
-                                    }
+                                    #endfor
                                 </div>
-                            }
+                            #endif
                         </header>
                     </td>
                 </tr>
             </thead>
             <tbody>
                 <tr class="logo">
-                    #for(teamStyle in teamStyles) {
+                    #for(teamStyle in teamStyles):
                         <td>
                             <img src="#(teamStyle.logo)" style="height: 100px;">
                         </td>
-                    }
+                    #endfor
                 </tr>
-                #for(row in rows) {
-                    #if(row.heading) {
+                #for(row in rows):
+                    #if(row.heading):
                         <tr>
-                            #for(teamMembers in row.teamMembers) {
+                            #for(teamMembers in row.teamMembers):
                                 <td>
                                     <h2>#(row.heading)</h2>
                                 </td>
-                            }
+                            #endfor
                         </tr>
-                    }
+                    #endif
                     <tr>
-                        #for(teamMembers in row.teamMembers) {
+                        #for(teamMembers in row.teamMembers):
                             <td>
-                                #for(teamMember in teamMembers) {
+                                #for(teamMember in teamMembers):
                                     <p>
                                         <span class="face">
                                             <img src="#(teamMember.picture)">
@@ -325,11 +321,11 @@ enum LeafTemplate {
                                             #(teamMember.role)
                                         </span>
                                     </p>
-                                }
+                                #endfor
                             </td>
-                        }
-                        #if(row.management) {
-                            #for(member in row.management.members) {
+                        #endfor
+                        #if(row.management):
+                            #for(member in row.management.members):
                                 <td>
                                     <p>
                                         <span class="face">
@@ -344,21 +340,28 @@ enum LeafTemplate {
                                         </span>
                                     </p>
                                 </td>
-                            }
+                            #endfor
                             <td class="overlay">
-                                #if(row.background && row.background != "#FFFFFF") {
+                                #if(row.background && row.background != "#FFFFFF"):
                                     <span class="box" style="background: #(row.background)19; border: solid #(row.background)7F;">
-                                } else {
+                                #else:
                                     <span class="box">
-                                }
+                                #endif
                                     <h3>#(row.management.title)</h3>
                                 </span>
                             </td>
-                        }
+                        #endif
                     </tr>
-                }
+                #endfor
             </tbody>
         </table>
     </body>
     """#
+    
+    
+    func file(path: String, on eventLoop: EventLoop) -> EventLoopFuture<ByteBuffer> {
+        var buffer = ByteBufferAllocator().buffer(capacity: 0)
+        buffer.writeString(html)
+        return eventLoop.makeSucceededFuture(buffer)
+    }
 }
