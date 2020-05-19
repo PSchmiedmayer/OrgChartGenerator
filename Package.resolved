@@ -56,6 +56,15 @@
         }
       },
       {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "branch": null,
+          "revision": "223d62adc52d51669ae2ee19bdb8b7d9fd6fcd9c",
+          "version": "0.0.6"
+        }
+      },
+      {
         "package": "swift-backtrace",
         "repositoryURL": "https://github.com/swift-server/swift-backtrace.git",
         "state": {
@@ -71,15 +80,6 @@
           "branch": null,
           "revision": "d67ac68d09a95443303e9d6e37b34e7ba101d5f1",
           "version": "1.0.1"
-        }
-      },
-      {
-        "package": "llbuild",
-        "repositoryURL": "https://github.com/apple/swift-llbuild.git",
-        "state": {
-          "branch": null,
-          "revision": "f73b84bc1525998e5e267f9d830c1411487ac65e",
-          "version": "0.2.0"
         }
       },
       {
@@ -134,15 +134,6 @@
           "branch": null,
           "revision": "10e0e17dd47b594c3d864a063f343d716e33e5c1",
           "version": "2.7.3"
-        }
-      },
-      {
-        "package": "SwiftPM",
-        "repositoryURL": "https://github.com/apple/swift-package-manager.git",
-        "state": {
-          "branch": null,
-          "revision": "9abcc2260438177cecd7cf5185b144d13e74122b",
-          "version": "0.5.0"
         }
       },
       {

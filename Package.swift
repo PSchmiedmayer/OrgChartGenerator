@@ -8,8 +8,11 @@ let package = Package(
     platforms: [
         .macOS(.v10_15),
     ],
+    products: [
+        .executable(name: "orgchartgenerator", targets: ["OrgChartGenerator"])
+    ],
     dependencies: [
-        .package(name: "SwiftPM", url: "https://github.com/apple/swift-package-manager.git", .exact("0.5.0")),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "0.0.6"),
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
         .package(url: "https://github.com/vapor/leaf.git", from: "4.0.0-rc.1.2"),
     ],
@@ -17,7 +20,7 @@ let package = Package(
         .target(
             name: "OrgChartGenerator",
             dependencies: [
-                .product(name: "SPMUtility", package: "SwiftPM"),
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "Leaf", package: "leaf")
             ]),
