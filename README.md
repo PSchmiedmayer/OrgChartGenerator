@@ -1,3 +1,3 @@
-# 🗂 OrgChart Generator
+# OrgChart
 
-Generate an OrgChart from the given directory structure.
+A description of this package.

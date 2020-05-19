@@ -1,0 +1,413 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		65994D7A247442AB000D566E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D79247442AB000D566E /* AppDelegate.swift */; };
+		65994D7C247442AB000D566E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D7B247442AB000D566E /* ContentView.swift */; };
+		65994D7E247442AF000D566E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65994D7D247442AF000D566E /* Assets.xcassets */; };
+		65994D81247442AF000D566E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65994D80247442AF000D566E /* Preview Assets.xcassets */; };
+		65994D84247442AF000D566E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65994D82247442AF000D566E /* Main.storyboard */; };
+		65994D8F24744DE6000D566E /* FaceCrop in Frameworks */ = {isa = PBXBuildFile; productRef = 65994D8E24744DE6000D566E /* FaceCrop */; };
+		65994D9124744DE9000D566E /* OrgChart in Frameworks */ = {isa = PBXBuildFile; productRef = 65994D9024744DE9000D566E /* OrgChart */; };
+		65994D9924745126000D566E /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9424745126000D566E /* Renderer.swift */; };
+		65994D9A24745126000D566E /* PrintableBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9624745126000D566E /* PrintableBorder.swift */; };
+		65994D9B24745126000D566E /* DrawableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9724745126000D566E /* DrawableView.swift */; };
+		65994D9C24745126000D566E /* PrintableRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9824745126000D566E /* PrintableRectangle.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		65994D76247442AB000D566E /* OrgChart Generator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OrgChart Generator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		65994D79247442AB000D566E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		65994D7B247442AB000D566E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		65994D7D247442AF000D566E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		65994D80247442AF000D566E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		65994D83247442AF000D566E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		65994D85247442AF000D566E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65994D86247442AF000D566E /* OrgChart_Generator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OrgChart_Generator.entitlements; sourceTree = "<group>"; };
+		65994D9224745115000D566E /* OrgChart */ = {isa = PBXFileReference; lastKnownFileType = folder; path = OrgChart; sourceTree = "<group>"; };
+		65994D9424745126000D566E /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		65994D9624745126000D566E /* PrintableBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintableBorder.swift; sourceTree = "<group>"; };
+		65994D9724745126000D566E /* DrawableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawableView.swift; sourceTree = "<group>"; };
+		65994D9824745126000D566E /* PrintableRectangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintableRectangle.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		65994D73247442AB000D566E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65994D9124744DE9000D566E /* OrgChart in Frameworks */,
+				65994D8F24744DE6000D566E /* FaceCrop in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		65994D6D247442AB000D566E = {
+			isa = PBXGroup;
+			children = (
+				65994D9224745115000D566E /* OrgChart */,
+				65994D78247442AB000D566E /* OrgChart Generator */,
+				65994D77247442AB000D566E /* Products */,
+				65994D8D24744DE6000D566E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		65994D77247442AB000D566E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65994D76247442AB000D566E /* OrgChart Generator.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65994D78247442AB000D566E /* OrgChart Generator */ = {
+			isa = PBXGroup;
+			children = (
+				65994D9324745126000D566E /* Renderer */,
+				65994D9524745126000D566E /* Views */,
+				65994D79247442AB000D566E /* AppDelegate.swift */,
+				65994D7B247442AB000D566E /* ContentView.swift */,
+				65994D7D247442AF000D566E /* Assets.xcassets */,
+				65994D82247442AF000D566E /* Main.storyboard */,
+				65994D85247442AF000D566E /* Info.plist */,
+				65994D86247442AF000D566E /* OrgChart_Generator.entitlements */,
+				65994D7F247442AF000D566E /* Preview Content */,
+			);
+			path = "OrgChart Generator";
+			sourceTree = "<group>";
+		};
+		65994D7F247442AF000D566E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				65994D80247442AF000D566E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		65994D8D24744DE6000D566E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		65994D9324745126000D566E /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				65994D9424745126000D566E /* Renderer.swift */,
+			);
+			name = Renderer;
+			path = Generator/Sources/OrgChartGenerator/Renderer;
+			sourceTree = SOURCE_ROOT;
+		};
+		65994D9524745126000D566E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				65994D9624745126000D566E /* PrintableBorder.swift */,
+				65994D9724745126000D566E /* DrawableView.swift */,
+				65994D9824745126000D566E /* PrintableRectangle.swift */,
+			);
+			name = Views;
+			path = Generator/Sources/OrgChartGenerator/Views;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		65994D75247442AB000D566E /* OrgChart Generator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65994D89247442AF000D566E /* Build configuration list for PBXNativeTarget "OrgChart Generator" */;
+			buildPhases = (
+				65994D72247442AB000D566E /* Sources */,
+				65994D73247442AB000D566E /* Frameworks */,
+				65994D74247442AB000D566E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OrgChart Generator";
+			packageProductDependencies = (
+				65994D8E24744DE6000D566E /* FaceCrop */,
+				65994D9024744DE9000D566E /* OrgChart */,
+			);
+			productName = "OrgChart Generator";
+			productReference = 65994D76247442AB000D566E /* OrgChart Generator.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		65994D6E247442AB000D566E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = "Paul Schmiedmayer";
+				TargetAttributes = {
+					65994D75247442AB000D566E = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 65994D71247442AB000D566E /* Build configuration list for PBXProject "OrgChart Generator" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 65994D6D247442AB000D566E;
+			productRefGroup = 65994D77247442AB000D566E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				65994D75247442AB000D566E /* OrgChart Generator */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		65994D74247442AB000D566E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65994D84247442AF000D566E /* Main.storyboard in Resources */,
+				65994D81247442AF000D566E /* Preview Assets.xcassets in Resources */,
+				65994D7E247442AF000D566E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		65994D72247442AB000D566E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65994D7C247442AB000D566E /* ContentView.swift in Sources */,
+				65994D9924745126000D566E /* Renderer.swift in Sources */,
+				65994D9B24745126000D566E /* DrawableView.swift in Sources */,
+				65994D9C24745126000D566E /* PrintableRectangle.swift in Sources */,
+				65994D7A247442AB000D566E /* AppDelegate.swift in Sources */,
+				65994D9A24745126000D566E /* PrintableBorder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		65994D82247442AF000D566E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				65994D83247442AF000D566E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		65994D87247442AF000D566E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		65994D88247442AF000D566E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		65994D8A247442AF000D566E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "OrgChart Generator/OrgChart_Generator.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"OrgChart Generator/Preview Content\"";
+				DEVELOPMENT_TEAM = 637867499T;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "OrgChart Generator/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.schmiedmayer.OrgChart-Generator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		65994D8B247442AF000D566E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "OrgChart Generator/OrgChart_Generator.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"OrgChart Generator/Preview Content\"";
+				DEVELOPMENT_TEAM = 637867499T;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "OrgChart Generator/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.schmiedmayer.OrgChart-Generator";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		65994D71247442AB000D566E /* Build configuration list for PBXProject "OrgChart Generator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65994D87247442AF000D566E /* Debug */,
+				65994D88247442AF000D566E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65994D89247442AF000D566E /* Build configuration list for PBXNativeTarget "OrgChart Generator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65994D8A247442AF000D566E /* Debug */,
+				65994D8B247442AF000D566E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		65994D8E24744DE6000D566E /* FaceCrop */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FaceCrop;
+		};
+		65994D9024744DE9000D566E /* OrgChart */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OrgChart;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 65994D6E247442AB000D566E /* Project object */;
+}
