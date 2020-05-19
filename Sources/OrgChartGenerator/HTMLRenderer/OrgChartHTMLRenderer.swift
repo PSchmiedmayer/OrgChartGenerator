@@ -16,7 +16,7 @@ final class OrgChartHTMLRenderer {
 
         app.views.use(.leaf)
         app.leaf.cache.isEnabled = false
-        app.leaf.files = LeafTemplate()
+        // app.leaf.files = LeafTemplate()
         
         let context = OrgChartLeafContext(orgChart)
     

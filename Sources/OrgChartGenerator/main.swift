@@ -8,6 +8,7 @@
 
 import ArgumentParser
 import Foundation
+import SwiftUI
 
 
 struct OrgChartGenerator: ParsableCommand {
@@ -28,6 +29,30 @@ struct OrgChartGenerator: ParsableCommand {
 
     func run() throws {
         let url = URL(fileURLWithPath: path, isDirectory: true)
+        
+        let newOrgChartURL = url.appendingPathComponent("\(OrgChartGenerator.Constants.orgChartName)_New.pdf", isDirectory: false)
+        struct TestView: View {
+            var body: some View {
+                VStack {
+                    Text("Test Background")
+                        .printableBackground(.systemRed)
+                    Text("Test Border")
+                        .printableBorder(.systemBlue)
+                    Text("Test Background + Border")
+                        .printableBackground(.systemRed)
+                        .printableBorder(.systemBlue, width: 3)
+                    PrintableRectangle(color: .systemRed)
+                    PrintableBorder(color: .systemBlue, width: 4)
+                    PrintableRectangle(color: .systemRed)
+                        .printableBorder(.systemTeal, width: 40)
+                        .frame(width: 100, height: 100)
+                }
+            }
+        }
+        let pdf = Renderer.render(TestView(),
+                                  withSize: .init(width: 1920, height: 1080))
+        try pdf.write(to: newOrgChartURL)
+        
         
         let progress = Progress(totalUnitCount: 100)
         let observation = progress.observe(\.fractionCompleted, changeHandler: { process, _ in
