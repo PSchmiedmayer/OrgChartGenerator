@@ -34,18 +34,18 @@ struct OrgChartGenerator: ParsableCommand {
         struct TestView: View {
             var body: some View {
                 VStack {
-                    Text("Test Background")
-                        .printableBackground(.systemRed)
+                    // Text("Test Background")
+                    //    .printableBackground(.systemRed)
                     Text("Test Border")
                         .printableBorder(.systemBlue)
-                    Text("Test Background + Border")
-                        .printableBackground(.systemRed)
-                        .printableBorder(.systemBlue, width: 3)
-                    PrintableRectangle(color: .systemRed)
-                    PrintableBorder(color: .systemBlue, width: 4)
-                    PrintableRectangle(color: .systemRed)
-                        .printableBorder(.systemTeal, width: 40)
-                        .frame(width: 100, height: 100)
+                    //Text("Test Background + Border")
+                    //    .printableBackground(.systemRed)
+                    // .printableBorder(.systemBlue, width: 3)
+                    // PrintableRectangle(color: .systemRed)
+                    // PrintableBorder(color: .systemBlue, width: 4)
+                    // PrintableRectangle(color: .systemRed)
+                    //    .printableBorder(.systemTeal, width: 40)
+                    //    .frame(width: 100, height: 100)
                 }
             }
         }

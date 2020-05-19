@@ -9,14 +9,14 @@ import SwiftUI
 
 
 struct PrintableBorder: View {
-    @State
-    var color: NSColor
+    @State var color: NSColor
+    @State var width: CGFloat
     
-    @State
-    var width: CGFloat
     
     var body: some View {
         DrawableView { rect in
+            print(rect)
+            
             guard rect.size.width > self.width, rect.size.height > self.width else {
                 if rect.size.width == self.width || rect.size.height == self.width {
                     self.color.setFill()
@@ -42,19 +42,18 @@ struct PrintableBorder: View {
 struct PrintableBorderModifer: ViewModifier {
     var color: NSColor
     var width: CGFloat
-    @State var test: CGSize = .zero
+    @State var size: CGSize = CGSize(width: 100, height: 100)
     
     func body(content: Content) -> some View {
         ZStack {
             content
                 .background(GeometryReader { geometry in
                     Color.clear.onAppear {
-                        print(geometry.size)
-                        self.test = geometry.size
+                        self.size = geometry.size
                     }
                 })
             PrintableBorder(color: self.color, width: self.width)
-                .frame(width: test.width, height: test.height)
+                .frame(width: size.width, height: size.height)
         }
     }
 }
