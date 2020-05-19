@@ -31,7 +31,7 @@ final class PDFRenderer: NSObject, WebFrameLoadDelegate {
         webFrameHandler.callback = { webView, frame in
             let printOpts: [NSPrintInfo.AttributeKey : Any] = [
                 NSPrintInfo.AttributeKey.jobDisposition: NSPrintInfo.JobDisposition.save,
-                NSPrintInfo.AttributeKey.jobSavingURL: url.appendingPathComponent("\(Generator.Constants.orgChartName).pdf", isDirectory: false)
+                NSPrintInfo.AttributeKey.jobSavingURL: url.appendingPathComponent("\(OrgChartGenerator.Constants.orgChartName).pdf", isDirectory: false)
             ]
             
             let printInfo: NSPrintInfo = NSPrintInfo(dictionary: printOpts)

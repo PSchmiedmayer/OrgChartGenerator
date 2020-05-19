@@ -21,7 +21,7 @@ final class OrgChartHTMLRenderer {
         let context = OrgChartLeafContext(orgChart)
     
         var view = try app.view.render("LeafTemplate", context).wait()
-        let htmlURL = url.appendingPathComponent("\(Generator.Constants.orgChartName).html", isDirectory: false)
+        let htmlURL = url.appendingPathComponent("\(OrgChartGenerator.Constants.orgChartName).html", isDirectory: false)
         
         let readableBytes = view.data.readableBytes
         guard let data: Data = view.data.readData(length: readableBytes) else {
