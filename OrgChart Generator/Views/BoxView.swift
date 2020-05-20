@@ -17,7 +17,7 @@ struct BoxView: View {
         VStack(alignment: .center, spacing: 16) {
             box.title.map { title in
                 Text(title)
-                    .font(.system(size: 25, weight: .semibold))
+                    .font(.system(size: 27, weight: .semibold))
             }
             HStack(alignment: .center, spacing: 8) {
                 ForEach(box.members, id: \.hashValue) { member in

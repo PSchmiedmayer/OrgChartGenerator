@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		650EC316247519C3008A3D4D /* PDFExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650EC315247519C3008A3D4D /* PDFExportView.swift */; };
+		6575CC6C24758E250009E92A /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6575CC6B24758E250009E92A /* TeamView.swift */; };
 		6587856824751CDE0071F4C7 /* OrgChartGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6587856724751CDE0071F4C7 /* OrgChartGenerator.swift */; };
 		6587856A24751E040071F4C7 /* OrgChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6587856924751E040071F4C7 /* OrgChartView.swift */; };
 		6587856C24751E4D0071F4C7 /* OrgChartMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6587856B24751E4D0071F4C7 /* OrgChartMock.swift */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		650EC315247519C3008A3D4D /* PDFExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PDFExportView.swift; path = "OrgChart Generator/Renderer/PDFExportView.swift"; sourceTree = SOURCE_ROOT; };
+		6575CC6B24758E250009E92A /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 		6587856724751CDE0071F4C7 /* OrgChartGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartGenerator.swift; sourceTree = "<group>"; };
 		6587856924751E040071F4C7 /* OrgChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartView.swift; sourceTree = "<group>"; };
 		6587856B24751E4D0071F4C7 /* OrgChartMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartMock.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				65994D9724745126000D566E /* DrawableView.swift */,
 				65994D9824745126000D566E /* PrintableRectangle.swift */,
 				6587856924751E040071F4C7 /* OrgChartView.swift */,
+				6575CC6B24758E250009E92A /* TeamView.swift */,
 				65878576247567450071F4C7 /* Header.swift */,
 				65878572247537300071F4C7 /* ControlView.swift */,
 				65C149F824756DB200DE0B19 /* BoxView.swift */,
@@ -245,6 +248,7 @@
 				65994D9A24745126000D566E /* PrintableBorder.swift in Sources */,
 				65C149FB24756FFA00DE0B19 /* MemberView.swift in Sources */,
 				6587856E247532CE0071F4C7 /* OrgChartGeneratorState.swift in Sources */,
+				6575CC6C24758E250009E92A /* TeamView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
