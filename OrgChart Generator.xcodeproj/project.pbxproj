@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		650EC316247519C3008A3D4D /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650EC315247519C3008A3D4D /* Renderer.swift */; };
 		65994D7A247442AB000D566E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D79247442AB000D566E /* AppDelegate.swift */; };
 		65994D7C247442AB000D566E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D7B247442AB000D566E /* ContentView.swift */; };
 		65994D7E247442AF000D566E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65994D7D247442AF000D566E /* Assets.xcassets */; };
@@ -14,13 +15,13 @@
 		65994D84247442AF000D566E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65994D82247442AF000D566E /* Main.storyboard */; };
 		65994D8F24744DE6000D566E /* FaceCrop in Frameworks */ = {isa = PBXBuildFile; productRef = 65994D8E24744DE6000D566E /* FaceCrop */; };
 		65994D9124744DE9000D566E /* OrgChart in Frameworks */ = {isa = PBXBuildFile; productRef = 65994D9024744DE9000D566E /* OrgChart */; };
-		65994D9924745126000D566E /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9424745126000D566E /* Renderer.swift */; };
 		65994D9A24745126000D566E /* PrintableBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9624745126000D566E /* PrintableBorder.swift */; };
 		65994D9B24745126000D566E /* DrawableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9724745126000D566E /* DrawableView.swift */; };
 		65994D9C24745126000D566E /* PrintableRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9824745126000D566E /* PrintableRectangle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		650EC315247519C3008A3D4D /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Renderer.swift; path = "OrgChart Generator/Renderer/Renderer.swift"; sourceTree = SOURCE_ROOT; };
 		65994D76247442AB000D566E /* OrgChart Generator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OrgChart Generator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65994D79247442AB000D566E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65994D7B247442AB000D566E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -30,7 +31,6 @@
 		65994D85247442AF000D566E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65994D86247442AF000D566E /* OrgChart_Generator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OrgChart_Generator.entitlements; sourceTree = "<group>"; };
 		65994D9224745115000D566E /* OrgChart */ = {isa = PBXFileReference; lastKnownFileType = folder; path = OrgChart; sourceTree = "<group>"; };
-		65994D9424745126000D566E /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		65994D9624745126000D566E /* PrintableBorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintableBorder.swift; sourceTree = "<group>"; };
 		65994D9724745126000D566E /* DrawableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawableView.swift; sourceTree = "<group>"; };
 		65994D9824745126000D566E /* PrintableRectangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintableRectangle.swift; sourceTree = "<group>"; };
@@ -49,6 +49,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		650EC31E24751A22008A3D4D /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				650EC315247519C3008A3D4D /* Renderer.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		650EC31F24751A2C008A3D4D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				65994D9624745126000D566E /* PrintableBorder.swift */,
+				65994D9724745126000D566E /* DrawableView.swift */,
+				65994D9824745126000D566E /* PrintableRectangle.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		65994D6D247442AB000D566E = {
 			isa = PBXGroup;
 			children = (
@@ -70,8 +88,8 @@
 		65994D78247442AB000D566E /* OrgChart Generator */ = {
 			isa = PBXGroup;
 			children = (
-				65994D9324745126000D566E /* Renderer */,
-				65994D9524745126000D566E /* Views */,
+				650EC31F24751A2C008A3D4D /* Views */,
+				650EC31E24751A22008A3D4D /* Renderer */,
 				65994D79247442AB000D566E /* AppDelegate.swift */,
 				65994D7B247442AB000D566E /* ContentView.swift */,
 				65994D7D247442AF000D566E /* Assets.xcassets */,
@@ -97,26 +115,6 @@
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
-		};
-		65994D9324745126000D566E /* Renderer */ = {
-			isa = PBXGroup;
-			children = (
-				65994D9424745126000D566E /* Renderer.swift */,
-			);
-			name = Renderer;
-			path = Generator/Sources/OrgChartGenerator/Renderer;
-			sourceTree = SOURCE_ROOT;
-		};
-		65994D9524745126000D566E /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				65994D9624745126000D566E /* PrintableBorder.swift */,
-				65994D9724745126000D566E /* DrawableView.swift */,
-				65994D9824745126000D566E /* PrintableRectangle.swift */,
-			);
-			name = Views;
-			path = Generator/Sources/OrgChartGenerator/Views;
-			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -194,7 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65994D7C247442AB000D566E /* ContentView.swift in Sources */,
-				65994D9924745126000D566E /* Renderer.swift in Sources */,
+				650EC316247519C3008A3D4D /* Renderer.swift in Sources */,
 				65994D9B24745126000D566E /* DrawableView.swift in Sources */,
 				65994D9C24745126000D566E /* PrintableRectangle.swift in Sources */,
 				65994D7A247442AB000D566E /* AppDelegate.swift in Sources */,

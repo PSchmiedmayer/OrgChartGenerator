@@ -1,6 +1,11 @@
-.DS_Store
-.build
-Packages
-*.xcodeproj
+# Swift Package Manager
+Package.resolved
 .swiftpm
-xcuserdata
+.build/
+OrgChart/OrgChart.xcodeproj
+
+# Xcode User settings
+xcuserdata/
+
+# Other files
+.DS_Store
