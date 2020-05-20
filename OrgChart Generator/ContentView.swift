@@ -7,11 +7,50 @@
 //
 
 import SwiftUI
+import OrgChart
 
 struct ContentView: View {
+    @ObservedObject var generator = OrgChartGenerator()
+    
     var body: some View {
-        Text("Hello, World!")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        if case .initialized = generator.state {
+            return onlyControlView("Please provide a path to the OrgChart")
+        }
+        if case let .pathProvided(path) = generator.state {
+            return onlyControlView("Press Parse to parse the OrgChart found at \(path)")
+        }
+        if case let .orgChartParsed(_, orgChart) = generator.state {
+            return orgChartVisible(orgChart)
+        }
+        if case let .facesCropped(_, orgChart) = generator.state {
+            return orgChartVisible(orgChart)
+        }
+        if case let .orgChartRendered(_, orgChart, _) = generator.state {
+            return orgChartVisible(orgChart)
+        }
+        return AnyView(
+            Text("Unknown State")
+        )
+    }
+    
+    func onlyControlView(_ message: String) -> AnyView {
+        return AnyView(
+            VStack {
+                ControlView(generator: generator)
+                Text(message)
+            }
+        )
+    }
+    
+    func orgChartVisible(_ orgChart: OrgChart) -> AnyView {
+        AnyView(
+            VStack {
+                ControlView(generator: generator)
+                ScrollView {
+                    OrgChartView(orgChart: orgChart)
+                }
+            }
+        )
     }
 }
 

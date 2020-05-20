@@ -10,18 +10,16 @@ import SwiftUI
 import OrgChart
 
 struct OrgChartView: View {
-    @State var orgChart: OrgChart
+    var orgChart: OrgChart
     @State var estimatedSize: CGSize = CGSize(width: 1920, height: 1080)
     
     var body: some View {
-        Text("OrgChart")
+        Text("OrgChartView")
     }
 }
 
 struct OrgChartView_Previews: PreviewProvider {
-    static var orgChart: OrgChart = OrgChart.mock
-    
     static var previews: some View {
-        OrgChartView(orgChart: orgChart)
+        OrgChartView(orgChart: OrgChart.mock)
     }
 }
