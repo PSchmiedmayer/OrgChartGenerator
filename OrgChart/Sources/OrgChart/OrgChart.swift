@@ -14,7 +14,7 @@ public final class OrgChart {
     public var teams: [Team]
     public var crossTeamRoles: [CrossTeamRole]
     
-    init(fromDirectory orgChartDirectory: URL) throws {
+    public init(fromDirectory orgChartDirectory: URL) throws {
         guard orgChartDirectory.hasDirectoryPath else {
             throw OrgChartError.notADirectory(orgChartDirectory)
         }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum OrgChartError: Error {
+public enum OrgChartError: Error {
     case notADirectory(URL)
     case unknownPosition(String)
     case impossibleTeamPosition(Position)
@@ -17,7 +17,7 @@ enum OrgChartError: Error {
     case couldNotWriteData(to: URL)
     case couldNotReadData(from: URL)
     
-    var localizedDescription: String {
+    public var localizedDescription: String {
         switch self {
         case let .notADirectory(url):
             return "The Generator expected a directory at (\(url))."
@@ -32,7 +32,7 @@ enum OrgChartError: Error {
         case let .couldNotWriteData(url):
             return "Could not write data to (\(url))."
         case let .couldNotReadData(url):
-            return "Could not read data from (\(url)), the file was either moved or the generator has not sufficient accress."
+            return "Could not read data from (\(url)), the file was either moved or the generator has not sufficient access."
         }
     }
 }

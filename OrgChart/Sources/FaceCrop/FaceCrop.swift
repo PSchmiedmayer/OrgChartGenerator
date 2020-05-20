@@ -10,16 +10,26 @@ import Cocoa
 import OrgChart
 
 
-enum FaceCropError: Error {
+public enum FaceCropError: Error {
     case couldNotReadData(from: URL)
+    case couldNotWriteData(to: URL)
+    
+    public var localizedDescription: String {
+        switch self {
+        case let .couldNotReadData(url):
+            return "Could not read data from (\(url)), the file was either moved or the tool has not sufficient access."
+        case let .couldNotWriteData(url):
+            return "Could not write data to (\(url))."
+        }
+    }
 }
 
-final class FaceCrop {
-    static func crop(_ orgChart: OrgChart, tempURL: URL?, imageSize: Int, compression: Double) throws {
+extension OrgChart {
+    public func crop(withTempURL tempURL: URL?, imageSize: Int, compression: Double) throws {
         precondition(0.0...1.0 ~= compression)
         
-        let cropImagesCount = orgChart.teams.reduce(0, { $0 + $1.members.values.count })
-            + orgChart.crossTeamRoles.reduce(0, { $0 + $1.management.count })
+        let cropImagesCount = self.teams.reduce(0, { $0 + $1.members.values.count })
+            + self.crossTeamRoles.reduce(0, { $0 + $1.management.count })
         
         let progress = Progress(totalUnitCount: Int64(cropImagesCount))
         
@@ -44,9 +54,9 @@ final class FaceCrop {
         }
         
         var transformedTeams: [Int: Result<Team, Error>] = [:]
-        DispatchQueue.concurrentPerform(iterations: orgChart.teams.count, execute: { index in
+        DispatchQueue.concurrentPerform(iterations: self.teams.count, execute: { index in
             do {
-                let team = orgChart.teams[index]
+                let team = self.teams[index]
                 team.members = Dictionary(uniqueKeysWithValues: try team.members.map({ position, members in
                     return (position, try members.map(transform))
                 }))
@@ -59,16 +69,16 @@ final class FaceCrop {
         for (index, result) in transformedTeams {
             switch result {
             case let .success(team):
-                orgChart.teams[index] = team
+                self.teams[index] = team
             case let .failure(error):
                 throw error
             }
         }
 
         var transformedCrossTeamRole: [Int: Result<CrossTeamRole, Error>] = [:]
-        DispatchQueue.concurrentPerform(iterations: orgChart.crossTeamRoles.count, execute: { index in
+        DispatchQueue.concurrentPerform(iterations: self.crossTeamRoles.count, execute: { index in
             do {
-                let crossTeamRole = orgChart.crossTeamRoles[index]
+                let crossTeamRole = self.crossTeamRoles[index]
                 crossTeamRole.management = try crossTeamRole.management.map(transform)
                 transformedCrossTeamRole[index] = .success(crossTeamRole)
             } catch {
@@ -79,10 +89,11 @@ final class FaceCrop {
         for (index, result) in transformedCrossTeamRole {
             switch result {
             case let .success(crossTeamRole):
-                orgChart.crossTeamRoles[index] = crossTeamRole
+                self.crossTeamRoles[index] = crossTeamRole
             case let .failure(error):
                 throw error
             }
         }
     }
+    
 }

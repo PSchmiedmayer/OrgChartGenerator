@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		650EC316247519C3008A3D4D /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650EC315247519C3008A3D4D /* Renderer.swift */; };
+		6587856824751CDE0071F4C7 /* OrgChartGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6587856724751CDE0071F4C7 /* OrgChartGenerator.swift */; };
+		6587856A24751E040071F4C7 /* OrgChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6587856924751E040071F4C7 /* OrgChartView.swift */; };
+		6587856C24751E4D0071F4C7 /* OrgChartMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6587856B24751E4D0071F4C7 /* OrgChartMock.swift */; };
+		6587856E247532CE0071F4C7 /* OrgChartGeneratorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6587856D247532CE0071F4C7 /* OrgChartGeneratorState.swift */; };
+		65878571247533110071F4C7 /* RenderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65878570247533110071F4C7 /* RenderError.swift */; };
 		65994D7A247442AB000D566E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D79247442AB000D566E /* AppDelegate.swift */; };
 		65994D7C247442AB000D566E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D7B247442AB000D566E /* ContentView.swift */; };
 		65994D7E247442AF000D566E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65994D7D247442AF000D566E /* Assets.xcassets */; };
@@ -22,6 +27,11 @@
 
 /* Begin PBXFileReference section */
 		650EC315247519C3008A3D4D /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Renderer.swift; path = "OrgChart Generator/Renderer/Renderer.swift"; sourceTree = SOURCE_ROOT; };
+		6587856724751CDE0071F4C7 /* OrgChartGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartGenerator.swift; sourceTree = "<group>"; };
+		6587856924751E040071F4C7 /* OrgChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartView.swift; sourceTree = "<group>"; };
+		6587856B24751E4D0071F4C7 /* OrgChartMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartMock.swift; sourceTree = "<group>"; };
+		6587856D247532CE0071F4C7 /* OrgChartGeneratorState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartGeneratorState.swift; sourceTree = "<group>"; };
+		65878570247533110071F4C7 /* RenderError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderError.swift; sourceTree = "<group>"; };
 		65994D76247442AB000D566E /* OrgChart Generator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OrgChart Generator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		65994D79247442AB000D566E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65994D7B247442AB000D566E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				650EC315247519C3008A3D4D /* Renderer.swift */,
+				65878570247533110071F4C7 /* RenderError.swift */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -63,8 +74,17 @@
 				65994D9624745126000D566E /* PrintableBorder.swift */,
 				65994D9724745126000D566E /* DrawableView.swift */,
 				65994D9824745126000D566E /* PrintableRectangle.swift */,
+				6587856924751E040071F4C7 /* OrgChartView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		6587856F247532E10071F4C7 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				6587856B24751E4D0071F4C7 /* OrgChartMock.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		65994D6D247442AB000D566E = {
@@ -88,10 +108,13 @@
 		65994D78247442AB000D566E /* OrgChart Generator */ = {
 			isa = PBXGroup;
 			children = (
-				650EC31F24751A2C008A3D4D /* Views */,
-				650EC31E24751A22008A3D4D /* Renderer */,
 				65994D79247442AB000D566E /* AppDelegate.swift */,
 				65994D7B247442AB000D566E /* ContentView.swift */,
+				6587856724751CDE0071F4C7 /* OrgChartGenerator.swift */,
+				6587856D247532CE0071F4C7 /* OrgChartGeneratorState.swift */,
+				650EC31F24751A2C008A3D4D /* Views */,
+				650EC31E24751A22008A3D4D /* Renderer */,
+				6587856F247532E10071F4C7 /* Helper */,
 				65994D7D247442AF000D566E /* Assets.xcassets */,
 				65994D82247442AF000D566E /* Main.storyboard */,
 				65994D85247442AF000D566E /* Info.plist */,
@@ -193,10 +216,15 @@
 			files = (
 				65994D7C247442AB000D566E /* ContentView.swift in Sources */,
 				650EC316247519C3008A3D4D /* Renderer.swift in Sources */,
+				6587856A24751E040071F4C7 /* OrgChartView.swift in Sources */,
 				65994D9B24745126000D566E /* DrawableView.swift in Sources */,
+				65878571247533110071F4C7 /* RenderError.swift in Sources */,
+				6587856824751CDE0071F4C7 /* OrgChartGenerator.swift in Sources */,
+				6587856C24751E4D0071F4C7 /* OrgChartMock.swift in Sources */,
 				65994D9C24745126000D566E /* PrintableRectangle.swift in Sources */,
 				65994D7A247442AB000D566E /* AppDelegate.swift in Sources */,
 				65994D9A24745126000D566E /* PrintableBorder.swift in Sources */,
+				6587856E247532CE0071F4C7 /* OrgChartGeneratorState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
