@@ -75,3 +75,9 @@ extension Team: CustomStringConvertible {
         """#
     }
 }
+
+extension Team: Identifiable {
+    public var id: String {
+        return name
+    }
+}

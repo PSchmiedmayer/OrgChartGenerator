@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class CrossTeamRole: Equatable, Hashable {
+public final class CrossTeamRole {
     public let title: String
     public let heading: String?
     public let position: Position
@@ -39,13 +39,23 @@ public final class CrossTeamRole: Equatable, Hashable {
                                      role: memberInformation.role))
         })
     }
-    
+}
+
+extension CrossTeamRole: Equatable {
     public static func == (lhs: CrossTeamRole, rhs: CrossTeamRole) -> Bool {
         return lhs.position == rhs.position
     }
-    
+}
+
+extension CrossTeamRole: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(position)
+    }
+}
+
+extension CrossTeamRole: Identifiable {
+    public var id: String {
+        title
     }
 }
 

@@ -11,7 +11,13 @@ import Foundation
 
 extension OrgChart {
     static let mock: OrgChart = {
-        fatalError("Not Implemented")
+        let generator = OrgChartGenerator.init(orgChartName: "OrgChart",
+                                               path: URL(fileURLWithPath: "/Users/paulschmiedmayer/Downloads/ios20-orgchart/iPraktikum 2020"))
+        generator.parseOrgChart()
+        guard let orgChart = generator.state.orgChart else {
+            preconditionFailure()
+        }
+        return orgChart
     }()
 }
 

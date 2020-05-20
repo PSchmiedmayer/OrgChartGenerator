@@ -31,6 +31,12 @@ extension Member: CustomStringConvertible {
     }
 }
 
+extension Member: Identifiable {
+    public var id: URL {
+        return picture
+    }
+}
+
 extension Dictionary where Key == Position, Value == [Member] {
     mutating func append(member: Member, at position: Position) throws {
         guard case .row(_) = position else {

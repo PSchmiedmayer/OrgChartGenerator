@@ -64,3 +64,5 @@ extension Background: Codable {
         try container.encode(hexString)
     }
 }
+
+extension Background: Hashable { }

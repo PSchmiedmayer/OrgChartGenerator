@@ -44,6 +44,7 @@ class OrgChartGenerator: ObservableObject {
         
         self.progress = Progress(totalUnitCount: 100)
         progress.publisher(for: \.fractionCompleted)
+            .receive(on: RunLoop.main)
             .sink { fractionCompleted in
                 self.fractionCompleted = fractionCompleted
             }
@@ -122,7 +123,7 @@ class OrgChartGenerator: ObservableObject {
         let pdfPath = path.appendingPathComponent("\(orgChartName).pdf")
         do {
             try pdf.write(to: pdfPath, options: .atomic)
-            // self.state = .orgChartRendered(path: path, orgChart: orgChart, pdf: pdf)
+            self.state = .orgChartRendered(path: path, orgChart: orgChart, pdf: pdf)
             return .success(Void())
         } catch {
             return .failure(RenderError.couldNotWriteData(to: pdfPath))

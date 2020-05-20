@@ -48,7 +48,8 @@ struct ContentView: View {
             VStack {
                 ControlView(generator: generator, renderPDF: $renderAsPDF)
                 ScrollView {
-                    PDFExportView(view: OrgChartView(orgChart: orgChart), renderAsPDF: $renderAsPDF) { pdf in
+                    PDFExportView(view: OrgChartView(context: orgChart.renderContext),
+                                  renderAsPDF: $renderAsPDF) { pdf in
                         self.generator.rendered(pdf)
                     }
                 }
