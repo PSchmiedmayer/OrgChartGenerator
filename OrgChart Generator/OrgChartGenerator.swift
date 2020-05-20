@@ -57,6 +57,7 @@ class OrgChartGenerator: ObservableObject {
     }
     
     
+    @discardableResult
     func parseOrgChart() -> Result<Void, OrgChartError> {
         guard let path = state.path else {
             preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path")
@@ -78,6 +79,7 @@ class OrgChartGenerator: ObservableObject {
         }
     }
 
+    @discardableResult
     func cropFaces() -> Result<Void, FaceCropError> {
         guard let orgChart = state.orgChart, let path = state.path else {
             preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an OrgChart")
@@ -105,6 +107,7 @@ class OrgChartGenerator: ObservableObject {
         }
     }
 
+    @discardableResult
     func rendered(_ pdf: Data) -> Result<Void, RenderError> {
         guard let path = state.path, let orgChart = state.orgChart else {
             preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an OrgChart")
@@ -119,7 +122,7 @@ class OrgChartGenerator: ObservableObject {
         let pdfPath = path.appendingPathComponent("\(orgChartName).pdf")
         do {
             try pdf.write(to: pdfPath, options: .atomic)
-            self.state = .orgChartRendered(path: path, orgChart: orgChart, pdf: pdf)
+            // self.state = .orgChartRendered(path: path, orgChart: orgChart, pdf: pdf)
             return .success(Void())
         } catch {
             return .failure(RenderError.couldNotWriteData(to: pdfPath))

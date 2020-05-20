@@ -7,6 +7,7 @@
 //
 
 import OrgChart
+import Foundation
 
 extension OrgChart {
     static let mock: OrgChart = {

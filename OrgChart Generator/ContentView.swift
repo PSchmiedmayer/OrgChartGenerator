@@ -37,20 +37,8 @@ struct ContentView: View {
     func onlyControlView(_ message: String) -> AnyView {
         return AnyView(
             VStack {
-                Button(action: {
-                        self.renderAsPDF = true
-                    }) {
-                        Text("Test")
-                    }
-                ControlView(generator: generator)
-                PDFExportView(view: Text(message), renderAsPDF: $renderAsPDF) { pdf in
-                    print(pdf)
-                    do {
-                        try pdf.write(to: URL(fileURLWithPath: "/Users/paulschmiedmayer/Downloads/Test.pdf"))
-                    } catch {
-                        print(error)
-                    }
-                }
+                ControlView(generator: generator, renderPDF: $renderAsPDF)
+                Text(message)
             }
         )
     }
@@ -58,10 +46,10 @@ struct ContentView: View {
     func orgChartVisible(_ orgChart: OrgChart) -> AnyView {
         AnyView(
             VStack {
-                ControlView(generator: generator)
+                ControlView(generator: generator, renderPDF: $renderAsPDF)
                 ScrollView {
                     PDFExportView(view: OrgChartView(orgChart: orgChart), renderAsPDF: $renderAsPDF) { pdf in
-                        print(pdf)
+                        self.generator.rendered(pdf)
                     }
                 }
             }

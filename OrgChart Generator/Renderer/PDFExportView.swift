@@ -26,9 +26,9 @@ struct PDFExportView<PrintableView: View>: NSViewRepresentable {
     
     private func renderAsPDF(_ view: NSView) {
         if renderAsPDF {
-            onPDFRender(view.dataWithPDF(inside: view.frame))
             DispatchQueue.main.async {
                 self.renderAsPDF = false
+                self.onPDFRender(view.dataWithPDF(inside: view.frame))
             }
         }
     }

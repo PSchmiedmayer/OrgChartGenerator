@@ -8,21 +8,20 @@
 
 import SwiftUI
 
-protocol ControlViewDelegate: AnyObject {
-    func cropFaces()
-    func render()
-}
 
 struct ControlView: View {
     @ObservedObject var generator: OrgChartGenerator
-    var delegate: ControlViewDelegate? = nil
+    @State var cropFaces: Bool = false
+    @Binding var renderPDF: Bool
+    
     
     var pathBinding: Binding<String> {
         Binding(
             get: {
                 self.generator.state.path?.path ?? ""
             }, set: { newValue in
-                guard let path = URL(string: newValue), path.isFileURL, path.hasDirectoryPath else {
+                let path = URL(fileURLWithPath: newValue)
+                guard path.isFileURL, path.hasDirectoryPath else {
                     return
                 }
                 
@@ -31,25 +30,58 @@ struct ControlView: View {
         )
     }
     
+    var disableGenerateButton: Bool {
+        if case .initialized = generator.state {
+            return true
+        }
+        return false
+    }
+    
     var body: some View {
         HStack {
-            Text("OrgChartPath")
-            TextField("Path", text: pathBinding)
+            Button(action: selectDirectory) {
+                Text("Select the OrgChart Path")
+            }
+            Toggle(isOn: $cropFaces) {
+                Text("Crop Faces")
+            }
             Spacer()
             Button(action: generateAction) {
                 Text("Generate OrgChart")
+            }.disabled(disableGenerateButton)
+        }
+    }
+    
+    func selectDirectory() {
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        
+        DispatchQueue.main.async {
+            let result = panel.runModal()
+            if result == .OK {
+                guard let path = panel.url, path.isFileURL, path.hasDirectoryPath else {
+                    return
+                }
+                
+                self.generator.state = .pathProvided(path: path)
             }
         }
     }
     
     func generateAction() {
-        delegate?.cropFaces()
-        delegate?.render()
+        generator.parseOrgChart()
+        if cropFaces {
+            generator.cropFaces()
+        }
+        renderPDF = true
     }
 }
 
 struct ControlView_Previews: PreviewProvider {
+    @State static var renderPDF: Bool = false
+    
     static var previews: some View {
-        ControlView(generator: OrgChartGenerator())
+        ControlView(generator: OrgChartGenerator(), renderPDF: $renderPDF)
     }
 }
