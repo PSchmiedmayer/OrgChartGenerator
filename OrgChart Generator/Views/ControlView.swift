@@ -8,11 +8,43 @@
 
 import SwiftUI
 
+protocol ControlViewDelegate: AnyObject {
+    func cropFaces()
+    func render()
+}
+
 struct ControlView: View {
     @ObservedObject var generator: OrgChartGenerator
+    var delegate: ControlViewDelegate? = nil
+    
+    var pathBinding: Binding<String> {
+        Binding(
+            get: {
+                self.generator.state.path?.path ?? ""
+            }, set: { newValue in
+                guard let path = URL(string: newValue), path.isFileURL, path.hasDirectoryPath else {
+                    return
+                }
+                
+                self.generator.state = .pathProvided(path: path)
+            }
+        )
+    }
     
     var body: some View {
-        Text("ControlView")
+        HStack {
+            Text("OrgChartPath")
+            TextField("Path", text: pathBinding)
+            Spacer()
+            Button(action: generateAction) {
+                Text("Generate OrgChart")
+            }
+        }
+    }
+    
+    func generateAction() {
+        delegate?.cropFaces()
+        delegate?.render()
     }
 }
 

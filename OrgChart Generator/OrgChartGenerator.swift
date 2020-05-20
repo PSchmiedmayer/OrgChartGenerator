@@ -105,9 +105,9 @@ class OrgChartGenerator: ObservableObject {
         }
     }
 
-    func render(_ orgChartView: OrgChartView) -> Result<Void, RenderError> {
-        guard let path = state.path else {
-            preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path")
+    func rendered(_ pdf: Data) -> Result<Void, RenderError> {
+        guard let path = state.path, let orgChart = state.orgChart else {
+            preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an OrgChart")
         }
         
         progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.facesCropped
@@ -115,11 +115,11 @@ class OrgChartGenerator: ObservableObject {
         defer {
             progress.resignCurrent()
         }
-
-        let pdfData = Renderer.render(orgChartView, withSize: orgChartView.estimatedSize)
+        
         let pdfPath = path.appendingPathComponent("\(orgChartName).pdf")
         do {
-            try pdfData.write(to: pdfPath, options: .atomic)
+            try pdf.write(to: pdfPath, options: .atomic)
+            self.state = .orgChartRendered(path: path, orgChart: orgChart, pdf: pdf)
             return .success(Void())
         } catch {
             return .failure(RenderError.couldNotWriteData(to: pdfPath))

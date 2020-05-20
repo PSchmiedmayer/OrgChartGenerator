@@ -11,6 +11,7 @@ import OrgChart
 
 struct ContentView: View {
     @ObservedObject var generator = OrgChartGenerator()
+    @State var renderAsPDF: Bool = false
     
     var body: some View {
         if case .initialized = generator.state {
@@ -36,8 +37,20 @@ struct ContentView: View {
     func onlyControlView(_ message: String) -> AnyView {
         return AnyView(
             VStack {
+                Button(action: {
+                        self.renderAsPDF = true
+                    }) {
+                        Text("Test")
+                    }
                 ControlView(generator: generator)
-                Text(message)
+                PDFExportView(view: Text(message), renderAsPDF: $renderAsPDF) { pdf in
+                    print(pdf)
+                    do {
+                        try pdf.write(to: URL(fileURLWithPath: "/Users/paulschmiedmayer/Downloads/Test.pdf"))
+                    } catch {
+                        print(error)
+                    }
+                }
             }
         )
     }
@@ -47,7 +60,9 @@ struct ContentView: View {
             VStack {
                 ControlView(generator: generator)
                 ScrollView {
-                    OrgChartView(orgChart: orgChart)
+                    PDFExportView(view: OrgChartView(orgChart: orgChart), renderAsPDF: $renderAsPDF) { pdf in
+                        print(pdf)
+                    }
                 }
             }
         )
