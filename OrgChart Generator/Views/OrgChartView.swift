@@ -15,7 +15,8 @@ struct OrgChartView: View {
     
     var body: some View {
         HStack {
-            Header(context: context)
+            OrgChartHeader(context: context)
+            OrgChartBody(context: context)
         }
     }
 }

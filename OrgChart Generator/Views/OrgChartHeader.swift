@@ -9,7 +9,7 @@
 import SwiftUI
 import OrgChart
 
-struct Header: View {
+struct OrgChartHeader: View {
     var context: OrgChartRenderContext
     
     var body: some View {
@@ -26,8 +26,8 @@ struct Header: View {
     }
 }
 
-struct Header_Previews: PreviewProvider {
+struct OrgChartHeader_Previews: PreviewProvider {
     static var previews: some View {
-        Header(context: OrgChart.mock.renderContext)
+        OrgChartHeader(context: OrgChart.mock.renderContext)
     }
 }
