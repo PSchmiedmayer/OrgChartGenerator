@@ -23,6 +23,8 @@ struct OrgChartBody: View {
             TeamBackgroundView(teamStyles: context.teamStyles,
                                managementWidth: $managementWidth)
             VStack(alignment: .leading) {
+                TeamHeaderView(teamStyles: context.teamStyles,
+                               managementWidth: $managementWidth)
                 ForEach(context.rows, id: \.hashValue) { row in
                     OrgChartRow(row: row)
                 }

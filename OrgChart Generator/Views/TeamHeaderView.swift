@@ -7,15 +7,46 @@
 //
 
 import SwiftUI
+import OrgChart
+
 
 struct TeamHeaderView: View {
+    var teamStyles: [OrgChartRenderContext.Style]
+    @Binding var managementWidth: CGFloat
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TeamView(managementWidth: $managementWidth, data: teamStyles) { teamStyle in
+            ZStack {
+                Color.white
+                Color(teamStyle.background.color.withAlphaComponent(0.1))
+                self.image(teamStyle.logo)
+            }.frame(height: 120)
+                .padding(6)
+        }
+    }
+    
+    func image(_ logo: String) -> some View {
+        guard let image = NSImage(contentsOfFile: logo) else {
+            return AnyView(
+                EmptyView()
+            )
+        }
+        
+        return AnyView(
+            Image(nsImage: image)
+                .resizable()
+                .scaledToFit()
+        )
     }
 }
 
 struct TeamHeaderView_Previews: PreviewProvider {
+    @State static var managementWidth: CGFloat = 64
+    
     static var previews: some View {
-        TeamHeaderView()
+        TeamHeaderView(teamStyles: OrgChart.mock.renderContext.teamStyles,
+                       managementWidth: $managementWidth)
+            .previewLayout(.fixed(width: 6000, height: 100))
+            .background(Color.white)
     }
 }
