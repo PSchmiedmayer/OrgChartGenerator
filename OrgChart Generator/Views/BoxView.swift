@@ -30,7 +30,6 @@ struct BoxView: View {
                 Color(box.background.color.withAlphaComponent(0.15))
                     .border(Color(box.background.color.withAlphaComponent(1.0)), width: 3)
             )
-            .padding()
             .fixedSize(horizontal: true, vertical: true)
     }
 }

@@ -14,10 +14,10 @@ struct OrgChartView: View {
     @State var estimatedSize: CGSize = CGSize(width: 1920, height: 1080)
     
     var body: some View {
-        VStack {
+        VStack(spacing: 64) {
             OrgChartHeader(context: context)
             OrgChartBody(context: context)
-        }
+        }.padding(32)
     }
 }
 
