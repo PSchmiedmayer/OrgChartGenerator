@@ -18,6 +18,7 @@ struct OrgChartView: View {
             OrgChartHeader(context: context)
             OrgChartBody(context: context)
         }.padding(32)
+            .background(Color.white)
     }
 }
 
