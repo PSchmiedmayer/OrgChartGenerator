@@ -10,28 +10,44 @@ import OrgChart
 
 
 struct OrgChartRenderContext {
-    struct Style: Hashable {
+    struct Style: Hashable, Identifiable {
         let logo: String
         let background: Background
+        
+        var id: Int {
+            hashValue
+        }
     }
     
-    struct Row: Hashable {
+    struct Row: Hashable, Identifiable {
         let heading: String?
         let background: Background?
         let teamMembers: [[OrgChartRenderContext.Member]]
         let management: Box?
+        
+        var id: Int {
+            hashValue
+        }
     }
     
-    struct Member: Hashable {
+    struct Member: Hashable, Identifiable {
         let name: String
         let picture: String
         let role: String?
+        
+        var id: Int {
+            hashValue
+        }
     }
     
-    struct Box: Hashable {
+    struct Box: Hashable, Identifiable {
         let title: String?
         let background: Background
         let members: [OrgChartRenderContext.Member]
+        
+        var id: Int {
+            hashValue
+        }
     }
     
     

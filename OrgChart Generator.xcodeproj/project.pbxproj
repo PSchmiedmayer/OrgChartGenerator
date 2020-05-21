@@ -34,6 +34,10 @@
 		65E5130024766DAC00311FA0 /* OrgChartRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E512FF24766DAC00311FA0 /* OrgChartRow.swift */; };
 		65FCC78C2476A5070078B643 /* WidthReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC78A2476A5070078B643 /* WidthReader.swift */; };
 		65FCC78D2476A5070078B643 /* HeightReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC78B2476A5070078B643 /* HeightReader.swift */; };
+		65FCC78F2476AFE40078B643 /* TeamBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC78E2476AFE40078B643 /* TeamBackgroundView.swift */; };
+		65FCC7912476AFED0078B643 /* TeamBorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC7902476AFED0078B643 /* TeamBorderView.swift */; };
+		65FCC7932476B1790078B643 /* TeamHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC7922476B1790078B643 /* TeamHeaderView.swift */; };
+		65FCC7952476B4260078B643 /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC7942476B4260078B643 /* TeamView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +70,10 @@
 		65E512FF24766DAC00311FA0 /* OrgChartRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartRow.swift; sourceTree = "<group>"; };
 		65FCC78A2476A5070078B643 /* WidthReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidthReader.swift; sourceTree = "<group>"; };
 		65FCC78B2476A5070078B643 /* HeightReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightReader.swift; sourceTree = "<group>"; };
+		65FCC78E2476AFE40078B643 /* TeamBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamBackgroundView.swift; sourceTree = "<group>"; };
+		65FCC7902476AFED0078B643 /* TeamBorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamBorderView.swift; sourceTree = "<group>"; };
+		65FCC7922476B1790078B643 /* TeamHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamHeaderView.swift; sourceTree = "<group>"; };
+		65FCC7942476B4260078B643 /* TeamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +108,10 @@
 				6575CC6D247595190009E92A /* MemberRow.swift */,
 				65E512FF24766DAC00311FA0 /* OrgChartRow.swift */,
 				6575CC6B24758E250009E92A /* OrgChartBody.swift */,
+				65FCC7922476B1790078B643 /* TeamHeaderView.swift */,
+				65FCC78E2476AFE40078B643 /* TeamBackgroundView.swift */,
+				65FCC7942476B4260078B643 /* TeamView.swift */,
+				65FCC7902476AFED0078B643 /* TeamBorderView.swift */,
 				6575CC6F24759B200009E92A /* ManagementRow.swift */,
 				65878576247567450071F4C7 /* OrgChartHeader.swift */,
 				65878572247537300071F4C7 /* ControlView.swift */,
@@ -252,8 +264,10 @@
 				65E5130024766DAC00311FA0 /* OrgChartRow.swift in Sources */,
 				6575CC7024759B200009E92A /* ManagementRow.swift in Sources */,
 				65C149F924756DB200DE0B19 /* BoxView.swift in Sources */,
+				65FCC7952476B4260078B643 /* TeamView.swift in Sources */,
 				65878577247567450071F4C7 /* OrgChartHeader.swift in Sources */,
 				650EC316247519C3008A3D4D /* PDFExportView.swift in Sources */,
+				65FCC7912476AFED0078B643 /* TeamBorderView.swift in Sources */,
 				65878575247558520071F4C7 /* RenderError.swift in Sources */,
 				6575CC6E247595190009E92A /* MemberRow.swift in Sources */,
 				6587856A24751E040071F4C7 /* OrgChartView.swift in Sources */,
@@ -263,11 +277,13 @@
 				6587856C24751E4D0071F4C7 /* OrgChartMock.swift in Sources */,
 				65FCC78C2476A5070078B643 /* WidthReader.swift in Sources */,
 				65994D9C24745126000D566E /* PrintableRectangle.swift in Sources */,
+				65FCC78F2476AFE40078B643 /* TeamBackgroundView.swift in Sources */,
 				65994D7A247442AB000D566E /* AppDelegate.swift in Sources */,
 				65994D9A24745126000D566E /* PrintableBorder.swift in Sources */,
 				65C149FB24756FFA00DE0B19 /* MemberView.swift in Sources */,
 				6587856E247532CE0071F4C7 /* OrgChartGeneratorState.swift in Sources */,
 				6575CC6C24758E250009E92A /* OrgChartBody.swift in Sources */,
+				65FCC7932476B1790078B643 /* TeamHeaderView.swift in Sources */,
 				65FCC78D2476A5070078B643 /* HeightReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -20,15 +20,8 @@ struct OrgChartBody: View {
     
     var body: some View {
         ZStack {
-            HStack(spacing: 0) {
-                HStack(spacing: 32) {
-                    ForEach(context.teamStyles, id: \.hashValue) { teamStyle in
-                        Color(teamStyle.background.color.withAlphaComponent(0.15))
-                    }
-                }
-                Spacer()
-                    .frame(width: managementWidth)
-            }
+            TeamBackgroundView(teamStyles: context.teamStyles,
+                               managementWidth: $managementWidth)
             VStack(alignment: .leading) {
                 ForEach(context.rows, id: \.hashValue) { row in
                     OrgChartRow(row: row)
@@ -37,6 +30,8 @@ struct OrgChartBody: View {
                 .onPreferenceChange(ManagementWidthPreferenceKey.self) { managementWidth in
                     self.managementWidth = managementWidth
                 }
+            TeamBorderView(teamStyles: context.teamStyles,
+                           managementWidth: $managementWidth)
         }.fixedSize(horizontal: true, vertical: true)
     }
 }

@@ -25,12 +25,12 @@ struct OrgChartRow: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .top, spacing: 0) {
+            HStack(alignment: .top, spacing: 32) {
                 MemberRow(row: row)
                     .onPreferenceChange(HeadingHeightPreferenceKey.self) { headingHeight in
                         self.headingHeight = headingHeight
                     }
-                Group {
+                HStack(alignment: .top, spacing: 0) {
                     ManagementRow(headingHeight: $headingHeight,
                                   row: row)
                         .onPreferenceChange(ManagementRowWidthPreferenceKey.self) { managementRowWidth in
