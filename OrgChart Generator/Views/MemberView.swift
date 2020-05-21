@@ -16,9 +16,14 @@ struct MemberView: View {
     
     var body: some View {
         HStack(alignment: .center, spacing: 8.0) {
-            imageView()
-                .printableBorder(accentColor.withAlphaComponent(0.5), width: 1.5)
-                .aspectRatio(1.0, contentMode: .fit)
+            NSImage(contentsOfFile: member.picture.path).map { image in
+                Image(nsImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 100, height: 100)
+                    .clipped()
+                    .printableBorder(accentColor.withAlphaComponent(0.5), width: 1.5)
+            }
             VStack(alignment: .leading, spacing: 4.0) {
                 Text(member.name)
                     .font(.system(size: 24, weight: .semibold))
