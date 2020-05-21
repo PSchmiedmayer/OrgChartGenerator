@@ -16,12 +16,7 @@ struct OrgChartBody: View {
     var body: some View {
         VStack(alignment: .leading) {
             ForEach(context.rows, id: \.hashValue) { row in
-                HStack {
-                    MemberRow(row: row)
-                    row.management.map { management in
-                        Text("Test")
-                    }
-                }
+                OrgChartRow(row: row)
             }
         }.fixedSize(horizontal: true, vertical: true)
     }

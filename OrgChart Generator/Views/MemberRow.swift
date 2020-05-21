@@ -16,21 +16,20 @@ struct MemberRow: View {
     var body: some View {
         HStack(alignment: .top) {
             ForEach(row.teamMembers, id: \.hashValue) { teamMembers in
-                VStack {
+                VStack(spacing: 0) {
                     self.row.heading.map { heading in
-                        VStack {
-                            Spacer()
-                                .frame(height: 36)
-                            Text(heading)
-                                .font(.system(size: 27, weight: .semibold))
-                        }.padding(8)
+                        Text(heading)
+                            .font(.system(size: 27, weight: .semibold))
+                            .padding(8)
+                            .padding(.vertical, 16)
+                            .padding(.bottom, 24)
+                            .modifier(HeightReader())
                     }
-                    if teamMembers.count == 0 {
-                        Text("No Team Member")
-                    }
-                    ForEach(teamMembers, id: \.hashValue) { member in
-                        MemberView(member: member, accentColor: .black)
-                            .padding(.horizontal, 16)
+                    VStack(spacing: 16) {
+                        ForEach(teamMembers, id: \.hashValue) { member in
+                            MemberView(member: member, accentColor: .black)
+                                .padding(.horizontal, 16)
+                        }
                     }
                 }
             }
@@ -41,6 +40,6 @@ struct MemberRow: View {
 
 struct MemberRow_Previews: PreviewProvider {
     static var previews: some View {
-        MemberRow(row: OrgChart.mock.renderContext.rows.first!)
+        MemberRow(row: OrgChart.mock.renderContext.rows[3])
     }
 }
