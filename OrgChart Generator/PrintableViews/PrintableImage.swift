@@ -25,7 +25,12 @@ struct PrintableImage: View {
                 self.image.size.height = rect.size.height
             }
             
-            self.image.draw(in: rect)
+            self.image.draw(in: rect,
+                            from: CGRect(origin: CGPoint(x: (self.image.size.width - rect.size.width) / 2,
+                                                         y: (self.image.size.height - rect.size.height) / 2),
+                                         size: rect.size),
+                            operation: .copy,
+                            fraction: 1.0)
         }
     }
 }
