@@ -9,80 +9,46 @@
 import SwiftUI
 import OrgChart
 
-struct HeightPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = .zero
 
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
-    }
-}
+struct ManagementRowWidthPreferenceKey: WidthPreferenceKey {}
 
-struct HeightReader: ViewModifier {
-    private var heightReaderView: some View {
-        GeometryReader { geometry in
-            Color.clear.preference(key: HeightPreferenceKey.self,
-                                   value: geometry.size.height)
-        }
-    }
-
-    func body(content: Content) -> some View {
-        content.background(heightReaderView)
-    }
-}
-
-struct WeightPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = .zero
-
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
-    }
-}
-
-struct WeightReader: ViewModifier {
-    private var weightReaderView: some View {
-        GeometryReader { geometry in
-            Color.clear.preference(key: WeightPreferenceKey.self,
-                                   value: geometry.size.height)
-        }
-    }
-
-    func body(content: Content) -> some View {
-        content.background(weightReaderView)
-    }
-}
 
 struct OrgChartRow: View {
     let row: OrgChartRenderContext.Row
+    
     @State var height: CGFloat = .zero
     @State var headingHeight: CGFloat = .zero
-    @State var managementWeight: CGFloat = .zero
+    @State var managementRowWidth: CGFloat = .zero
+    
     
     var body: some View {
-        VStack(alignment: .leading ,spacing: 0) {
-            HStack(alignment: .top) {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .top, spacing: 0) {
                 MemberRow(row: row)
                     .onPreferenceChange(HeightPreferenceKey.self) { headingHeight in
                         self.headingHeight = headingHeight
                     }
-                ManagementRow(headingHeight: $headingHeight,
-                              row: row)
-                    .onPreferenceChange(WeightPreferenceKey.self) { managementWeight in
-                        self.managementWeight = managementWeight
-                    }
-                Spacer()
-                row.management?.title.map { title in
-                    VStack(spacing: 0) {
-                        self.row.heading.map { heading in
-                            Color.clear
-                                .frame(height: self.headingHeight)
+                Group {
+                    ManagementRow(headingHeight: $headingHeight,
+                                  row: row)
+                        .onPreferenceChange(ManagementRowWidthPreferenceKey.self) { managementRowWidth in
+                            self.managementRowWidth = managementRowWidth
                         }
-                        Text(title)
-                            .font(.system(size: 27, weight: .semibold))
-                            .fixedSize(horizontal: true, vertical: false)
-                            .padding(.horizontal, 32)
-                            .frame(height: headingHeight)
-                    }.fixedSize(horizontal: true, vertical: true)
-                }
+                    Spacer()
+                    row.management?.title.map { title in
+                        VStack(spacing: 0) {
+                            self.row.heading.map { heading in
+                                Color.clear
+                                    .frame(height: self.headingHeight)
+                            }
+                            Text(title)
+                                .font(.system(size: 27, weight: .semibold))
+                                .fixedSize(horizontal: true, vertical: false)
+                                .padding(.horizontal, 32)
+                                .frame(height: headingHeight)
+                        }.fixedSize(horizontal: true, vertical: true)
+                    }
+                }.modifier(WidthReader(preferenceKey: ManagementWidthPreferenceKey.self))
             }.padding(.vertical)
                 .modifier(HeightReader())
                 .onPreferenceChange(HeightPreferenceKey.self) { height in

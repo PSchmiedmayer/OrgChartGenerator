@@ -28,7 +28,7 @@ struct ManagementRow: View {
                     }
                 }
             }
-        }.modifier(WeightReader())
+        }.modifier(WidthReader(preferenceKey: ManagementRowWidthPreferenceKey.self))
             .fixedSize(horizontal: true, vertical: true)
     }
 }

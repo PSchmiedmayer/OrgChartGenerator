@@ -10,14 +10,31 @@ import SwiftUI
 import OrgChart
 
 
+struct ManagementWidthPreferenceKey: WidthPreferenceKey {}
+
+
 struct OrgChartBody: View {
     var context: OrgChartRenderContext
+    @State var managementWidth: CGFloat = .zero
+    
     
     var body: some View {
-        VStack(alignment: .leading) {
-            ForEach(context.rows, id: \.hashValue) { row in
-                OrgChartRow(row: row)
+        ZStack {
+            HStack(spacing: 0) {
+                ForEach(context.teamStyles, id: \.hashValue) { teamStyle in
+                    Color(teamStyle.background.color.withAlphaComponent(0.15))
+                }
+                Spacer()
+                    .frame(width: managementWidth)
             }
+            VStack(alignment: .leading) {
+                ForEach(context.rows, id: \.hashValue) { row in
+                    OrgChartRow(row: row)
+                }
+            }
+                .onPreferenceChange(ManagementWidthPreferenceKey.self) { managementWidth in
+                    self.managementWidth = managementWidth
+                }
         }.fixedSize(horizontal: true, vertical: true)
     }
 }

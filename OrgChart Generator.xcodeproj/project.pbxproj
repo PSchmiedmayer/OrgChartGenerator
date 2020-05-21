@@ -32,6 +32,8 @@
 		65C149F924756DB200DE0B19 /* BoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C149F824756DB200DE0B19 /* BoxView.swift */; };
 		65C149FB24756FFA00DE0B19 /* MemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C149FA24756FFA00DE0B19 /* MemberView.swift */; };
 		65E5130024766DAC00311FA0 /* OrgChartRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E512FF24766DAC00311FA0 /* OrgChartRow.swift */; };
+		65FCC78C2476A5070078B643 /* WidthReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC78A2476A5070078B643 /* WidthReader.swift */; };
+		65FCC78D2476A5070078B643 /* HeightReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC78B2476A5070078B643 /* HeightReader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +64,8 @@
 		65C149F824756DB200DE0B19 /* BoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxView.swift; sourceTree = "<group>"; };
 		65C149FA24756FFA00DE0B19 /* MemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberView.swift; sourceTree = "<group>"; };
 		65E512FF24766DAC00311FA0 /* OrgChartRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartRow.swift; sourceTree = "<group>"; };
+		65FCC78A2476A5070078B643 /* WidthReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidthReader.swift; sourceTree = "<group>"; };
+		65FCC78B2476A5070078B643 /* HeightReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightReader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 				65878572247537300071F4C7 /* ControlView.swift */,
 				65C149F824756DB200DE0B19 /* BoxView.swift */,
 				65C149FA24756FFA00DE0B19 /* MemberView.swift */,
+				65FCC78B2476A5070078B643 /* HeightReader.swift */,
+				65FCC78A2476A5070078B643 /* WidthReader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -255,12 +261,14 @@
 				65878573247537300071F4C7 /* ControlView.swift in Sources */,
 				6587856824751CDE0071F4C7 /* OrgChartGenerator.swift in Sources */,
 				6587856C24751E4D0071F4C7 /* OrgChartMock.swift in Sources */,
+				65FCC78C2476A5070078B643 /* WidthReader.swift in Sources */,
 				65994D9C24745126000D566E /* PrintableRectangle.swift in Sources */,
 				65994D7A247442AB000D566E /* AppDelegate.swift in Sources */,
 				65994D9A24745126000D566E /* PrintableBorder.swift in Sources */,
 				65C149FB24756FFA00DE0B19 /* MemberView.swift in Sources */,
 				6587856E247532CE0071F4C7 /* OrgChartGeneratorState.swift in Sources */,
 				6575CC6C24758E250009E92A /* OrgChartBody.swift in Sources */,
+				65FCC78D2476A5070078B643 /* HeightReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
