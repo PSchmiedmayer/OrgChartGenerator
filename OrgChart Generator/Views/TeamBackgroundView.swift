@@ -16,7 +16,7 @@ struct TeamBackgroundView: View {
     
     var body: some View {
         TeamView(managementWidth: $managementWidth, data: teamStyles) { teamStyle in
-            Color(teamStyle.background.color.withAlphaComponent(0.15))
+            PrintableRectangle(color: teamStyle.background.color.withAlphaComponent(0.15))
         }
     }
 }

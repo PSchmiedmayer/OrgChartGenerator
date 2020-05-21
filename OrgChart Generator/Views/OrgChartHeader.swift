@@ -32,6 +32,6 @@ struct OrgChartHeader: View {
 struct OrgChartHeader_Previews: PreviewProvider {
     static var previews: some View {
         OrgChartHeader(context: OrgChart.mock.renderContext)
-            .background(Color(.white))
+            .background(Color.white)
     }
 }

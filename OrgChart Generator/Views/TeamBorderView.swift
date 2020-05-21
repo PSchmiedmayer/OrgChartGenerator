@@ -17,8 +17,7 @@ struct TeamBorderView: View {
     
     var body: some View {
         TeamView(managementWidth: $managementWidth, data: teamStyles) { teamStyle in
-            Color.clear
-                .border(Color(teamStyle.background.color.withAlphaComponent(1.0)), width: 3)
+            PrintableBorder(color: teamStyle.background.color.withAlphaComponent(1.0), width: 3)
         }
     }
 }

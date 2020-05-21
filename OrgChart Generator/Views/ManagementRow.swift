@@ -39,6 +39,6 @@ struct ManagementRow_Previews: PreviewProvider {
     static var previews: some View {
         ManagementRow(headingHeight: $headingHeight,
                       row: OrgChart.mock.renderContext.rows[3])
-            .background(Color(.white))
+            .background(Color.white)
     }
 }

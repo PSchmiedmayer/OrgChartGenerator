@@ -26,10 +26,8 @@ struct BoxView: View {
             }
         }
             .padding(.all, 16)
-            .background(
-                Color(box.background.color.withAlphaComponent(0.15))
-                    .border(Color(box.background.color.withAlphaComponent(1.0)), width: 3)
-            )
+            .printableBackground(box.background.color.withAlphaComponent(0.1))
+            .background(PrintableBorder(color: box.background.color.withAlphaComponent(0.5), width: 4))
             .fixedSize(horizontal: true, vertical: true)
     }
 }

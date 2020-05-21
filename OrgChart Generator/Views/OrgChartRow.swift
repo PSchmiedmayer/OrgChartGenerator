@@ -68,9 +68,10 @@ struct OrgChartRow: View {
         }
         
         return AnyView(
-            Color(color.withAlphaComponent(0.15))
-                .border(Color(color.withAlphaComponent(1.0)), width: 3)
-                .frame(height: height - headingHeight)
+            ZStack {
+                PrintableRectangle(color: color.withAlphaComponent(0.1))
+                PrintableBorder(color: color.withAlphaComponent(0.5), width: 3)
+            }.frame(height: height - headingHeight)
         )
     }
 }
