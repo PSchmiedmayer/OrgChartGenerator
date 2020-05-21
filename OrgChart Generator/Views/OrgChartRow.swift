@@ -30,10 +30,32 @@ struct HeightReader: ViewModifier {
     }
 }
 
+struct WeightPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = .zero
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}
+
+struct WeightReader: ViewModifier {
+    private var weightReaderView: some View {
+        GeometryReader { geometry in
+            Color.clear.preference(key: WeightPreferenceKey.self,
+                                   value: geometry.size.height)
+        }
+    }
+
+    func body(content: Content) -> some View {
+        content.background(weightReaderView)
+    }
+}
+
 struct OrgChartRow: View {
     let row: OrgChartRenderContext.Row
     @State var height: CGFloat = .zero
     @State var headingHeight: CGFloat = .zero
+    @State var managementWeight: CGFloat = .zero
     
     var body: some View {
         VStack(alignment: .leading ,spacing: 0) {
@@ -42,14 +64,32 @@ struct OrgChartRow: View {
                     .onPreferenceChange(HeightPreferenceKey.self) { headingHeight in
                         self.headingHeight = headingHeight
                     }
-                ManagementRow(headingHeight: $headingHeight, row: row)
+                ManagementRow(headingHeight: $headingHeight,
+                              row: row)
+                    .onPreferenceChange(WeightPreferenceKey.self) { managementWeight in
+                        self.managementWeight = managementWeight
+                    }
+                Spacer()
+                row.management?.title.map { title in
+                    VStack(spacing: 0) {
+                        self.row.heading.map { heading in
+                            Color.clear
+                                .frame(height: self.headingHeight)
+                        }
+                        Text(title)
+                            .font(.system(size: 27, weight: .semibold))
+                            .fixedSize(horizontal: true, vertical: false)
+                            .padding(.horizontal, 32)
+                            .frame(height: headingHeight)
+                    }.fixedSize(horizontal: true, vertical: true)
+                }
             }.padding(.vertical)
                 .modifier(HeightReader())
                 .onPreferenceChange(HeightPreferenceKey.self) { height in
                     self.height = height
                 }
                 .background(background, alignment: .bottom)
-        }.fixedSize(horizontal: true, vertical: true)
+        }
     }
     
     var background: AnyView {

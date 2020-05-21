@@ -41,5 +41,6 @@ struct MemberRow: View {
 struct MemberRow_Previews: PreviewProvider {
     static var previews: some View {
         MemberRow(row: OrgChart.mock.renderContext.rows[3])
+            .background(Color(.white))
     }
 }

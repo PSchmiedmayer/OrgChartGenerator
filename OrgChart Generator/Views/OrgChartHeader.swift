@@ -13,21 +13,25 @@ struct OrgChartHeader: View {
     var context: OrgChartRenderContext
     
     var body: some View {
-        HStack(spacing: 120) {
+        HStack(spacing: 0) {
             context.topLeft.map { topLeft in
                 BoxView(box: topLeft)
             }
+            Spacer(minLength: 120)
             Text(context.title)
                 .font(.system(size: 120, weight: .medium))
+                .fixedSize(horizontal: true, vertical: true)
+            Spacer(minLength: 120)
             context.topRight.map { topRight in
                 BoxView(box: topRight)
             }
-        }.fixedSize(horizontal: true, vertical: true)
+        }
     }
 }
 
 struct OrgChartHeader_Previews: PreviewProvider {
     static var previews: some View {
         OrgChartHeader(context: OrgChart.mock.renderContext)
+            .background(Color(.white))
     }
 }

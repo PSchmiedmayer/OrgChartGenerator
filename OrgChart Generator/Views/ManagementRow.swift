@@ -28,21 +28,8 @@ struct ManagementRow: View {
                     }
                 }
             }
-            Spacer()
-            row.management?.title.map { title in
-                VStack(spacing: 0) {
-                    self.row.heading.map { heading in
-                        Color.clear
-                            .frame(height: self.headingHeight)
-                    }
-                    Spacer()
-                    Text(title)
-                        .font(.system(size: 27, weight: .semibold))
-                        .padding(.horizontal, 32)
-                    Spacer()
-                }.fixedSize(horizontal: true, vertical: false)
-            }
-        }.fixedSize(horizontal: true, vertical: true)
+        }.modifier(WeightReader())
+            .fixedSize(horizontal: true, vertical: true)
     }
 }
 
@@ -50,6 +37,8 @@ struct ManagementRow_Previews: PreviewProvider {
     @State static var headingHeight: CGFloat = 64
     
     static var previews: some View {
-        ManagementRow(headingHeight: $headingHeight, row: OrgChart.mock.renderContext.rows[3])
+        ManagementRow(headingHeight: $headingHeight,
+                      row: OrgChart.mock.renderContext.rows[3])
+            .background(Color(.white))
     }
 }
