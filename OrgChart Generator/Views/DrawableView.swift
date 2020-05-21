@@ -42,6 +42,9 @@ struct DrawableView: NSViewRepresentable {
     }
 
     func updateNSView(_ colorView: ColorView, context: Context) {
-        colorView.setNeedsDisplay(colorView.frame)
+        DispatchQueue.main.async {
+            colorView.needsLayout = true
+            colorView.needsDisplay = true
+        }
     }
 }

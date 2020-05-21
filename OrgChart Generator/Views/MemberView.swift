@@ -14,14 +14,10 @@ struct MemberView: View {
     var member: OrgChartRenderContext.Member
     var accentColor: NSColor
     
-    var image: NSImage? {
-        NSImage(contentsOfFile: member.picture)
-    }
-    
     var body: some View {
         HStack(alignment: .center, spacing: 8.0) {
             imageView()
-                .border(Color(accentColor), width: 1.5)
+                .printableBorder(accentColor.withAlphaComponent(0.5), width: 1.5)
                 .aspectRatio(1.0, contentMode: .fit)
             VStack(alignment: .leading, spacing: 4.0) {
                 Text(member.name)
@@ -38,13 +34,16 @@ struct MemberView: View {
     }
     
     func imageView() -> some View {
-        guard let image = NSImage(contentsOfFile: member.picture) else {
+        guard let image = NSImage(contentsOfFile: member.picture.path) else {
             return AnyView(
                 PrintableRectangle(color: .systemGray)
             )
         }
         return AnyView(
             Image(nsImage: image)
+                .resizable()
+                .scaledToFill()
+                .aspectRatio(1.0, contentMode: .fit)
         )
     }
 }

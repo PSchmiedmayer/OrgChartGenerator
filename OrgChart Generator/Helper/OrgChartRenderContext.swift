@@ -7,11 +7,12 @@
 //
 
 import OrgChart
+import Foundation
 
 
 struct OrgChartRenderContext {
     struct Style: Hashable, Identifiable {
-        let logo: String
+        let logo: URL
         let background: Background
         
         var id: Int {
@@ -32,7 +33,7 @@ struct OrgChartRenderContext {
     
     struct Member: Hashable, Identifiable {
         let name: String
-        let picture: String
+        let picture: URL
         let role: String?
         
         var id: Int {
@@ -62,7 +63,7 @@ struct OrgChartRenderContext {
         self.title = orgChart.title
         self.topLeft = orgChart.crossTeamRoles.first(where: { $0.position == .topLeft })?.box
         self.topRight = orgChart.crossTeamRoles.first(where: { $0.position == .topRight })?.box
-        self.teamStyles = orgChart.teams.map({ Style(logo: $0.logo.absoluteString, background: $0.background) })
+        self.teamStyles = orgChart.teams.map({ Style(logo: $0.logo, background: $0.background) })
         let positions = Set(orgChart.teams.flatMap({ $0.members.keys })).sorted()
         self.rows = positions.map({ position in
             let crossTeamRole = orgChart.crossTeamRoles.first(where: { $0.position == position })
@@ -93,6 +94,6 @@ extension CrossTeamRole {
 
 extension Member {
     fileprivate var member: OrgChartRenderContext.Member {
-        OrgChartRenderContext.Member(name: name, picture: picture.absoluteString, role: role)
+        OrgChartRenderContext.Member(name: name, picture: picture, role: role)
     }
 }

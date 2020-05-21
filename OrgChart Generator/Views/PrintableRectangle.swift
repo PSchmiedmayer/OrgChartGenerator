@@ -20,18 +20,32 @@ struct PrintableRectangle: View {
     }
 }
 
-struct PrintableRectangleModifer: ViewModifier {
-    let color: NSColor
+fileprivate struct PrintableRectangleModifer: ViewModifier {
+    fileprivate enum Defaults {
+        static let allignment: Alignment = .center
+    }
+    
+    fileprivate let color: NSColor
+    fileprivate let allignment: Alignment
+    
+    
+    fileprivate init(color: NSColor, allignment: Alignment = Defaults.allignment) {
+        self.color = color
+        self.allignment = allignment
+    }
+    
 
     func body(content: Content) -> some View {
         content
-            .background(PrintableRectangle(color: color))
+            .background(PrintableRectangle(color: color),
+                        alignment: allignment)
     }
 }
 
 extension View {
-    func printableBackground(_ color: NSColor) -> some View {
-        self.modifier(PrintableRectangleModifer(color: color))
+    func printableBackground(_ color: NSColor,
+                             allignment: Alignment = PrintableRectangleModifer.Defaults.allignment) -> some View {
+        self.modifier(PrintableRectangleModifer(color: color, allignment: allignment))
     }
 }
 

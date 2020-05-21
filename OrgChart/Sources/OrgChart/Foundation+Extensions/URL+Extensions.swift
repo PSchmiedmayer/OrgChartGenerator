@@ -92,6 +92,6 @@ extension URL {
             throw OrgChartError.notADirectory(self)
         }
         
-        return directoryEnumerator.compactMap({ $0 as? URL }).sorted(by: { $0.absoluteString < $1.absoluteString })
+        return directoryEnumerator.compactMap({ $0 as? URL }).sorted(by: { $0.path < $1.path })
     }
 }

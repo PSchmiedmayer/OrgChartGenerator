@@ -27,7 +27,7 @@ struct BoxView: View {
         }
             .padding(.all, 16)
             .printableBackground(box.background.color.withAlphaComponent(0.1))
-            .background(PrintableBorder(color: box.background.color.withAlphaComponent(0.5), width: 4))
+            .printableBorder(box.background.color.withAlphaComponent(0.5), width: 4)
             .fixedSize(horizontal: true, vertical: true)
     }
 }

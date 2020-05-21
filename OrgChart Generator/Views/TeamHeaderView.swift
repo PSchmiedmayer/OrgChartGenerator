@@ -25,8 +25,8 @@ struct TeamHeaderView: View {
         }
     }
     
-    func image(_ logo: String) -> some View {
-        guard let image = NSImage(contentsOfFile: logo) else {
+    func image(_ logo: URL) -> some View {
+        guard let image = NSImage(contentsOfFile: logo.path) else {
             return AnyView(
                 EmptyView()
             )
