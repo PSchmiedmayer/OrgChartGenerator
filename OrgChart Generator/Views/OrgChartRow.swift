@@ -11,6 +11,8 @@ import OrgChart
 
 
 struct ManagementRowWidthPreferenceKey: WidthPreferenceKey {}
+struct RowHeightPreferenceKey: WidthPreferenceKey {}
+struct HeadingHeightPreferenceKey: WidthPreferenceKey {}
 
 
 struct OrgChartRow: View {
@@ -25,7 +27,7 @@ struct OrgChartRow: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top, spacing: 0) {
                 MemberRow(row: row)
-                    .onPreferenceChange(HeightPreferenceKey.self) { headingHeight in
+                    .onPreferenceChange(HeadingHeightPreferenceKey.self) { headingHeight in
                         self.headingHeight = headingHeight
                     }
                 Group {
@@ -50,8 +52,8 @@ struct OrgChartRow: View {
                     }
                 }.modifier(WidthReader(preferenceKey: ManagementWidthPreferenceKey.self))
             }.padding(.vertical)
-                .modifier(HeightReader())
-                .onPreferenceChange(HeightPreferenceKey.self) { height in
+                .modifier(HeightReader(preferenceKey: RowHeightPreferenceKey.self))
+                .onPreferenceChange(RowHeightPreferenceKey.self) { height in
                     self.height = height
                 }
                 .background(background, alignment: .bottom)

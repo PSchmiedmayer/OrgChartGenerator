@@ -21,8 +21,10 @@ struct OrgChartBody: View {
     var body: some View {
         ZStack {
             HStack(spacing: 0) {
-                ForEach(context.teamStyles, id: \.hashValue) { teamStyle in
-                    Color(teamStyle.background.color.withAlphaComponent(0.15))
+                HStack(spacing: 32) {
+                    ForEach(context.teamStyles, id: \.hashValue) { teamStyle in
+                        Color(teamStyle.background.color.withAlphaComponent(0.15))
+                    }
                 }
                 Spacer()
                     .frame(width: managementWidth)

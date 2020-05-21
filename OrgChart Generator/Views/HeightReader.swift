@@ -9,21 +9,30 @@
 import SwiftUI
 
 
-struct HeightPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = .zero
+protocol HeightPreferenceKey: PreferenceKey {}
+
+
+extension HeightPreferenceKey {
+    static var defaultValue: CGFloat {
+        .zero
+    }
 
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = max(value, nextValue())
     }
 }
 
-struct HeightReader: ViewModifier {
+struct HeightReader<K : PreferenceKey>: ViewModifier where K.Value == CGFloat {
+    var preferenceKey: K.Type
+    
+    
     private var heightReaderView: some View {
         GeometryReader { geometry in
-            Color.clear.preference(key: HeightPreferenceKey.self,
+            Color.clear.preference(key: self.preferenceKey.self,
                                    value: geometry.size.height)
         }
     }
+    
 
     func body(content: Content) -> some View {
         content.background(heightReaderView)

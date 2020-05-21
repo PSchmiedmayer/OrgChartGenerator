@@ -14,7 +14,7 @@ struct MemberRow: View {
     let row: OrgChartRenderContext.Row
     
     var body: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .top, spacing: 32) {
             ForEach(row.teamMembers, id: \.hashValue) { teamMembers in
                 VStack(spacing: 0) {
                     self.row.heading.map { heading in
@@ -23,7 +23,7 @@ struct MemberRow: View {
                             .padding(8)
                             .padding(.vertical, 16)
                             .padding(.bottom, 24)
-                            .modifier(HeightReader())
+                            .modifier(HeightReader(preferenceKey: HeadingHeightPreferenceKey.self))
                     }
                     VStack(spacing: 16) {
                         ForEach(teamMembers, id: \.hashValue) { member in
