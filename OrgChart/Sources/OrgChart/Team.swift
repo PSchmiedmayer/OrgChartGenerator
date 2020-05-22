@@ -8,6 +8,8 @@
 
 import Foundation
 
+public typealias OrgChartTeam = Team
+
 public final class Team {
     public let name: String
     public let logo: URL
