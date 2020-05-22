@@ -8,7 +8,8 @@
 
 import Foundation
 
-public final class Member: Codable {
+
+public final class OrgChartMember: Codable {
     public let name: String
     public var picture: URL
     public let role: String?
@@ -20,7 +21,7 @@ public final class Member: Codable {
     }
 }
 
-extension Member: CustomStringConvertible {
+extension OrgChartMember: CustomStringConvertible {
     public var description: String {
         guard let role = role else {
             return name
@@ -29,14 +30,14 @@ extension Member: CustomStringConvertible {
     }
 }
 
-extension Member: Identifiable {
+extension OrgChartMember: Identifiable {
     public var id: URL {
         return picture
     }
 }
 
-extension Dictionary where Key == Position, Value == [Member] {
-    mutating func append(member: Member, at position: Position) throws {
+extension Dictionary where Key == Position, Value == [OrgChartMember] {
+    mutating func append(member: OrgChartMember, at position: Position) throws {
         guard case .row(_) = position else {
             throw OrgChartError.impossibleTeamPosition(position)
         }
@@ -54,9 +55,9 @@ extension Dictionary where Key == Position, Value == [Member] {
             }
             let memberInformation = try fileURL.extractInformation()
             
-            try append(member: Member(name: memberInformation.name,
-                                      picture: fileURL,
-                                      role: memberInformation.role ?? role),
+            try append(member: OrgChartMember(name: memberInformation.name,
+                                              picture: fileURL,
+                                              role: memberInformation.role ?? role),
                        at: position)
         })
     }

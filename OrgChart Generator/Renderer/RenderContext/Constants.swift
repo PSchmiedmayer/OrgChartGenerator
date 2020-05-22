@@ -8,9 +8,22 @@
 
 import Foundation
 
+
 enum Constants {
     enum Team {
         static let headerBackgroundAlpha: CGFloat = 0.1
+        static let backgroundAlpha: CGFloat = 0.15
+    }
+    
+    enum Row {
+        static let borderWidth: CGFloat = 3
+        static let borderAlpha: CGFloat = 0.5
+        static let backgroundAlpha: CGFloat = 0.15
+    }
+    
+    enum Box {
+        static let borderWidth: CGFloat = 3
+        static let borderAlpha: CGFloat = 0.5
         static let backgroundAlpha: CGFloat = 0.15
     }
 }

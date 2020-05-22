@@ -1,5 +1,5 @@
 //
-//  Team.swift
+//  OrgChartTeam.swift
 //  OrgChartGenerator
 //
 //  Created by Paul Schmiedmayer on 5/31/19.
@@ -8,15 +8,14 @@
 
 import Foundation
 
-public typealias OrgChartTeam = Team
 
-public final class Team {
+public final class OrgChartTeam {
     public let name: String
     public let logo: URL
     public let background: Background
-    public var members: [Position: [Member]]
+    public var members: [Position: [OrgChartMember]]
     
-    init(name: String, logo: URL, background: Background, members: [Position: [Member]]) throws {
+    init(name: String, logo: URL, background: Background, members: [Position: [OrgChartMember]]) throws {
         for position in members.keys {
             guard case .row(_) = position else {
                 throw OrgChartError.impossibleTeamPosition(position)
@@ -41,7 +40,7 @@ public final class Team {
         content.removeAll(where: { $0 == logoURL })
         
         // Members
-        var members: [Position: [Member]] = [:]
+        var members: [Position: [OrgChartMember]] = [:]
         for teamMembersURL in content {
             let information = try teamMembersURL.extractInformation()
             guard let position = information.position else {
@@ -51,9 +50,9 @@ public final class Team {
             if teamMembersURL.hasDirectoryPath {
                 try members.appendMembers(inDirectory: teamMembersURL, atPosition: position, withDefaultRole: information.role)
             } else {
-                try members.append(member: Member(name: information.name,
-                                                  picture: teamMembersURL,
-                                                  role: information.role),
+                try members.append(member: OrgChartMember(name: information.name,
+                                                          picture: teamMembersURL,
+                                                          role: information.role),
                                    at: position)
             }
         }
@@ -65,7 +64,7 @@ public final class Team {
     }
 }
 
-extension Team: CustomStringConvertible {
+extension OrgChartTeam: CustomStringConvertible {
     public var description: String {
         let membersDescription = members.keys.map({ "\t\t \($0.description): \(members[$0]?.description ?? "[]")"}).joined(separator: "\n")
         return #"""
@@ -77,7 +76,7 @@ extension Team: CustomStringConvertible {
     }
 }
 
-extension Team: Identifiable {
+extension OrgChartTeam: Identifiable {
     public var id: String {
         return name
     }

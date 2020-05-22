@@ -7,6 +7,7 @@
 //
 
 import AppKit
+import OrgChart
 
 
 struct Member {
@@ -20,6 +21,13 @@ struct Member {
         self.name = name
         self.picture = picture
         self.role = role
+    }
+    
+    init(_ orgChartMember: OrgChartMember) {
+        self.init(name: orgChartMember.name,
+                  picture: NSImage(contentsOfFile: orgChartMember.picture.path),
+                  role: orgChartMember.role)
+        
     }
 }
 

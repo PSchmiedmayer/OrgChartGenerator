@@ -27,8 +27,49 @@ struct Row {
         self.management =  management
     }
     
-    init(_ crossTeamRole: CrossTeamRole) {
-        init()
+    init(_ orgChart: OrgChart, position: Position) {
+        guard case let .row(id) = position else {
+            preconditionFailure("Cross Team for a row must have a row index")
+        }
+        
+        let crossTeamRole = orgChart.crossTeamRoles
+            .first(where: { $0.position == position })
+        let management = crossTeamRole
+            .flatMap { crossTeamRole in
+                Management(title: crossTeamRole.title,
+                           members: crossTeamRole.management.map { Member($0) })
+            }
+        
+        let background: Background? = crossTeamRole
+            .flatMap { crossTeamRole in
+                let background: Background?
+                if crossTeamRole.background.color == .white {
+                    background = nil
+                } else {
+                    let color = crossTeamRole.background.color
+                    background = Background(color: color.withAlphaComponent(Constants.Row.backgroundAlpha),
+                                            border: Border(color: color.withAlphaComponent(Constants.Row.borderAlpha),
+                                                           width: Constants.Row.borderWidth))
+                }
+                return background
+            }
+        let teams: [Team] = orgChart.teams
+            .map { team -> [Member] in
+                guard let members = team.members[position] else {
+                    // Add a placeholder
+                    return [Member(name: "...")]
+                }
+                return members
+                    .map { orgChartMember in
+                        Member(orgChartMember)
+                    }
+            }
+        
+        self.init(id: id,
+                  heading: crossTeamRole?.heading,
+                  background: background,
+                  teams: teams,
+                  management: management)
     }
 }
 

@@ -13,7 +13,7 @@ public final class CrossTeamRole {
     public let heading: String?
     public let position: Position
     public let background: Background
-    public var management: [Member]
+    public var management: [OrgChartMember]
     
     init(fromDirectory directory: URL) throws {
         let information = try directory.extractInformation()
@@ -33,9 +33,9 @@ public final class CrossTeamRole {
             }
             let memberInformation = try fileURL.extractInformation()
             
-            management.append(Member(name: memberInformation.name,
-                                     picture: fileURL,
-                                     role: memberInformation.role))
+            management.append(OrgChartMember(name: memberInformation.name,
+                                             picture: fileURL,
+                                             role: memberInformation.role))
         })
     }
 }

@@ -11,7 +11,7 @@ import AppKit
 
 public final class OrgChart {
     public let title: String
-    public var teams: [Team]
+    public var teams: [OrgChartTeam]
     public var crossTeamRoles: [CrossTeamRole]
     
     public init(fromDirectory orgChartDirectory: URL) throws {
@@ -22,7 +22,7 @@ public final class OrgChart {
         self.title = try orgChartDirectory.extractInformation().name
         
         let teamsDirectory = orgChartDirectory.appendingPathComponent("Teams", isDirectory: true)
-        self.teams = try teamsDirectory.content().map(Team.init)
+        self.teams = try teamsDirectory.content().map(OrgChartTeam.init)
         
         let crossTeamRolesDirectory = orgChartDirectory.appendingPathComponent("CrossTeamRoles", isDirectory: true)
         self.crossTeamRoles = try crossTeamRolesDirectory.content().map(CrossTeamRole.init)

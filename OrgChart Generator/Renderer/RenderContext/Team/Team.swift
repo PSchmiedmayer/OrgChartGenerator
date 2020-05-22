@@ -1,5 +1,5 @@
 //
-//  Team.swift
+//  OrgChartTeam.swift
 //  OrgChart Generator
 //
 //  Created by Paul Schmiedmayer on 5/22/20.
