@@ -8,9 +8,9 @@
 
 import AppKit
 
-enum Content {
+enum HeaderContent {
     case image(NSImage)
     case text(String)
 }
 
-extension Content: Hashable {}
+extension HeaderContent: Hashable {}

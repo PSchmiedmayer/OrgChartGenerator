@@ -11,10 +11,10 @@ import OrgChart
 
 
 struct TeamHeader {
-    let content: Content
+    let content: HeaderContent
     let background: Background
     
-    init(content: Content, background: Background) {
+    init(content: HeaderContent, background: Background) {
         self.content = content
         self.background = background
     }

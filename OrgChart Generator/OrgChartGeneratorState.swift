@@ -12,16 +12,16 @@ import OrgChart
 
 enum OrgChartGeneratorState {
     case initialized
-    case pathProvided(path: URL)
-    case orgChartParsed(path: URL, orgChart: OrgChart)
-    case facesCropped(path: URL, orgChart: OrgChart)
-    case orgChartRendered(path: URL, orgChart: OrgChart, pdf: Data)
+    case pathProvided(path: URL, orgChart: OrgChart)
+    case orgChartParsed(path: URL, renderContext: OrgChartRenderContext)
+    case imagesCropped(path: URL, renderContext: OrgChartRenderContext)
+    case orgChartRendered(path: URL, renderContext: OrgChartRenderContext, pdf: Data)
     
     enum ProcessFraction {
         static let initialized: Int64 = 0
         static let pathProvided: Int64 = 0
         static let orgChartParsed: Int64 = 5
-        static let facesCropped: Int64 = 85
+        static let imagesCropped: Int64 = 85
         static let orgChartRendered: Int64 = 10
     }
     
@@ -29,23 +29,23 @@ enum OrgChartGeneratorState {
         static let initialized: Int64 = 0
         static let pathProvided: Int64 = ProcessFraction.initialized
         static let orgChartParsed: Int64 = ProcessFraction.initialized + ProcessFraction.pathProvided
-        static let facesCropped: Int64 = ProcessFraction.initialized + ProcessFraction.pathProvided + ProcessFraction.orgChartParsed
-        static let orgChartRendered: Int64 = ProcessFraction.initialized + ProcessFraction.pathProvided + ProcessFraction.orgChartParsed + ProcessFraction.facesCropped
+        static let imagesCropped: Int64 = ProcessFraction.initialized + ProcessFraction.pathProvided + ProcessFraction.orgChartParsed
+        static let orgChartRendered: Int64 = ProcessFraction.initialized + ProcessFraction.pathProvided + ProcessFraction.orgChartParsed + ProcessFraction.imagesCropped
     }
     
     var path: URL? {
         switch self {
-        case let .pathProvided(path), let .orgChartParsed(path, _), let .facesCropped(path, _), let .orgChartRendered(path, _, _):
+        case let .pathProvided(path, _), let .orgChartParsed(path, _), let .imagesCropped(path, _), let .orgChartRendered(path, _, _):
             return path
         case .initialized:
             return nil
         }
     }
     
-    var orgChart: OrgChart? {
+    var renderContext: OrgChartRenderContext? {
         switch self {
-        case let .orgChartParsed(_, orgChart), let .facesCropped(_, orgChart), let .orgChartRendered(_, orgChart, _):
-            return orgChart
+        case let .orgChartParsed(_, renderContext), let .imagesCropped(_, renderContext), let .orgChartRendered(_, renderContext, _):
+            return renderContext
         case .initialized, .pathProvided:
             return nil
         }
@@ -55,7 +55,7 @@ enum OrgChartGeneratorState {
         switch self {
         case let .orgChartRendered(_, _, pdf):
             return pdf
-        case .initialized, .pathProvided, .orgChartParsed, .facesCropped:
+        case .initialized, .pathProvided, .orgChartParsed, .imagesCropped:
             return nil
         }
     }

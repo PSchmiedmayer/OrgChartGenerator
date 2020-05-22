@@ -52,8 +52,8 @@ class OrgChartGenerator: ObservableObject {
     
     
     init(path: URL? = Defaults.path, settings: OrgChartGeneratorSettings? = nil) {
-        if let path = path {
-            self.state = .pathProvided(path: path)
+        if let path = path, let orgChart = try? OrgChart(fromDirectory: path) {
+            self.state = .pathProvided(path: path, orgChart: orgChart)
         }
         self.settings = settings ?? OrgChartGeneratorSettings()
         
