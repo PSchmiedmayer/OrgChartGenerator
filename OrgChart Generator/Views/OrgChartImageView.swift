@@ -9,12 +9,16 @@
 import SwiftUI
 import OrgChart
 import ImageProcessor
+import Combine
+
 
 struct OrgChartImageView: View {
     enum ImageState {
         case faceCropped
         case cropped
     }
+    
+    
     @EnvironmentObject var generator: OrgChartGenerator
     
     var imagePath: URL
@@ -25,6 +29,7 @@ struct OrgChartImageView: View {
     @State private var imageState: ImageState?
     @State private var loading: Bool = true
     @State private var errorMessage: String?
+    @State private var cancellable: AnyCancellable?
     
     
     var body: some View {
@@ -45,6 +50,8 @@ struct OrgChartImageView: View {
     }
     
     func loadImage() {
+        let imageProcessor = ImageProcessor()
+        
         DispatchQueue.global(qos: .userInitiated).async {
             guard let data = self.data ?? (try? Data(contentsOf: self.imagePath)),
                   var image = self.image ?? NSImage(data: data) else {
@@ -63,10 +70,17 @@ struct OrgChartImageView: View {
             
             if self.generator.settings.cropFaces &&
                self.imageState != .faceCropped {
-                image = ImageProcessor.process(image: image,
-                                               withTransformations: [
-                    .cropSquareCenteredOnFace
-                ])
+                self.cancellable = imageProcessor
+                    .process(image,
+                             withTransformations: [
+                                 CropSquareCenteredOnFaceTransformation()
+                             ])
+                    .sink(
+                        receiveCompletion: { completion in
+                        
+                        }, receiveValue: { transformedImage in
+                            image = transformedImage
+                        })
                 
                 DispatchQueue.main.async {
                     self.imageState = .faceCropped
@@ -75,9 +89,9 @@ struct OrgChartImageView: View {
                     self.loading = false
                 }
             } else if self.imageState != .cropped {
-                image = ImageProcessor.process(image: image, withTransformations: [
-                    .scale(toSize: size)
-                ])
+                //image = ImageProcessor.process(image: image, withTransformations: [
+                //    .scale(toSize: size)
+                //])
                 DispatchQueue.main.async {
                     self.imageState = .cropped
                     self.data = data

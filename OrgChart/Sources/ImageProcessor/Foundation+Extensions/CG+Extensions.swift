@@ -6,7 +6,7 @@
 //  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
-import Foundation
+import CoreGraphics
 
 extension CGRect {
     init(center: CGPoint, size: CGSize) {

@@ -8,6 +8,7 @@
 
 import SwiftUI
 import OrgChart
+import ImageProcessor
 
 
 struct MemberView: View {
@@ -16,7 +17,7 @@ struct MemberView: View {
     
     var body: some View {
         HStack(alignment: .center, spacing: 8.0) {
-            LoadableImageView(imagePath: member.picture)
+            OrgChartImageView(imagePath: member.picture)
                 .frame(width: 100, height: 100)
                 .clipped()
                 .printableBorder(accentColor.withAlphaComponent(0.5), width: 1.5)
@@ -32,20 +33,6 @@ struct MemberView: View {
         }
             .aspectRatio(3.8, contentMode: .fit)
             .frame(height: 100)
-    }
-    
-    func imageView() -> some View {
-        guard let image = NSImage(contentsOfFile: member.picture.path) else {
-            return AnyView(
-                PrintableRectangle(color: .systemGray)
-            )
-        }
-        return AnyView(
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFill()
-                .aspectRatio(1.0, contentMode: .fit)
-        )
     }
 }
 

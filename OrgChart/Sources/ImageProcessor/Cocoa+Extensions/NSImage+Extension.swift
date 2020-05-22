@@ -6,7 +6,7 @@
 //  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
-import Cocoa
+import AppKit
 
 extension NSImage {
     var ciImage: CIImage? {
@@ -16,15 +16,6 @@ extension NSImage {
             return nil
         }
         return ciImage
-    }
-    
-    func imageData(as fileType: FileType, withCompressionFactor factor: Double = 1.0) -> Data {
-        let bitmapImageRep = representations.first as! NSBitmapImageRep
-        
-        let factor = max(0.0, min(factor, 1.0))
-        let properties = [NSBitmapImageRep.PropertyKey.compressionFactor : factor]
-        
-        return bitmapImageRep.representation(using: fileType, properties: properties)!
     }
     
     func scale(toSize size: CGSize) -> NSImage {

@@ -8,7 +8,6 @@
 
 import Foundation
 import OrgChart
-import FaceCrop
 import Combine
 
 class OrgChartGeneratorSettings: ObservableObject {

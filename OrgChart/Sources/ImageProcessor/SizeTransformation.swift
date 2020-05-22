@@ -1,21 +1,31 @@
 //
 //  SizeTransformation.swift
-//  OrgChartGenerator
+//  ImageProcessor
 //
 //  Created by Paul Schmiedmayer on 6/4/19.
 //  Copyright © 2019 Paul Schmiedmayer. All rights reserved.
 //
 
-import Cocoa
+import AppKit
+import Combine
 
-class SizeTransformation {
-    static func createProcess(forSize size: CGSize) -> ((NSImage, (NSImage) -> ()) -> ()) {
-        func process(image: NSImage, completion: (NSImage) -> ()) {
-            autoreleasepool{
-                completion(image.scale(toSize: size))
-            }
-        }
-        
-        return process
+
+public struct SizeTransformation: ImageTransformation {
+    public let size: CGSize
+    
+    
+    init(_ size: CGSize) {
+        self.size = size
+    }
+    
+    init(_ size: Int) {
+        self.init(CGSize(width: size, height: size))
+    }
+    
+    
+    public func transform(_ image: NSImage) -> AnyPublisher<NSImage, ImageTransformationError> {
+        Future { promise in
+            promise(.success(image.scale(toSize: self.size)))
+        }.eraseToAnyPublisher()
     }
 }

@@ -14,6 +14,11 @@ struct ContentView: View {
     @State var renderAsPDF: Bool = false
     
     var body: some View {
+        chooseMainView()
+            .environmentObject(generator)
+    }
+    
+    func chooseMainView() -> AnyView {
         if case .initialized = generator.state {
             return onlyControlView("Please provide a path to the OrgChart")
         }
@@ -37,7 +42,7 @@ struct ContentView: View {
     func onlyControlView(_ message: String) -> AnyView {
         return AnyView(
             VStack {
-                ControlView(generator: generator, renderPDF: $renderAsPDF)
+                ControlView(renderPDF: $renderAsPDF)
                 Text(message)
             }
         )
@@ -46,7 +51,7 @@ struct ContentView: View {
     func orgChartVisible(_ orgChart: OrgChart) -> AnyView {
         AnyView(
             VStack {
-                ControlView(generator: generator, renderPDF: $renderAsPDF)
+                ControlView(renderPDF: $renderAsPDF)
                 ScrollView([.horizontal, .vertical], showsIndicators: true) {
                     PDFExportView(view: OrgChartView(context: orgChart.renderContext),
                                   renderAsPDF: $renderAsPDF) { pdf in

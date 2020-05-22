@@ -19,7 +19,7 @@ struct TeamHeaderView: View {
             ZStack {
                 Color.white
                 Color(teamStyle.background.color.withAlphaComponent(0.1))
-                LoadableImageView(imagePath: teamStyle.logo, displayMode: .scaleToFit)
+                OrgChartImageView(imagePath: teamStyle.logo, displayMode: .scaleToFit)
             }.frame(height: 120)
                 .padding(6)
         }

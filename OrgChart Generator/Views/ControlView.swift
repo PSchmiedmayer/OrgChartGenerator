@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Combine
-import FaceCrop
 import OrgChart
 
 
@@ -22,7 +21,7 @@ struct GeneratorError: Error {
 
 
 struct ControlView: View {
-    @ObservedObject var generator: OrgChartGenerator
+    @EnvironmentObject var generator: OrgChartGenerator
     @State var cropFaces: Bool = true
     @Binding var renderPDF: Bool
     @State var cancellable: AnyCancellable?
@@ -106,6 +105,6 @@ struct ControlView_Previews: PreviewProvider {
     @State static var renderPDF: Bool = false
     
     static var previews: some View {
-        ControlView(generator: OrgChartGenerator(), renderPDF: $renderPDF)
+        ControlView(renderPDF: $renderPDF)
     }
 }
