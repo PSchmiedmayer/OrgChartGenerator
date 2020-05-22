@@ -19,24 +19,10 @@ struct TeamHeaderView: View {
             ZStack {
                 Color.white
                 Color(teamStyle.background.color.withAlphaComponent(0.1))
-                self.image(teamStyle.logo)
+                LoadableImageView(imagePath: teamStyle.logo, displayMode: .scaleToFit)
             }.frame(height: 120)
                 .padding(6)
         }
-    }
-    
-    func image(_ logo: URL) -> some View {
-        guard let image = NSImage(contentsOfFile: logo.path) else {
-            return AnyView(
-                EmptyView()
-            )
-        }
-        
-        return AnyView(
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFit()
-        )
     }
 }
 

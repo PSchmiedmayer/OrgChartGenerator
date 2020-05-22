@@ -16,12 +16,10 @@ struct MemberView: View {
     
     var body: some View {
         HStack(alignment: .center, spacing: 8.0) {
-            NSImage(contentsOfFile: member.picture.path).map { image in
-                PrintableImage(image: image)
-                    .frame(width: 100, height: 100)
-                    .clipped()
-                    .printableBorder(accentColor.withAlphaComponent(0.5), width: 1.5)
-            }
+            LoadableImageView(imagePath: member.picture)
+                .frame(width: 100, height: 100)
+                .clipped()
+                .printableBorder(accentColor.withAlphaComponent(0.5), width: 1.5)
             VStack(alignment: .leading, spacing: 4.0) {
                 Text(member.name)
                     .font(.system(size: 24, weight: .semibold))
