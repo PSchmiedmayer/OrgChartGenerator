@@ -35,7 +35,6 @@ public final class CrossTeamRole {
             
             management.append(Member(name: memberInformation.name,
                                      picture: fileURL,
-                                     cropImage: memberInformation.cropImage,
                                      role: memberInformation.role))
         })
     }

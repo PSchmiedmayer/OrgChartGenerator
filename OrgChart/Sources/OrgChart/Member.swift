@@ -11,13 +11,11 @@ import Foundation
 public final class Member: Codable {
     public let name: String
     public var picture: URL
-    public let cropImage: Bool
     public let role: String?
     
-    init(name: String, picture: URL, cropImage: Bool = true, role: String? = nil) {
+    init(name: String, picture: URL, role: String? = nil) {
         self.name = name
         self.picture = picture
-        self.cropImage = cropImage
         self.role = role
     }
 }
@@ -58,7 +56,6 @@ extension Dictionary where Key == Position, Value == [Member] {
             
             try append(member: Member(name: memberInformation.name,
                                       picture: fileURL,
-                                      cropImage: memberInformation.cropImage,
                                       role: memberInformation.role ?? role),
                        at: position)
         })

@@ -11,36 +11,52 @@ import OrgChart
 import FaceCrop
 import Combine
 
-class OrgChartGenerator: ObservableObject {
+class OrgChartGeneratorSettings: ObservableObject {
     private enum Defaults {
         static let orgChartName: String = "OrgChart"
-        static let path: URL? = nil
         static let imageSize: Int = 500
         static let compressionRate: Double = 0.6
+        static let cropFaces: Bool = true
     }
     
     
     @Published var orgChartName: String
     @Published var imageSize: Int
     @Published var compressionRate: Double
+    @Published var cropFaces: Bool
+    
+    
+    init(orgChartName: String = Defaults.orgChartName,
+        imageSize: Int = Defaults.imageSize,
+        compressionRate: Double = Defaults.compressionRate,
+        cropFaces: Bool = Defaults.cropFaces) {
+        self.orgChartName = orgChartName
+        self.imageSize = imageSize
+        self.compressionRate = compressionRate
+        self.cropFaces = cropFaces
+    }
+}
+
+
+class OrgChartGenerator: ObservableObject {
+    private enum Defaults {
+        static let path: URL? = nil
+    }
+    
+    
     @Published var state: OrgChartGeneratorState = .initialized
     @Published var fractionCompleted: Double = 0.0
+    @Published var settings: OrgChartGeneratorSettings
     
     private var progress: Progress
     private var cancellables: Set<AnyCancellable> = []
     
     
-    init(orgChartName: String = Defaults.orgChartName,
-         path: URL? = Defaults.path,
-         imageSize: Int = Defaults.imageSize,
-         compressionRate: Double = Defaults.compressionRate) {
-        self.orgChartName = orgChartName
-        self.imageSize = imageSize
-        self.compressionRate = compressionRate
-        
+    init(path: URL? = Defaults.path, settings: OrgChartGeneratorSettings? = nil) {
         if let path = path {
             self.state = .pathProvided(path: path)
         }
+        self.settings = settings ?? OrgChartGeneratorSettings()
         
         self.progress = Progress(totalUnitCount: 100)
         progress.publisher(for: \.fractionCompleted)
@@ -59,74 +75,61 @@ class OrgChartGenerator: ObservableObject {
     
     
     @discardableResult
-    func parseOrgChart() -> Result<Void, OrgChartError> {
-        guard let path = state.path else {
-            preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path")
-        }
-        
-        progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.pathProvided
-        progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.orgChartParsed)
-        defer {
-            progress.resignCurrent()
-        }
-        
-        do {
-            self.state = .orgChartParsed(path: path, orgChart: try OrgChart(fromDirectory: path))
-            return .success(Void())
-        } catch let error as OrgChartError {
-            return .failure(error)
-        } catch {
-            return .failure(OrgChartError.couldNotReadData(from: path))
-        }
+    func parseOrgChart() -> AnyPublisher<Void, OrgChartError> {
+        Future { promise in
+            DispatchQueue.global(qos: .userInitiated).async {
+                guard let path = self.state.path else {
+                    preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path")
+                }
+                
+                self.progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.pathProvided
+                self.progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.orgChartParsed)
+                defer {
+                    self.progress.resignCurrent()
+                }
+                
+                do {
+                    let orgChart = try OrgChart(fromDirectory: path)
+                    DispatchQueue.main.async {
+                        self.state = .orgChartParsed(path: path, orgChart: orgChart)
+                    }
+                    promise(.success(Void()))
+                } catch let error as OrgChartError {
+                    promise(.failure(error))
+                } catch {
+                    promise(.failure(OrgChartError.couldNotReadData(from: path)))
+                }
+            }
+        }.receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
     }
 
     @discardableResult
-    func cropFaces() -> Result<Void, FaceCropError> {
-        guard let orgChart = state.orgChart, let path = state.path else {
-            preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an OrgChart")
-        }
-        
-        progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.pathProvided
-        progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.orgChartParsed)
-        defer {
-            progress.resignCurrent()
-        }
-        
-        let tempURL = path.appendingPathComponent(".pictures", isDirectory: true)
-        do {
-            try? FileManager.default.removeItem(at: tempURL)
-            try FileManager.default.createDirectory(at: tempURL,
-                                                    withIntermediateDirectories: true,
-                                                    attributes: nil)
-            try orgChart.crop(withTempURL: tempURL, imageSize: imageSize, compression: compressionRate)
-            self.state = .facesCropped(path: path, orgChart: orgChart)
-            return .success(Void())
-        } catch let error as FaceCropError {
-            return .failure(error)
-        } catch {
-            return .failure(FaceCropError.couldNotWriteData(to: tempURL))
-        }
-    }
-
-    @discardableResult
-    func rendered(_ pdf: Data) -> Result<Void, RenderError> {
-        guard let path = state.path, let orgChart = state.orgChart else {
-            preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an OrgChart")
-        }
-        
-        progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.facesCropped
-        progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.orgChartRendered)
-        defer {
-            progress.resignCurrent()
-        }
-        
-        let pdfPath = path.appendingPathComponent("\(orgChartName).pdf")
-        do {
-            try pdf.write(to: pdfPath, options: .atomic)
-            self.state = .orgChartRendered(path: path, orgChart: orgChart, pdf: pdf)
-            return .success(Void())
-        } catch {
-            return .failure(RenderError.couldNotWriteData(to: pdfPath))
-        }
+    func rendered(_ pdf: Data) -> AnyPublisher<Void, RenderError> {
+        Future { promise in
+            DispatchQueue.global(qos: .userInitiated).async {
+                guard let path = self.state.path, let orgChart = self.state.orgChart else {
+                    preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an OrgChart")
+                }
+                
+                self.progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.facesCropped
+                self.progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.orgChartRendered)
+                defer {
+                    self.progress.resignCurrent()
+                }
+                
+                let pdfPath = path.appendingPathComponent("\(self.settings.orgChartName).pdf")
+                do {
+                    try pdf.write(to: pdfPath, options: .atomic)
+                    DispatchQueue.main.async {
+                        self.state = .orgChartRendered(path: path, orgChart: orgChart, pdf: pdf)
+                    }
+                    promise(.success(Void()))
+                } catch {
+                    promise(.failure(RenderError.couldNotWriteData(to: pdfPath)))
+                }
+            }
+        }.receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
     }
 }

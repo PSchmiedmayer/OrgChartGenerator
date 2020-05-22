@@ -51,7 +51,6 @@ public final class Team {
             } else {
                 try members.append(member: Member(name: information.name,
                                                   picture: teamMembersURL,
-                                                  cropImage: information.cropImage,
                                                   role: information.role),
                                    at: position)
             }

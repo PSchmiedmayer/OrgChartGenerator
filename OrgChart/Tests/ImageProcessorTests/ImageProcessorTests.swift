@@ -1,7 +1,7 @@
 import XCTest
-@testable import FaceCrop
+@testable import ImageProcessor
 
-final class FaceCropTests: XCTestCase {
+final class ImageProcessorTests: XCTestCase {
     func testExample() {
         XCTAssert(true, "✅")
     }

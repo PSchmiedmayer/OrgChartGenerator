@@ -12,8 +12,8 @@ let package = Package(
             name: "OrgChart",
             targets: ["OrgChart"]),
         .library(
-            name: "FaceCrop",
-            targets: ["FaceCrop"]),
+            name: "ImageProcessor",
+            targets: ["ImageProcessor"]),
     ],
     targets: [
         .target(
@@ -23,10 +23,10 @@ let package = Package(
             name: "OrgChartTests",
             dependencies: ["OrgChart"]),
         .target(
-            name: "FaceCrop",
-            dependencies: ["OrgChart"]),
+            name: "ImageProcessor",
+            dependencies: []),
         .testTarget(
-            name: "FaceCropTests",
-            dependencies: ["FaceCrop"]),
+            name: "ImageProcessorTests",
+            dependencies: ["ImageProcessor"]),
     ]
 )

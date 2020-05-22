@@ -7,12 +7,25 @@
 //
 
 import SwiftUI
+import Combine
+import FaceCrop
+import OrgChart
+
+
+struct GeneratorError: Error {
+    let localizedDescription: String
+    
+    init(_ orgChartError: OrgChartError) {
+        self.localizedDescription = orgChartError.localizedDescription
+    }
+}
 
 
 struct ControlView: View {
     @ObservedObject var generator: OrgChartGenerator
-    @State var cropFaces: Bool = false
+    @State var cropFaces: Bool = true
     @Binding var renderPDF: Bool
+    @State var cancellable: AnyCancellable?
     
     
     var pathBinding: Binding<String> {
@@ -30,7 +43,7 @@ struct ControlView: View {
         )
     }
     
-    var disableGenerateButton: Bool {
+    var disableExportButton: Bool {
         if case .initialized = generator.state {
             return true
         }
@@ -46,35 +59,46 @@ struct ControlView: View {
                 Text("Crop Faces")
             }
             Spacer()
-            Button(action: generateAction) {
-                Text("Generate OrgChart")
-            }.disabled(disableGenerateButton)
+            Button(action: {
+                self.renderPDF = true
+            }) {
+                Text("Export OrgChart as PDF")
+            }.disabled(disableExportButton)
         }
     }
     
     func selectDirectory() {
-        let panel = NSOpenPanel()
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        
         DispatchQueue.main.async {
+            let panel = NSOpenPanel()
+            panel.canChooseDirectories = true
+            panel.canChooseFiles = false
+        
             let result = panel.runModal()
             if result == .OK {
                 guard let path = panel.url, path.isFileURL, path.hasDirectoryPath else {
                     return
                 }
                 
-                self.generator.state = .pathProvided(path: path)
+                DispatchQueue.main.async {
+                    self.generator.state = .pathProvided(path: path)
+                    self.generateAction()
+                }
             }
         }
     }
     
     func generateAction() {
-        generator.parseOrgChart()
-        if cropFaces {
-            generator.cropFaces()
-        }
-        renderPDF = true
+        cancellable = generator.parseOrgChart()
+            .mapError { error in
+                GeneratorError(error)
+            }
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .finished: break
+                    case let .failure(error): print(error)
+                    }
+                }, receiveValue: { })
     }
 }
 

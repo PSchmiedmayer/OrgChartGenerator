@@ -23,7 +23,6 @@ enum ImageTransformationType {
 }
 
 final class ImageProcessor {
-    
     static func process(imageFromPath path: URL, withTransformations transformations: [ImageTransformationType] = []) -> NSImage? {
         guard let image = NSImage(contentsOfFile: path.path) else {
             return nil
