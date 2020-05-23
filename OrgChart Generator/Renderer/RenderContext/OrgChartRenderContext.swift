@@ -49,7 +49,8 @@ struct OrgChartRenderContext: ImageLoadable {
             }
     }
     
-    mutating func loadImages() {
+    
+    func loadImages() {
         topLeft?.loadImages()
         topRight?.loadImages()
         
@@ -62,7 +63,7 @@ struct OrgChartRenderContext: ImageLoadable {
         }
     }
     
-    mutating func cropImages(cropFaces: Bool, size: CGSize) {
+    func cropImages(cropFaces: Bool, size: CGSize) {
         topLeft?.cropImages(cropFaces: cropFaces, size: size)
         topRight?.cropImages(cropFaces: cropFaces, size: size)
         

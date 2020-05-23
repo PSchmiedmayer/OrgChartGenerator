@@ -78,7 +78,7 @@ struct Row {
 
 
 extension Row: ImageHandler {
-    mutating func loadImages() {
+    func loadImages() {
         for teamIndex in teams.indices {
             for index in teams[teamIndex].indices {
                 teams[teamIndex][index].loadImages()
@@ -87,7 +87,7 @@ extension Row: ImageHandler {
         management?.loadImages()
     }
     
-    mutating func cropImages(cropFaces: Bool, size: CGSize) {
+    func cropImages(cropFaces: Bool, size: CGSize) {
         for teamIndex in teams.indices {
             for index in teams[teamIndex].indices {
                 teams[teamIndex][index].cropImages(cropFaces: cropFaces, size: size)

@@ -11,7 +11,7 @@ import OrgChart
 
 
 struct BoxView: View {
-    var box: OrgChartRenderContext.Box
+    var box: Box
     
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
@@ -21,20 +21,20 @@ struct BoxView: View {
             }
             HStack(alignment: .center, spacing: 8) {
                 ForEach(box.members, id: \.hashValue) { member in
-                    MemberView(member: member, accentColor: self.box.background.color)
+                    MemberView(member: member,
+                               accentColor: self.box.background?.color ?? .clear)
                 }
             }
         }
             .padding(.all, 16)
-            .printableBackground(box.background.color.withAlphaComponent(0.1))
-            .printableBorder(box.background.color.withAlphaComponent(0.5), width: 4)
+            .background(box.background?.view ?? AnyView(EmptyView()))
             .fixedSize(horizontal: true, vertical: true)
     }
 }
 
 struct BoxView_Previews: PreviewProvider {
     static var previews: some View {
-        BoxView(box: OrgChart.mock.renderContext.topLeft!)
+        BoxView(box: OrgChartRenderContext.mock.topLeft!)
             .previewLayout(.sizeThatFits)
     }
 }

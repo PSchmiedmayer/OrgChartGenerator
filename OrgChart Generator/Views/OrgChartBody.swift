@@ -20,10 +20,10 @@ struct OrgChartBody: View {
     
     var body: some View {
         ZStack {
-            TeamBackgroundView(teamStyles: context.teamStyles,
+            TeamBackgroundView(teams: context.teams,
                                managementWidth: $managementWidth)
             VStack(alignment: .leading) {
-                TeamHeaderView(teamStyles: context.teamStyles,
+                TeamHeaderView(teams: context.teams,
                                managementWidth: $managementWidth)
                 ForEach(context.rows, id: \.hashValue) { row in
                     OrgChartRow(row: row)
@@ -32,7 +32,7 @@ struct OrgChartBody: View {
                 .onPreferenceChange(ManagementWidthPreferenceKey.self) { managementWidth in
                     self.managementWidth = managementWidth
                 }
-            TeamBorderView(teamStyles: context.teamStyles,
+            TeamBorderView(teams: context.teams,
                            managementWidth: $managementWidth)
         }.fixedSize(horizontal: true, vertical: true)
     }
@@ -41,7 +41,7 @@ struct OrgChartBody: View {
 
 struct OrgChartBody_Previews: PreviewProvider {
     static var previews: some View {
-        OrgChartBody(context: OrgChart.mock.renderContext)
+        OrgChartBody(context: OrgChartRenderContext.mock)
             .background(Color.white)
     }
 }

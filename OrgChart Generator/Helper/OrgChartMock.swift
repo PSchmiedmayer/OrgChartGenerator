@@ -6,17 +6,15 @@
 //  Copyright © 2020 Paul Schmiedmayer. All rights reserved.
 //
 
-import OrgChart
 import Foundation
+import OrgChart
 
-extension OrgChart {
-    static let mock: OrgChart = {
-        let generator = OrgChartGenerator.init(path: URL(fileURLWithPath: "/Users/paulschmiedmayer/Downloads/ios1920-orgchart/iPraktikum 2019-20"))
-        generator.parseOrgChart()
-        guard let orgChart = generator.state.orgChart else {
-            preconditionFailure()
-        }
-        return orgChart
+
+extension OrgChartRenderContext {
+    static let mock: OrgChartRenderContext = {
+        let orgChart = try! OrgChart(fromDirectory: URL(fileURLWithPath: "/Users/paulschmiedmayer/Downloads/ios1920-orgchart/iPraktikum 2019-20"))
+        let renderContext = OrgChartRenderContext(orgChart)
+        return renderContext
     }()
 }
 

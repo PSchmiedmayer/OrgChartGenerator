@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import OrgChart
 
 
 struct ManagementRowWidthPreferenceKey: WidthPreferenceKey {}
@@ -16,7 +15,7 @@ struct HeadingHeightPreferenceKey: WidthPreferenceKey {}
 
 
 struct OrgChartRow: View {
-    let row: OrgChartRenderContext.Row
+    let row: Row
     
     @State var height: CGFloat = .zero
     @State var headingHeight: CGFloat = .zero
@@ -77,7 +76,7 @@ struct OrgChartRow: View {
 
 struct OrgChartRow_Previews: PreviewProvider {
     static var previews: some View {
-        OrgChartRow(row: OrgChart.mock.renderContext.rows[3])
+        OrgChartRow(row: OrgChartRenderContext.mock.rows[3])
             .background(Color.white)
     }
 }

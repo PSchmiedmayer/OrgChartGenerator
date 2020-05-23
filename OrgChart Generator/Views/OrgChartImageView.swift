@@ -13,23 +13,10 @@ import Combine
 
 
 struct OrgChartImageView: View {
-    enum ImageState {
-        case faceCropped
-        case cropped
-    }
-    
-    
     @EnvironmentObject var generator: OrgChartGenerator
     
-    var imagePath: URL
     var displayMode: ImageDisplayMode = .scaleToFill
-    
-    @State private var data: Data?
-    @State private var image: NSImage?
-    @State private var imageState: ImageState?
-    @State private var loading: Bool = true
-    @State private var errorMessage: String?
-    @State private var cancellable: AnyCancellable?
+    var imageState: ImageState
     
     
     var body: some View {
@@ -48,69 +35,10 @@ struct OrgChartImageView: View {
             }
         }.onAppear(perform: self.loadImage)
     }
-    
-    func loadImage() {
-        let imageProcessor = ImageProcessor()
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            guard let data = self.data ?? (try? Data(contentsOf: self.imagePath)),
-                  var image = self.image ?? NSImage(data: data) else {
-                DispatchQueue.main.async {
-                    self.errorMessage = """
-                        ⚠️
-                        Could not be loaded
-                    """
-                    self.loading = false
-                }
-                return
-            }
-            
-            let size = CGSize(width: self.generator.settings.imageSize,
-                              height: self.generator.settings.imageSize)
-            
-            if self.generator.settings.cropFaces &&
-               self.imageState != .faceCropped {
-                self.cancellable = imageProcessor
-                    .process(image,
-                             withTransformations: [
-                                 CropSquareCenteredOnFaceTransformation()
-                             ])
-                    .sink(
-                        receiveCompletion: { completion in
-                        
-                        }, receiveValue: { transformedImage in
-                            image = transformedImage
-                        })
-                
-                DispatchQueue.main.async {
-                    self.imageState = .faceCropped
-                    self.data = data
-                    self.image = image
-                    self.loading = false
-                }
-            } else if self.imageState != .cropped {
-                //image = ImageProcessor.process(image: image, withTransformations: [
-                //    .scale(toSize: size)
-                //])
-                DispatchQueue.main.async {
-                    self.imageState = .cropped
-                    self.data = data
-                    self.image = image
-                    self.loading = false
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.data = data
-                    self.image = image
-                    self.loading = false
-                }
-            }
-        }
-    }
 }
 
 struct LoadableImageView_Previews: PreviewProvider {
     static var previews: some View {
-        OrgChartImageView(imagePath: OrgChart.mock.renderContext.topLeft!.members.first!.picture)
+        OrgChartImageView(imageState: OrgChartRenderContext.mock.topLeft!.members.first!.imageState)
     }
 }

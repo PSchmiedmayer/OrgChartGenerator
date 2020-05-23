@@ -10,7 +10,7 @@ import AppKit
 import OrgChart
 
 
-struct TeamHeader {
+class TeamHeader {
     let background: Background
     
     private var imageState: ImageState
@@ -33,7 +33,7 @@ struct TeamHeader {
         self.background = background
     }
     
-    init(_ team: OrgChartTeam) {
+    convenience init(_ team: OrgChartTeam) {
         let background = Background(color: team.background.color.withAlphaComponent(Constants.Team.headerBackgroundAlpha))
         
         self.init(imageState: .notLoaded(team.logo),
@@ -44,7 +44,7 @@ struct TeamHeader {
 
 
 extension TeamHeader: ImageLoadable {
-    mutating func loadImages() {
+    func loadImages() {
         guard case let .notLoaded(pictureURL) = imageState,
               let image = NSImage(contentsOfFile: pictureURL.path) else {
             return
@@ -55,4 +55,20 @@ extension TeamHeader: ImageLoadable {
 }
 
 
-extension TeamHeader: Hashable {}
+extension TeamHeader: Equatable {
+    static func == (lhs: TeamHeader, rhs: TeamHeader) -> Bool {
+        lhs.background == rhs.background
+            && lhs.imageState == rhs.imageState
+            && lhs.fallbackName == rhs.fallbackName
+        
+    }
+}
+
+
+extension TeamHeader: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(background)
+        hasher.combine(imageState)
+        hasher.combine(fallbackName)
+    }
+}

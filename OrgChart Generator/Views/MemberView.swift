@@ -7,17 +7,16 @@
 //
 
 import SwiftUI
-import OrgChart
 import ImageProcessor
 
 
 struct MemberView: View {
-    var member: OrgChartRenderContext.Member
+    var member: Member
     var accentColor: NSColor
     
     var body: some View {
         HStack(alignment: .center, spacing: 8.0) {
-            OrgChartImageView(imagePath: member.picture)
+            OrgChartImageView(imageState: member.imageState)
                 .frame(width: 100, height: 100)
                 .clipped()
                 .printableBorder(accentColor.withAlphaComponent(0.5), width: 1.5)
@@ -38,7 +37,7 @@ struct MemberView: View {
 
 struct MemberView_Previews: PreviewProvider {
     static var previews: some View {
-        MemberView(member: OrgChart.mock.renderContext.topLeft!.members[0],
+        MemberView(member: OrgChartRenderContext.mock.topLeft!.members[0],
                    accentColor: .systemBlue)
             .previewLayout(.sizeThatFits)
     }

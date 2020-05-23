@@ -12,12 +12,12 @@ import OrgChart
 import ImageProcessor
 
 
-struct Member {
+class Member {
     let id: UUID = UUID()
     let name: String
     let role: String?
     private(set) var imageState: ImageState
-    private var cancellable: AnyCancellable
+    private var cancellable: AnyCancellable?
     
     
     var picture: NSImage? {
@@ -36,7 +36,7 @@ struct Member {
         self.imageState = imageState
     }
     
-    init(_ orgChartMember: OrgChartMember) {
+    convenience init(_ orgChartMember: OrgChartMember) {
         self.init(name: orgChartMember.name,
                   role: orgChartMember.role,
                   imageState: .notLoaded(orgChartMember.picture))
@@ -45,7 +45,7 @@ struct Member {
 
 
 extension Member: ImageHandler {
-    mutating func loadImages() {
+    func loadImages() {
         guard case let .notLoaded(pictureURL) = imageState,
               let image = NSImage(contentsOfFile: pictureURL.path) else {
             return
@@ -54,7 +54,7 @@ extension Member: ImageHandler {
         imageState = .loaded(image)
     }
     
-    mutating func cropImages(cropFaces: Bool, size: CGSize) {
+    func cropImages(cropFaces: Bool, size: CGSize) {
         guard case let .loaded(image) = imageState else {
             return
         }
@@ -87,7 +87,25 @@ extension Member: ImageHandler {
     }
 }
 
-extension Member: Hashable { }
+extension Member: Equatable {
+    static func == (lhs: Member, rhs: Member) -> Bool {
+        lhs.id == rhs.id
+            && lhs.name == rhs.name
+            && lhs.role == rhs.role
+            && lhs.imageState == rhs.imageState
+        
+    }
+}
+
+
+extension Member: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(name)
+        hasher.combine(role)
+        hasher.combine(imageState)
+    }
+}
 
 
 extension Member: Identifiable { }

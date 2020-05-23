@@ -7,15 +7,14 @@
 //
 
 import SwiftUI
-import OrgChart
 
 
 struct MemberRow: View {
-    let row: OrgChartRenderContext.Row
+    let row: Row
     
     var body: some View {
         HStack(alignment: .top, spacing: 32) {
-            ForEach(row.teamMembers, id: \.hashValue) { teamMembers in
+            ForEach(row.teams, id: \.hashValue) { teamMembers in
                 VStack(spacing: 0) {
                     self.row.heading.map { heading in
                         Text(heading)
@@ -40,7 +39,7 @@ struct MemberRow: View {
 
 struct MemberRow_Previews: PreviewProvider {
     static var previews: some View {
-        MemberRow(row: OrgChart.mock.renderContext.rows[3])
+        MemberRow(row: OrgChartRenderContext.mock.rows[3])
             .background(Color.white)
     }
 }

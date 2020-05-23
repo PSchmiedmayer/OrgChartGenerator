@@ -48,9 +48,6 @@ class OrgChartGenerator: ObservableObject {
     
     
     init(path: URL? = nil, settings: OrgChartGeneratorSettings? = nil) {
-        if let path = path, let orgChart = try? OrgChart(fromDirectory: path) {
-            self.state = .pathProvided(path: path, orgChart: orgChart)
-        }
         self.settings = settings ?? OrgChartGeneratorSettings()
         
         self.progress = Progress(totalUnitCount: 100)
@@ -60,6 +57,10 @@ class OrgChartGenerator: ObservableObject {
                 self.fractionCompleted = fractionCompleted
             }
             .store(in: &cancellables)
+        
+        if let path = path {
+            self.readOrgChart(from: path)
+        }
     }
     
     deinit {
@@ -133,7 +134,7 @@ class OrgChartGenerator: ObservableObject {
                     self.progress.resignCurrent()
                 }
                 
-                guard let path = self.state.path, var renderContext = self.state.renderContext else {
+                guard let path = self.state.path, let renderContext = self.state.renderContext else {
                     preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an render context")
                 }
                 
@@ -151,7 +152,7 @@ class OrgChartGenerator: ObservableObject {
     func cropImages() -> AnyPublisher<Void, Never> {
         Future { promise in
             DispatchQueue.global(qos: .userInitiated).async {
-                guard let path = self.state.path, var renderContext = self.state.renderContext else {
+                guard let path = self.state.path, let renderContext = self.state.renderContext else {
                     preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an render context")
                 }
                 

@@ -27,21 +27,6 @@ struct ControlView: View {
     @State var cancellable: AnyCancellable?
     
     
-    var pathBinding: Binding<String> {
-        Binding(
-            get: {
-                self.generator.state.path?.path ?? ""
-            }, set: { newValue in
-                let path = URL(fileURLWithPath: newValue)
-                guard path.isFileURL, path.hasDirectoryPath else {
-                    return
-                }
-                
-                self.generator.state = .pathProvided(path: path)
-            }
-        )
-    }
-    
     var disableExportButton: Bool {
         if case .initialized = generator.state {
             return true
@@ -66,6 +51,7 @@ struct ControlView: View {
         }
     }
     
+    
     func selectDirectory() {
         DispatchQueue.main.async {
             let panel = NSOpenPanel()
@@ -79,7 +65,7 @@ struct ControlView: View {
                 }
                 
                 DispatchQueue.main.async {
-                    self.generator.state = .pathProvided(path: path)
+                    self.generator.readOrgChart(from: path)
                     self.generateAction()
                 }
             }
@@ -87,9 +73,13 @@ struct ControlView: View {
     }
     
     func generateAction() {
-        cancellable = generator.parseOrgChart()
-            .mapError { error in
-                GeneratorError(error)
+        cancellable = generator
+            .parseOrgChart()
+            .flatMap {
+                self.generator.loadImages()
+            }
+            .flatMap {
+                self.generator.cropImages()
             }
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { completion in

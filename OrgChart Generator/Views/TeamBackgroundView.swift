@@ -11,12 +11,14 @@ import OrgChart
 
 
 struct TeamBackgroundView: View {
-    var teamStyles: [OrgChartRenderContext.Style]
+    var teams: [Team]
+    
     @Binding var managementWidth: CGFloat
     
+    
     var body: some View {
-        TeamView(managementWidth: $managementWidth, data: teamStyles) { teamStyle in
-            PrintableRectangle(color: teamStyle.background.color.withAlphaComponent(0.15))
+        TeamView(managementWidth: $managementWidth, data: teams) { team in
+            PrintableRectangle(color: team.background.color)
         }
     }
 }
@@ -25,7 +27,7 @@ struct TeamBackgroundView_Previews: PreviewProvider {
     @State static var managementWidth: CGFloat = 64
     
     static var previews: some View {
-        TeamBackgroundView(teamStyles: OrgChart.mock.renderContext.teamStyles,
+        TeamBackgroundView(teams: OrgChartRenderContext.mock.teams,
                            managementWidth: $managementWidth)
     }
 }

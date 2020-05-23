@@ -11,7 +11,7 @@ import AppKit
 
 struct Background {
     let color: NSColor
-    let border: Border? = nil
+    let border: Border?
     
     init(color: NSColor, border: Border? = nil) {
         self.color = color

@@ -24,7 +24,7 @@ struct Team {
 
 
 extension Team: ImageLoadable {
-    mutating func loadImages() {
+    func loadImages() {
         header.loadImages()
     }
 }

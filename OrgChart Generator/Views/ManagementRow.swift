@@ -7,12 +7,11 @@
 //
 
 import SwiftUI
-import OrgChart
 
 
 struct ManagementRow: View {
     @Binding var headingHeight: CGFloat
-    let row: OrgChartRenderContext.Row
+    let row: Row
     
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
@@ -33,12 +32,13 @@ struct ManagementRow: View {
     }
 }
 
+
 struct ManagementRow_Previews: PreviewProvider {
     @State static var headingHeight: CGFloat = 64
     
     static var previews: some View {
         ManagementRow(headingHeight: $headingHeight,
-                      row: OrgChart.mock.renderContext.rows[3])
+                      row: OrgChartRenderContext.mock.rows[3])
             .background(Color.white)
     }
 }

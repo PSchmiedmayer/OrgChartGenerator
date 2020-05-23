@@ -24,7 +24,7 @@ struct OrgChartView: View {
 
 struct OrgChartView_Previews: PreviewProvider {
     static var previews: some View {
-        OrgChartView(context: OrgChart.mock.renderContext)
+        OrgChartView(context: OrgChartRenderContext.mock)
             .background(Color(.white))
     }
 }
