@@ -21,6 +21,7 @@ struct OrgChartImageView: View {
     
     var body: some View {
         ZStack {
+            
             if image == nil {
                 Rectangle()
                     .foregroundColor(Color(.lightGray))

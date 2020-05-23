@@ -21,12 +21,7 @@ class Member {
     
     
     var picture: NSImage? {
-        switch imageState {
-        case .notLoaded, .cloudNotBeLoaded:
-            return nil
-        case let .loaded(image), let .cropped(image):
-            return image
-        }
+        imageState.image
     }
     
     
@@ -46,34 +41,13 @@ class Member {
 
 extension Member: ImageHandler {
     func loadImages() {
-        guard case let .notLoaded(pictureURL) = imageState,
-              let image = NSImage(contentsOfFile: pictureURL.path) else {
-            return
+        if case let .success(image) = imageState.loadImage() {
+            self.imageState = .loaded(image)
         }
-        
-        imageState = .loaded(image)
     }
     
     func cropImages(cropFaces: Bool, size: CGSize) {
-        guard case let .loaded(image) = imageState else {
-            return
-        }
-        
-        let transformations: [ImageTransformation]
-        if cropFaces {
-            transformations = [
-                CropSquareCenteredOnFaceTransformation(),
-                SizeTransformation(size)
-            ]
-        } else {
-            transformations = [
-                SizeTransformation(size)
-            ]
-        }
-        
-        cancellable = ImageProcessor()
-            .process(image, withTransformations: transformations)
-            .receive(on: RunLoop.main)
+        self.cancellable = self.imageState.cropImages(cropFaces: cropFaces, size: size)
             .sink(
                 receiveCompletion: { completion in
                     switch completion {
