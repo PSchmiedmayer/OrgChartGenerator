@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
     @ObservedObject var generator = OrgChartGenerator()
     @State var renderAsPDF: Bool = false

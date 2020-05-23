@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct PrintableRectangle: View {
-    @State
     var color: NSColor
 
     var body: some View {

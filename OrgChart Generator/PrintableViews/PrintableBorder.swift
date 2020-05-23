@@ -10,8 +10,8 @@ import SwiftUI
 
 
 struct PrintableBorder: View {
-    @State var color: NSColor
-    @State var width: CGFloat
+    var color: NSColor
+    var width: CGFloat
 
 
     var body: some View {

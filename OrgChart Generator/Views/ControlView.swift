@@ -19,11 +19,19 @@ struct GeneratorError: Error {
     }
 }
 
-
 struct ControlView: View {
+    struct ErrorMessage: Hashable, Identifiable {
+        var id: Int {
+            hashValue
+        }
+        
+        let message: String
+    }
+    
     @EnvironmentObject var generator: OrgChartGenerator
     @State var cropFaces: Bool = true
     @Binding var renderPDF: Bool
+    @State var errorMessage: ErrorMessage?
     @State var cancellable: AnyCancellable?
     
     
@@ -48,6 +56,8 @@ struct ControlView: View {
             }) {
                 Text("Export OrgChart as PDF")
             }.disabled(disableExportButton)
+        }.alert(item: $errorMessage) { errorMessage in
+            Alert(title: Text(errorMessage.message))
         }
     }
     
@@ -65,27 +75,33 @@ struct ControlView: View {
                 }
                 
                 DispatchQueue.main.async {
-                    self.generator.readOrgChart(from: path)
-                    self.generateAction()
+                    self.generateAction(path)
                 }
             }
         }
     }
     
-    func generateAction() {
+    func generateAction(_ path: URL) {
         cancellable = generator
-            .parseOrgChart()
+            .readOrgChart(from: path)
+            .flatMap {
+                self.generator.parseOrgChart()
+                    .setFailureType(to: OrgChartError.self)
+            }
             .flatMap {
                 self.generator.loadImages()
+                    .setFailureType(to: OrgChartError.self)
             }
             .flatMap {
                 self.generator.cropImages()
+                    .setFailureType(to: OrgChartError.self)
             }
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { completion in
                     switch completion {
                     case .finished: break
-                    case let .failure(error): print(error)
+                    case let .failure(error):
+                        self.errorMessage = ErrorMessage(message: error.localizedDescription)
                     }
                 }, receiveValue: { })
     }

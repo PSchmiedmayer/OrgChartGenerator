@@ -62,6 +62,12 @@ class OrgChartGenerator: ObservableObject {
         if let path = path {
             self.readOrgChart(from: path)
         }
+        
+        $state
+            .sink { newState in
+                print(newState)
+            }
+            .store(in: &cancellables)
     }
     
     deinit {
@@ -83,7 +89,7 @@ class OrgChartGenerator: ObservableObject {
                 
                 do {
                     let orgChart = try OrgChart(fromDirectory: path)
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.sync {
                         self.state = .pathProvided(path: path, orgChart: orgChart)
                     }
                     promise(.success(Void()))
@@ -116,7 +122,7 @@ class OrgChartGenerator: ObservableObject {
                 }
                 
                 let renderContext = OrgChartRenderContext(orgChart)
-                DispatchQueue.main.async {
+                DispatchQueue.main.sync {
                     self.state = .orgChartParsed(path: path, renderContext: renderContext)
                 }
                 promise(.success(Void()))
@@ -140,7 +146,7 @@ class OrgChartGenerator: ObservableObject {
                 }
                 
                 renderContext.loadImages()
-                DispatchQueue.main.async {
+                DispatchQueue.main.sync {
                     self.state = .imagesLoaded(path: path, renderContext: renderContext)
                 }
                 promise(.success(Void()))
@@ -165,7 +171,7 @@ class OrgChartGenerator: ObservableObject {
                 
                 renderContext.cropImages(cropFaces: self.settings.cropFaces,
                                          size: CGSize(width: self.settings.imageSize, height: self.settings.imageSize))
-                DispatchQueue.main.async {
+                DispatchQueue.main.sync {
                     self.state = .imagesCropped(path: path, renderContext: renderContext)
                 }
                 promise(.success(Void()))
@@ -191,7 +197,7 @@ class OrgChartGenerator: ObservableObject {
                 let pdfPath = path.appendingPathComponent("\(self.settings.orgChartName).pdf")
                 do {
                     try pdf.write(to: pdfPath, options: .atomic)
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.sync {
                         self.state = .orgChartRendered(path: path, renderContext: renderContext, pdf: pdf)
                     }
                     promise(.success(Void()))

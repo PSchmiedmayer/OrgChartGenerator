@@ -17,13 +17,13 @@ enum Constants {
     
     enum Row {
         static let borderWidth: CGFloat = 3
-        static let borderAlpha: CGFloat = 0.5
+        static let borderAlpha: CGFloat = 0.75
         static let backgroundAlpha: CGFloat = 0.15
     }
     
     enum Box {
         static let borderWidth: CGFloat = 3
-        static let borderAlpha: CGFloat = 0.5
+        static let borderAlpha: CGFloat = 0.75
         static let backgroundAlpha: CGFloat = 0.15
     }
 }
