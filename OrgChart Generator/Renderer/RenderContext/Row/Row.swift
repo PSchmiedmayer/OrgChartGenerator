@@ -13,11 +13,13 @@ import OrgChart
 struct Row {
     typealias Team = [Member]
     
+    
     let id: Int
     let heading: String?
     let background: Background?
-    let teams: [Team]
-    let management: Management?
+    private(set) var teams: [Team]
+    private(set) var management: Management?
+    
     
     init(id: Int, heading: String? = nil, background: Background? = nil, teams: [Team], management: Management? = nil) {
         self.id = id
@@ -57,7 +59,7 @@ struct Row {
             .map { team -> [Member] in
                 guard let members = team.members[position] else {
                     // Add a placeholder
-                    return [Member(name: "...")]
+                    return [Member(name: "...", imageState: .cloudNotBeLoaded)]
                 }
                 return members
                     .map { orgChartMember in
@@ -65,11 +67,22 @@ struct Row {
                     }
             }
         
+        
         self.init(id: id,
                   heading: crossTeamRole?.heading,
                   background: background,
                   teams: teams,
                   management: management)
+    }
+    
+    
+    mutating func loadImages() {
+        for teamIndex in teams.indices {
+            for index in teams[teamIndex].indices {
+                teams[teamIndex][index].loadImage()
+            }
+        }
+        management?.loadImages()
     }
 }
 

@@ -12,13 +12,18 @@ import OrgChart
 
 struct Team {
     let id: UUID = UUID()
-    let header: TeamHeader
+    private(set) var header: TeamHeader
     let background: Background
     
     
     init(_ team: OrgChartTeam) {
         self.header = TeamHeader(team)
         self.background = Background(color: team.background.color.withAlphaComponent(Constants.Team.backgroundAlpha))
+    }
+    
+    
+    mutating func loadImages() {
+        header.loadImages()
     }
 }
 

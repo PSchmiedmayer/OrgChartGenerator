@@ -11,23 +11,44 @@ import OrgChart
 
 
 struct TeamHeader {
-    let content: HeaderContent
     let background: Background
     
-    init(content: HeaderContent, background: Background) {
-        self.content = content
+    private var imageState: ImageState
+    private let fallbackName: String
+    
+    
+    var content: HeaderContent {
+        switch imageState {
+        case .cloudNotBeLoaded, .notLoaded:
+            return .text(fallbackName)
+        case let .cropped(image), let .loaded(image):
+            return .image(image)
+        }
+    }
+    
+    
+    init(imageState: ImageState, fallbackName: String, background: Background) {
+        self.imageState = imageState
+        self.fallbackName = fallbackName
         self.background = background
     }
     
     init(_ team: OrgChartTeam) {
         let background = Background(color: team.background.color.withAlphaComponent(Constants.Team.headerBackgroundAlpha))
         
-        guard let image = NSImage(contentsOfFile: team.logo.path) else {
-            self.init(content: .text(team.name), background: background)
+        self.init(imageState: .notLoaded(team.logo),
+                  fallbackName: team.name,
+                  background: background)
+    }
+    
+    
+    mutating func loadImages() {
+        guard case let .notLoaded(pictureURL) = imageState,
+              let image = NSImage(contentsOfFile: pictureURL.path) else {
             return
         }
         
-        self.init(content: .image(image), background: background)
+        self.imageState = .loaded(image)
     }
 }
 

@@ -13,7 +13,8 @@ struct Box {
     let id: UUID = UUID()
     let title: String?
     let background: Background?
-    let members: [Member]
+    private(set) var members: [Member]
+    
     
     init(title: String? = nil, background: Background? = nil, members: [Member]) {
         self.title = title
@@ -31,6 +32,13 @@ struct Box {
         self.init(title: crossTeamRole.title,
                   background: background,
                   members: members)
+    }
+    
+    
+    mutating func loadImages() {
+        for index in members.indices {
+            members[index].loadImage()
+        }
     }
 }
 

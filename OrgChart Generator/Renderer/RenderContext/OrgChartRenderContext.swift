@@ -12,13 +12,13 @@ import AppKit
 
 struct OrgChartRenderContext {
     let title: String
-    let topLeft: Box?
-    let topRight: Box?
-    let teams: [Team]
-    let rows: [Row]
+    private(set) var topLeft: Box?
+    private(set) var topRight: Box?
+    private(set) var teams: [Team]
+    private(set) var rows: [Row]
     
     
-    fileprivate init(_ orgChart: OrgChart) {
+    init(_ orgChart: OrgChart) {
         self.title = orgChart.title
         
         // Top Left
@@ -47,5 +47,20 @@ struct OrgChartRenderContext {
             .map { position in
                 Row(orgChart, position: position)
             }
+    }
+    
+    mutating func loadImages() {
+        topLeft?.loadImages()
+        topRight?.loadImages()
+        for index in teams.indices {
+            teams[index].loadImages()
+        }
+        for index in rows.indices {
+            rows[index].loadImages()
+        }
+    }
+    
+    mutating func cropImages(cropFaces: Bool) {
+        fatalError("Not implemented")
     }
 }

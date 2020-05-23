@@ -11,11 +11,19 @@ import Foundation
 
 struct Management {
     let title: String?
-    let members: [Member]
+    private(set) var members: [Member]
+    
     
     init(title: String? = nil, members: [Member]) {
         self.title = title
         self.members = members
+    }
+    
+    
+    mutating func loadImages() {
+        for index in members.indices {
+            members[index].loadImage()
+        }
     }
 }
 

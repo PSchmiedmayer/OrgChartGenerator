@@ -13,21 +13,40 @@ import OrgChart
 struct Member {
     let id: UUID = UUID()
     let name: String
-    let picture: NSImage?
     let role: String?
+    private(set) var imageState: ImageState
     
     
-    init(name: String, picture: NSImage? = nil, role: String? = nil) {
+    var picture: NSImage? {
+        switch imageState {
+        case .notLoaded, .cloudNotBeLoaded:
+            return nil
+        case let .loaded(image), let .cropped(image):
+            return image
+        }
+    }
+    
+    
+    init(name: String, role: String? = nil, imageState: ImageState) {
         self.name = name
-        self.picture = picture
         self.role = role
+        self.imageState = imageState
     }
     
     init(_ orgChartMember: OrgChartMember) {
         self.init(name: orgChartMember.name,
-                  picture: NSImage(contentsOfFile: orgChartMember.picture.path),
-                  role: orgChartMember.role)
+                  role: orgChartMember.role,
+                  imageState: .notLoaded(orgChartMember.picture))
+    }
+    
+    
+    mutating func loadImage() {
+        guard case let .notLoaded(pictureURL) = imageState,
+              let image = NSImage(contentsOfFile: pictureURL.path) else {
+            return
+        }
         
+        imageState = .loaded(image)
     }
 }
 
