@@ -14,12 +14,12 @@ public struct SizeTransformation: ImageTransformation {
     public let size: CGSize
     
     
-    init(_ size: CGSize) {
+    public init(_ size: CGSize) {
         self.size = size
     }
     
-    init(_ size: Int) {
-        self.init(CGSize(width: size, height: size))
+    public init(square: Int) {
+        self.init(CGSize(width: square, height: square))
     }
     
     

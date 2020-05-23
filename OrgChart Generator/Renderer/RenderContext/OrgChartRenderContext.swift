@@ -10,7 +10,7 @@ import OrgChart
 import AppKit
 
 
-struct OrgChartRenderContext {
+struct OrgChartRenderContext: ImageLoadable {
     let title: String
     private(set) var topLeft: Box?
     private(set) var topRight: Box?
@@ -52,15 +52,22 @@ struct OrgChartRenderContext {
     mutating func loadImages() {
         topLeft?.loadImages()
         topRight?.loadImages()
+        
         for index in teams.indices {
             teams[index].loadImages()
         }
+        
         for index in rows.indices {
             rows[index].loadImages()
         }
     }
     
-    mutating func cropImages(cropFaces: Bool) {
-        fatalError("Not implemented")
+    mutating func cropImages(cropFaces: Bool, size: CGSize) {
+        topLeft?.cropImages(cropFaces: cropFaces, size: size)
+        topRight?.cropImages(cropFaces: cropFaces, size: size)
+        
+        for index in rows.indices {
+            rows[index].cropImages(cropFaces: cropFaces, size: size)
+        }
     }
 }

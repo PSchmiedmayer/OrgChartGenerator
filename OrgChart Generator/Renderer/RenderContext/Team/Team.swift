@@ -20,8 +20,10 @@ struct Team {
         self.header = TeamHeader(team)
         self.background = Background(color: team.background.color.withAlphaComponent(Constants.Team.backgroundAlpha))
     }
-    
-    
+}
+
+
+extension Team: ImageLoadable {
     mutating func loadImages() {
         header.loadImages()
     }

@@ -18,11 +18,19 @@ struct Management {
         self.title = title
         self.members = members
     }
-    
-    
+}
+
+
+extension Management: ImageHandler {
     mutating func loadImages() {
         for index in members.indices {
-            members[index].loadImage()
+            members[index].loadImages()
+        }
+    }
+    
+    mutating func cropImages(cropFaces: Bool, size: CGSize) {
+        for index in members.indices {
+            members[index].cropImages(cropFaces: cropFaces, size: size)
         }
     }
 }

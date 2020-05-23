@@ -7,7 +7,9 @@
 //
 
 import AppKit
+import Combine
 import OrgChart
+import ImageProcessor
 
 
 struct Member {
@@ -15,6 +17,7 @@ struct Member {
     let name: String
     let role: String?
     private(set) var imageState: ImageState
+    private var cancellable: AnyCancellable
     
     
     var picture: NSImage? {
@@ -38,9 +41,11 @@ struct Member {
                   role: orgChartMember.role,
                   imageState: .notLoaded(orgChartMember.picture))
     }
-    
-    
-    mutating func loadImage() {
+}
+
+
+extension Member: ImageHandler {
+    mutating func loadImages() {
         guard case let .notLoaded(pictureURL) = imageState,
               let image = NSImage(contentsOfFile: pictureURL.path) else {
             return
@@ -48,8 +53,39 @@ struct Member {
         
         imageState = .loaded(image)
     }
+    
+    mutating func cropImages(cropFaces: Bool, size: CGSize) {
+        guard case let .loaded(image) = imageState else {
+            return
+        }
+        
+        let transformations: [ImageTransformation]
+        if cropFaces {
+            transformations = [
+                CropSquareCenteredOnFaceTransformation(),
+                SizeTransformation(size)
+            ]
+        } else {
+            transformations = [
+                SizeTransformation(size)
+            ]
+        }
+        
+        cancellable = ImageProcessor()
+            .process(image, withTransformations: transformations)
+            .receive(on: RunLoop.main)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .finished: break
+                    case let .failure(error):
+                        print(error)
+                    }
+                }, receiveValue: { image in
+                    self.imageState = .cropped(image)
+                })
+    }
 }
-
 
 extension Member: Hashable { }
 

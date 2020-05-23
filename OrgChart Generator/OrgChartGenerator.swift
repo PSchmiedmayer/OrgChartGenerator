@@ -161,7 +161,8 @@ class OrgChartGenerator: ObservableObject {
                     self.progress.resignCurrent()
                 }
                 
-                renderContext.cropImages(cropFaces: self.settings.cropFaces)
+                renderContext.cropImages(cropFaces: self.settings.cropFaces,
+                                         size: CGSize(width: self.settings.imageSize, height: self.settings.imageSize))
                 DispatchQueue.main.async {
                     self.state = .imagesCropped(path: path, renderContext: renderContext)
                 }

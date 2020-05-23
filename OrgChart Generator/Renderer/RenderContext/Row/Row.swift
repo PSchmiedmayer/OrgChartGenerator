@@ -74,18 +74,31 @@ struct Row {
                   teams: teams,
                   management: management)
     }
-    
-    
+}
+
+
+extension Row: ImageHandler {
     mutating func loadImages() {
         for teamIndex in teams.indices {
             for index in teams[teamIndex].indices {
-                teams[teamIndex][index].loadImage()
+                teams[teamIndex][index].loadImages()
             }
         }
         management?.loadImages()
     }
+    
+    mutating func cropImages(cropFaces: Bool, size: CGSize) {
+        for teamIndex in teams.indices {
+            for index in teams[teamIndex].indices {
+                teams[teamIndex][index].cropImages(cropFaces: cropFaces, size: size)
+            }
+        }
+        management?.cropImages(cropFaces: cropFaces, size: size)
+    }
 }
 
+
 extension Row: Hashable { }
+
 
 extension Row: Identifiable { }

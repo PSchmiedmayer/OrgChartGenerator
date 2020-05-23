@@ -40,8 +40,10 @@ struct TeamHeader {
                   fallbackName: team.name,
                   background: background)
     }
-    
-    
+}
+
+
+extension TeamHeader: ImageLoadable {
     mutating func loadImages() {
         guard case let .notLoaded(pictureURL) = imageState,
               let image = NSImage(contentsOfFile: pictureURL.path) else {

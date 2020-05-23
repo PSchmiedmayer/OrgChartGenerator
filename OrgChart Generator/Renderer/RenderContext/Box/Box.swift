@@ -33,11 +33,19 @@ struct Box {
                   background: background,
                   members: members)
     }
-    
-    
+}
+
+
+extension Box: ImageHandler {
     mutating func loadImages() {
         for index in members.indices {
-            members[index].loadImage()
+            members[index].loadImages()
+        }
+    }
+    
+    mutating func cropImages(cropFaces: Bool, size: CGSize) {
+        for index in members.indices {
+            members[index].cropImages(cropFaces: cropFaces, size: size)
         }
     }
 }
