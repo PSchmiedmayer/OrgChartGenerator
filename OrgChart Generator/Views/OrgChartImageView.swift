@@ -21,20 +21,15 @@ struct OrgChartImageView: View {
     
     var body: some View {
         ZStack {
-            
-            if image == nil {
+            if imageState.image == nil {
                 Rectangle()
                     .foregroundColor(Color(.lightGray))
             }
-            ActivityIndicator(loading: $loading)
-            errorMessage.map { errorMessage in
-                Text(errorMessage)
-                    .multilineTextAlignment(.center)
-            }
-            self.image.map { image in
+            ActivityIndicator(loading: generator.loading)
+            imageState.image.map { image in
                 PrintableImage(image: image, mode: displayMode)
             }
-        }.onAppear(perform: self.loadImage)
+        }
     }
 }
 

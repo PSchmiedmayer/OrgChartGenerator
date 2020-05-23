@@ -40,6 +40,7 @@ class OrgChartGeneratorSettings: ObservableObject {
 
 class OrgChartGenerator: ObservableObject {
     @Published var state: OrgChartGeneratorState = .initialized
+    @Published var loading: Bool = false
     @Published var fractionCompleted: Double = 0.0
     @Published var settings: OrgChartGeneratorSettings
     

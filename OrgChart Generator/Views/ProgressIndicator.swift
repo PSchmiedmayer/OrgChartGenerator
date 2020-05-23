@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ActivityIndicator: NSViewRepresentable {
-    @Binding var loading: Bool
+    var loading: Bool
     
 
     func makeNSView(context: Context) -> NSProgressIndicator {
