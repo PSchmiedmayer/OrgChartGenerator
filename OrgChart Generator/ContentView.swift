@@ -7,11 +7,13 @@
 //
 
 import SwiftUI
+import Combine
 
 
 struct ContentView: View {
     @ObservedObject var generator = OrgChartGenerator()
     @State var renderAsPDF: Bool = false
+    @State var pdfCancellable: AnyCancellable?
     
     
     var unsafeRenderContextBinding: Binding<OrgChartRenderContext> {
@@ -69,7 +71,8 @@ struct ContentView: View {
                 ScrollView([.horizontal, .vertical], showsIndicators: true) {
                     PDFExportView(view: OrgChartView(context: renderContext),
                                   renderAsPDF: $renderAsPDF) { pdf in
-                        self.generator.rendered(pdf)
+                        self.pdfCancellable = self.generator.rendered(pdf)
+                            .sink(receiveCompletion: { _ in }, receiveValue: { })
                     }
                 }
             }

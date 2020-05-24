@@ -14,9 +14,10 @@ import Combine
 class OrgChartGeneratorSettings: ObservableObject {
     private enum Defaults {
         static let orgChartName: String = "OrgChart"
-        static let imageSize: Int = 500
+        static let imageSize: Int = 250
         static let compressionRate: Double = 0.6
         static let cropFaces: Bool = true
+        static let exitOnPDFExport: Bool = false
     }
     
     
@@ -24,16 +25,19 @@ class OrgChartGeneratorSettings: ObservableObject {
     @Published var imageSize: Int
     @Published var compressionRate: Double
     @Published var cropFaces: Bool
+    @Published var exitOnPDFExport: Bool
     
     
     init(orgChartName: String = Defaults.orgChartName,
         imageSize: Int = Defaults.imageSize,
         compressionRate: Double = Defaults.compressionRate,
-        cropFaces: Bool = Defaults.cropFaces) {
+        cropFaces: Bool = Defaults.cropFaces,
+        exitOnPDFExport: Bool = Defaults.exitOnPDFExport) {
         self.orgChartName = orgChartName
         self.imageSize = imageSize
         self.compressionRate = compressionRate
         self.cropFaces = cropFaces
+        self.exitOnPDFExport = exitOnPDFExport
     }
 }
 
@@ -237,6 +241,11 @@ class OrgChartGenerator: ObservableObject {
         }.receive(on: RunLoop.main)
             .map {
                 self.loading = false
+            }
+            .map {
+                if self.settings.exitOnPDFExport {
+                    exit(0)
+                }
             }
             .eraseToAnyPublisher()
     }

@@ -17,6 +17,7 @@ class Member {
     let name: String
     let role: String?
     var imageState: ImageState
+    var loading: Bool = false
     
     
     var picture: NSImage? {
@@ -40,19 +41,22 @@ class Member {
 
 extension Member: ImageHandler {
     func loadImages() {
+        loading = true
         if case let .success(image) = imageState.loadImage() {
             self.imageState = .loaded(image)
+            loading = false
         }
     }
     
     func cropImages(cropFaces: Bool, size: CGSize)  -> AnyPublisher<Void, Never> {
-        Just(Void())
+        loading = true
+        return Just(Void())
             .flatMap { _ in
                 self.imageState
                     .cropImages(cropFaces: cropFaces, size: size)
-                    // .receive(on: RunLoop.main)
                     .map { image in
                         self.imageState = .cropped(image)
+                        self.loading = false
                     }
                     .replaceError(with: Void())
             }

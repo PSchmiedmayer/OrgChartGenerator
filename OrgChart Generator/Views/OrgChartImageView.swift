@@ -19,7 +19,7 @@ struct OrgChartImageView: View {
     @Binding var imageState: ImageState
     
     
-    var loading: Bool {
+    var displayLoading: Bool {
         switch imageState {
         case .cropped, .cloudNotBeLoaded:
             return false
@@ -34,14 +34,15 @@ struct OrgChartImageView: View {
                 Rectangle()
                     .foregroundColor(Color(.lightGray))
             }
-            ActivityIndicator(loading: generator.loading)
             PrintableImage(imageState: $imageState, mode: displayMode)
+            ActivityIndicator(loading: displayLoading)
         }
     }
 }
 
 struct OrgChartImageView_Previews: PreviewProvider {
     @State static var imageState = OrgChartRenderContext.mock.topLeft!.members.first!.imageState
+    @State static var loading = true
     
     static var previews: some View {
         OrgChartImageView(imageState: $imageState)

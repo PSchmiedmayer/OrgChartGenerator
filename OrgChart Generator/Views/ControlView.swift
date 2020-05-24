@@ -103,7 +103,9 @@ struct ControlView: View {
                     case let .failure(error):
                         self.errorMessage = ErrorMessage(message: error.localizedDescription)
                     }
-                }, receiveValue: { })
+                }, receiveValue: {
+                    self.renderPDF = true
+                })
     }
 }
 
