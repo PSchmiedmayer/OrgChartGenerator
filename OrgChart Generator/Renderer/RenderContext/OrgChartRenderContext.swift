@@ -12,10 +12,10 @@ import AppKit
 
 struct OrgChartRenderContext: ImageLoadable {
     let title: String
-    private(set) var topLeft: Box?
-    private(set) var topRight: Box?
-    private(set) var teams: [Team]
-    private(set) var rows: [Row]
+    var topLeft: Box?
+    var topRight: Box?
+    var teams: [Team]
+    var rows: [Row]
     
     
     init(_ orgChart: OrgChart) {

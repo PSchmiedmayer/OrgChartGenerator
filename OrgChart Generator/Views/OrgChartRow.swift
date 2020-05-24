@@ -15,7 +15,7 @@ struct HeadingHeightPreferenceKey: WidthPreferenceKey {}
 
 
 struct OrgChartRow: View {
-    let row: Row
+    @Binding var row: Row
     
     @State var height: CGFloat = .zero
     @State var headingHeight: CGFloat = .zero
@@ -25,13 +25,13 @@ struct OrgChartRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .top, spacing: 32) {
-                MemberRow(row: row)
+                MemberRow(row: $row)
                     .onPreferenceChange(HeadingHeightPreferenceKey.self) { headingHeight in
                         self.headingHeight = headingHeight
                     }
                 HStack(alignment: .top, spacing: 0) {
                     ManagementRow(headingHeight: $headingHeight,
-                                  row: row)
+                                  row: $row)
                         .onPreferenceChange(ManagementRowWidthPreferenceKey.self) { managementRowWidth in
                             self.managementRowWidth = managementRowWidth
                         }
@@ -75,8 +75,10 @@ struct OrgChartRow: View {
 }
 
 struct OrgChartRow_Previews: PreviewProvider {
+    @State static var row: Row = OrgChartRenderContext.mock.rows[3]
+    
     static var previews: some View {
-        OrgChartRow(row: OrgChartRenderContext.mock.rows[3])
+        OrgChartRow(row: $row)
             .background(Color.white)
     }
 }

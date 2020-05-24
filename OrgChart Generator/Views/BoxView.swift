@@ -11,7 +11,7 @@ import OrgChart
 
 
 struct BoxView: View {
-    @State var box: Box
+    @Binding var box: Box
     
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
@@ -33,8 +33,10 @@ struct BoxView: View {
 }
 
 struct BoxView_Previews: PreviewProvider {
+    @State static var box: Box = OrgChartRenderContext.mock.topLeft!
+    
     static var previews: some View {
-        BoxView(box: OrgChartRenderContext.mock.topLeft!)
+        BoxView(box: $box)
             .previewLayout(.sizeThatFits)
     }
 }

@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ManagementRow: View {
     @Binding var headingHeight: CGFloat
-    @State var row: Row
+    @Binding var row: Row
     
     
     var unsafeManagementBinding: Binding<Management> {
@@ -56,11 +56,12 @@ struct ManagementBox: View {
 
 
 struct ManagementRow_Previews: PreviewProvider {
+    @State static var row: Row = OrgChartRenderContext.mock.rows[3]
     @State static var headingHeight: CGFloat = 64
     
     static var previews: some View {
         ManagementRow(headingHeight: $headingHeight,
-                      row: OrgChartRenderContext.mock.rows[3])
+                      row: $row)
             .background(Color.white)
     }
 }

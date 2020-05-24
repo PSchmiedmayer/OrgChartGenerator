@@ -51,12 +51,14 @@ enum OrgChartGeneratorState {
     }
     
     var renderContext: OrgChartRenderContext? {
-        switch self {
-        case let .orgChartParsed(_, renderContext), let .imagesLoaded(_, renderContext), let .imagesCropped(_, renderContext),
-             let .orgChartRendered(_, renderContext, _):
-            return renderContext
-        case .initialized, .pathProvided:
-            return nil
+        get {
+            switch self {
+            case let .orgChartParsed(_, renderContext), let .imagesLoaded(_, renderContext), let .imagesCropped(_, renderContext),
+                 let .orgChartRendered(_, renderContext, _):
+                return renderContext
+            case .initialized, .pathProvided:
+                return nil
+            }
         }
     }
     
@@ -66,6 +68,21 @@ enum OrgChartGeneratorState {
             return pdf
         case .initialized, .pathProvided, .orgChartParsed, .imagesLoaded, .imagesCropped:
             return nil
+        }
+    }
+    
+    static func set(renderContext: OrgChartRenderContext, on state: Self) -> Self {
+        switch state {
+        case .pathProvided, .initialized:
+            return state
+        case let .orgChartParsed(path, _):
+            return .orgChartParsed(path: path, renderContext: renderContext)
+        case let .imagesLoaded(path, _):
+            return .imagesLoaded(path: path, renderContext: renderContext)
+        case let .imagesCropped(path, _):
+            return .imagesCropped(path: path, renderContext: renderContext)
+        case let .orgChartRendered(path, _, pdf):
+            return .orgChartRendered(path: path, renderContext: renderContext, pdf: pdf)
         }
     }
 }

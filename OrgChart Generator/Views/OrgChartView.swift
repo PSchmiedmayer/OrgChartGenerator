@@ -10,20 +10,22 @@ import SwiftUI
 import OrgChart
 
 struct OrgChartView: View {
-    var context: OrgChartRenderContext
+    @Binding var context: OrgChartRenderContext
     
     var body: some View {
         VStack(spacing: 64) {
-            OrgChartHeader(context: context)
-            OrgChartBody(context: context)
+            OrgChartHeader(context: $context)
+            OrgChartBody(context: $context)
         }.padding(32)
             .printableBackground(.white)
     }
 }
 
 struct OrgChartView_Previews: PreviewProvider {
+    @State static var renderContext = OrgChartRenderContext.mock
+    
     static var previews: some View {
-        OrgChartView(context: OrgChartRenderContext.mock)
+        OrgChartView(context: $renderContext)
             .background(Color(.white))
     }
 }

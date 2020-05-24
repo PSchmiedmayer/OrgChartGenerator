@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct MemberRow: View {
-    @State var row: Row
+    @Binding var row: Row
     
     var body: some View {
         HStack(alignment: .top, spacing: 32) {
@@ -39,8 +39,10 @@ struct MemberRow: View {
 
 
 struct MemberRow_Previews: PreviewProvider {
+    @State static var row: Row = OrgChartRenderContext.mock.rows[3]
+    
     static var previews: some View {
-        MemberRow(row: OrgChartRenderContext.mock.rows[3])
+        MemberRow(row: $row)
             .background(Color.white)
     }
 }

@@ -14,7 +14,7 @@ struct ManagementWidthPreferenceKey: WidthPreferenceKey {}
 
 
 struct OrgChartBody: View {
-    var context: OrgChartRenderContext
+    @Binding var context: OrgChartRenderContext
     @State var managementWidth: CGFloat = .zero
     
     
@@ -25,8 +25,8 @@ struct OrgChartBody: View {
             VStack(alignment: .leading) {
                 TeamHeaderView(teams: context.teams,
                                managementWidth: $managementWidth)
-                ForEach(context.rows, id: \.hashValue) { row in
-                    OrgChartRow(row: row)
+                ForEach(context.rows.indices) { rowIndex in
+                    OrgChartRow(row: self.$context.rows[rowIndex])
                 }
             }
                 .onPreferenceChange(ManagementWidthPreferenceKey.self) { managementWidth in
@@ -40,8 +40,10 @@ struct OrgChartBody: View {
 
 
 struct OrgChartBody_Previews: PreviewProvider {
+    @State static var renderContext = OrgChartRenderContext.mock
+    
     static var previews: some View {
-        OrgChartBody(context: OrgChartRenderContext.mock)
+        OrgChartBody(context: $renderContext)
             .background(Color.white)
     }
 }
