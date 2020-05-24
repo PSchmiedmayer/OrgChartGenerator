@@ -192,10 +192,12 @@ class OrgChartGenerator: ObservableObject {
                 
                 renderContext.cropImages(cropFaces: self.settings.cropFaces,
                                          size: CGSize(width: self.settings.imageSize, height: self.settings.imageSize))
-                DispatchQueue.main.sync {
-                    self.state = .imagesCropped(path: path, renderContext: renderContext)
-                }
-                promise(.success(Void()))
+                    .receive(on: RunLoop.main)
+                    .sink(receiveValue: {
+                        self.state = .imagesCropped(path: path, renderContext: renderContext)
+                        promise(.success(Void()))
+                    })
+                    .store(in: &self.cancellables)
             }
         }.receive(on: RunLoop.main)
             .map {
@@ -212,7 +214,9 @@ class OrgChartGenerator: ObservableObject {
                     preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an OrgChart")
                 }
                 
-                self.loading = true
+                DispatchQueue.main.sync {
+                    self.loading = true
+                }
                 self.progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.orgChartRendered
                 self.progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.orgChartRendered)
                 defer {

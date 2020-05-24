@@ -8,36 +8,42 @@
 
 import SwiftUI
 
+
 enum ImageDisplayMode {
     case scaleToFill
     case scaleToFit
 }
 
+
 struct PrintableImage: View {
-    var image: NSImage
-    var mode: ImageDisplayMode = .scaleToFill
+    @Binding var imageState: ImageState
+    @State var mode: ImageDisplayMode = .scaleToFill
 
     var body: some View {
         DrawableView { rect in
-            let imageAspectRatio = self.image.size.height / self.image.size.width
+            guard let image = self.imageState.image else {
+                return
+            }
+            
+            let imageAspectRatio = image.size.height / image.size.width
             let viewAspectRatio = rect.size.height / rect.size.width
 
             if (self.mode == .scaleToFill && imageAspectRatio > viewAspectRatio) ||
                (self.mode == .scaleToFit && imageAspectRatio < viewAspectRatio) {
-                self.image.size.width = rect.size.width
-                self.image.size.height = rect.size.width * imageAspectRatio
+                image.size.width = rect.size.width
+                image.size.height = rect.size.width * imageAspectRatio
             } else {
-                self.image.size.width = rect.size.height / imageAspectRatio
-                self.image.size.height = rect.size.height
+                image.size.width = rect.size.height / imageAspectRatio
+                image.size.height = rect.size.height
             }
             
-            let imageOrigin = CGPoint(x: (self.image.size.width - rect.size.width) / 2,
-                                      y: (self.image.size.height - rect.size.height) / 2)
-            self.image.draw(in: rect,
-                            from: CGRect(origin: imageOrigin,
-                                         size: rect.size),
-                            operation: .copy,
-                            fraction: 1.0)
+            let imageOrigin = CGPoint(x: (image.size.width - rect.size.width) / 2,
+                                      y: (image.size.height - rect.size.height) / 2)
+            image.draw(in: rect,
+                       from: CGRect(origin: imageOrigin,
+                                    size: rect.size),
+                       operation: .copy,
+                       fraction: 1.0)
         }
     }
 }

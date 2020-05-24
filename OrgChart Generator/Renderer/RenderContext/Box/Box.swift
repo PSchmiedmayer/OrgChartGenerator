@@ -8,6 +8,8 @@
 
 import Foundation
 import OrgChart
+import Combine
+
 
 struct Box {
     let id: UUID = UUID()
@@ -43,10 +45,15 @@ extension Box: ImageHandler {
         }
     }
     
-    func cropImages(cropFaces: Bool, size: CGSize) {
-        for index in members.indices {
-            members[index].cropImages(cropFaces: cropFaces, size: size)
-        }
+    func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never> {
+        let publishers = members.indices
+            .map { index in
+                members[index].cropImages(cropFaces: cropFaces, size: size)
+            }
+        return Publishers.MergeMany(publishers)
+            .collect()
+            .map { _ in }
+            .eraseToAnyPublisher()
     }
 }
 

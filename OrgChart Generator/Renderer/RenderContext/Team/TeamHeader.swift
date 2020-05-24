@@ -21,8 +21,8 @@ class TeamHeader {
         switch imageState {
         case .cloudNotBeLoaded, .notLoaded:
             return .text(fallbackName)
-        case let .cropped(image), let .loaded(image):
-            return .image(image)
+        case .cropped, .loaded:
+            return .image(imageState)
         }
     }
     

@@ -71,7 +71,6 @@ enum ImageState: Hashable {
         
         return ImageProcessor()
             .process(image, withTransformations: transformations)
-            .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
 }

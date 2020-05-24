@@ -35,9 +35,7 @@ struct OrgChartImageView: View {
                     .foregroundColor(Color(.lightGray))
             }
             ActivityIndicator(loading: generator.loading)
-            imageState.image.map { image in
-                PrintableImage(image: image, mode: displayMode)
-            }
+            PrintableImage(imageState: $imageState, mode: displayMode)
         }
     }
 }

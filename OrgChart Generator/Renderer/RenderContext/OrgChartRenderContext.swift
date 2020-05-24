@@ -8,6 +8,7 @@
 
 import OrgChart
 import AppKit
+import Combine
 
 
 struct OrgChartRenderContext: ImageLoadable {
@@ -63,12 +64,22 @@ struct OrgChartRenderContext: ImageLoadable {
         }
     }
     
-    func cropImages(cropFaces: Bool, size: CGSize) {
-        topLeft?.cropImages(cropFaces: cropFaces, size: size)
-        topRight?.cropImages(cropFaces: cropFaces, size: size)
+    func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never> {
+        var publishers : [AnyPublisher<Void, Never>] = [
+            topLeft?.cropImages(cropFaces: cropFaces, size: size) ?? Just(Void()).eraseToAnyPublisher(),
+            topRight?.cropImages(cropFaces: cropFaces, size: size) ?? Just(Void()).eraseToAnyPublisher(),
+        ]
         
-        for index in rows.indices {
-            rows[index].cropImages(cropFaces: cropFaces, size: size)
-        }
+        publishers.append(contentsOf:
+            rows.indices
+                .map { index in
+                    rows[index].cropImages(cropFaces: cropFaces, size: size)
+                }
+        )
+        
+        return Publishers.MergeMany(publishers)
+            .collect()
+            .map { _ in }
+            .eraseToAnyPublisher()
     }
 }

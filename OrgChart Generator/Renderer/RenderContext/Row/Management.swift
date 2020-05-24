@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 
 struct Management {
@@ -28,10 +29,15 @@ extension Management: ImageHandler {
         }
     }
     
-    func cropImages(cropFaces: Bool, size: CGSize) {
-        for index in members.indices {
-            members[index].cropImages(cropFaces: cropFaces, size: size)
-        }
+    func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never> {
+        let publisher = members.indices
+            .map { index in
+                members[index].cropImages(cropFaces: cropFaces, size: size)
+            }
+        return Publishers.MergeMany(publisher)
+            .collect()
+            .map { _ in }
+            .eraseToAnyPublisher()
     }
 }
 

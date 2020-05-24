@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 
 protocol ImageHandler: ImageLoadable & ImageCropable { }
@@ -18,5 +19,5 @@ protocol ImageLoadable {
 
 
 protocol ImageCropable {
-    mutating func cropImages(cropFaces: Bool, size: CGSize)
+    mutating func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never>
 }

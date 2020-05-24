@@ -41,8 +41,11 @@ struct TeamHeaderView: View {
     
     func headerView(for headerContent: HeaderContent) -> AnyView {
         switch headerContent {
-        case let .image(image):
-            return AnyView(PrintableImage(image: image, mode: .scaleToFit))
+        case let .image(imageState):
+            let binding = Binding(get: {
+                return imageState
+            }, set: { _ in })
+            return AnyView(PrintableImage(imageState: binding, mode: .scaleToFit))
         case let .text(text):
             return AnyView(
                 Text(text)

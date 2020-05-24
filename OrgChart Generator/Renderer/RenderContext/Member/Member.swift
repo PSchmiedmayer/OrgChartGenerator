@@ -17,7 +17,6 @@ class Member {
     let name: String
     let role: String?
     var imageState: ImageState
-    private var cancellable: AnyCancellable?
     
     
     var picture: NSImage? {
@@ -46,18 +45,18 @@ extension Member: ImageHandler {
         }
     }
     
-    func cropImages(cropFaces: Bool, size: CGSize) {
-        self.cancellable = self.imageState.cropImages(cropFaces: cropFaces, size: size)
-            .sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .finished: break
-                    case let .failure(error):
-                        print(error)
+    func cropImages(cropFaces: Bool, size: CGSize)  -> AnyPublisher<Void, Never> {
+        Just(Void())
+            .flatMap { _ in
+                self.imageState
+                    .cropImages(cropFaces: cropFaces, size: size)
+                    // .receive(on: RunLoop.main)
+                    .map { image in
+                        self.imageState = .cropped(image)
                     }
-                }, receiveValue: { image in
-                    self.imageState = .cropped(image)
-                })
+                    .replaceError(with: Void())
+            }
+            .eraseToAnyPublisher()
     }
 }
 

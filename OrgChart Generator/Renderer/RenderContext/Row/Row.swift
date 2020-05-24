@@ -8,6 +8,7 @@
 
 import Foundation
 import OrgChart
+import Combine
 
 
 struct Row {
@@ -87,13 +88,20 @@ extension Row: ImageHandler {
         management?.loadImages()
     }
     
-    func cropImages(cropFaces: Bool, size: CGSize) {
+    func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never> {
+        var publishers: [AnyPublisher<Void, Never>] = []
         for teamIndex in teams.indices {
             for index in teams[teamIndex].indices {
-                teams[teamIndex][index].cropImages(cropFaces: cropFaces, size: size)
+                publishers.append(
+                    teams[teamIndex][index].cropImages(cropFaces: cropFaces, size: size)
+                )
             }
         }
-        management?.cropImages(cropFaces: cropFaces, size: size)
+        publishers.append(management?.cropImages(cropFaces: cropFaces, size: size) ?? Just(Void()).eraseToAnyPublisher())
+        return Publishers.MergeMany(publishers)
+            .collect()
+            .map { _ in }
+            .eraseToAnyPublisher()
     }
 }
 
