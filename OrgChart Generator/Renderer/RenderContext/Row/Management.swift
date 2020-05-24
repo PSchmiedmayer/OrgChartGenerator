@@ -11,7 +11,7 @@ import Foundation
 
 struct Management {
     let title: String?
-    private(set) var members: [Member]
+    var members: [Member]
     
     
     init(title: String? = nil, members: [Member]) {

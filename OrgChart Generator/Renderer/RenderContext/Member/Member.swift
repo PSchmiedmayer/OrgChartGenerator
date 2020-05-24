@@ -16,7 +16,7 @@ class Member {
     let id: UUID = UUID()
     let name: String
     let role: String?
-    private(set) var imageState: ImageState
+    var imageState: ImageState
     private var cancellable: AnyCancellable?
     
     

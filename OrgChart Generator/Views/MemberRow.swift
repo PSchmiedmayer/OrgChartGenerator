@@ -10,11 +10,11 @@ import SwiftUI
 
 
 struct MemberRow: View {
-    let row: Row
+    @State var row: Row
     
     var body: some View {
         HStack(alignment: .top, spacing: 32) {
-            ForEach(row.teams, id: \.hashValue) { teamMembers in
+            ForEach(row.teams.indices) { teamMembersIndex in
                 VStack(spacing: 0) {
                     self.row.heading.map { heading in
                         Text(heading)
@@ -25,8 +25,9 @@ struct MemberRow: View {
                             .modifier(HeightReader(preferenceKey: HeadingHeightPreferenceKey.self))
                     }
                     VStack(spacing: 16) {
-                        ForEach(teamMembers, id: \.hashValue) { member in
-                            MemberView(member: member, accentColor: .black)
+                        ForEach(self.row.teams[teamMembersIndex].indices) { memberIndex in
+                            MemberView(member: self.$row.teams[teamMembersIndex][memberIndex],
+                                       accentColor: self.row.background?.border?.color ?? .clear)
                                 .padding(.horizontal, 16)
                         }
                     }

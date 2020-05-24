@@ -11,15 +11,15 @@ import ImageProcessor
 
 
 struct MemberView: View {
-    var member: Member
+    @Binding var member: Member
     var accentColor: NSColor
     
     var body: some View {
         HStack(alignment: .center, spacing: 8.0) {
-            OrgChartImageView(imageState: member.imageState)
+            OrgChartImageView(imageState: $member.imageState)
                 .frame(width: 100, height: 100)
                 .clipped()
-                .printableBorder(accentColor.withAlphaComponent(0.5), width: 1.5)
+                .printableBorder(accentColor, width: 1.5)
             VStack(alignment: .leading, spacing: 4.0) {
                 Text(member.name)
                     .font(.system(size: 24, weight: .semibold))
@@ -36,8 +36,10 @@ struct MemberView: View {
 }
 
 struct MemberView_Previews: PreviewProvider {
+    @State static var member = OrgChartRenderContext.mock.topLeft!.members.first!
+    
     static var previews: some View {
-        MemberView(member: OrgChartRenderContext.mock.topLeft!.members[0],
+        MemberView(member: $member,
                    accentColor: .systemBlue)
             .previewLayout(.sizeThatFits)
     }

@@ -65,7 +65,7 @@ class OrgChartGenerator: ObservableObject {
         
         $state
             .sink { newState in
-                print(newState)
+                self.objectWillChange.send()
             }
             .store(in: &cancellables)
     }
@@ -81,6 +81,9 @@ class OrgChartGenerator: ObservableObject {
     func readOrgChart(from path: URL) -> AnyPublisher<Void, OrgChartError> {
         Future { promise in
             DispatchQueue.global(qos: .userInitiated).async {
+                DispatchQueue.main.sync {
+                    self.loading = true
+                }
                 self.progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.pathProvided
                 self.progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.pathProvided)
                 defer {
@@ -100,6 +103,9 @@ class OrgChartGenerator: ObservableObject {
                 }
             }
         }.receive(on: RunLoop.main)
+            .map {
+                self.loading = false
+            }
             .eraseToAnyPublisher()
     }
     
@@ -115,6 +121,9 @@ class OrgChartGenerator: ObservableObject {
                     return
                 }
                 
+                DispatchQueue.main.sync {
+                    self.loading = true
+                }
                 self.progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.orgChartParsed
                 self.progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.orgChartParsed)
                 defer {
@@ -128,6 +137,9 @@ class OrgChartGenerator: ObservableObject {
                 promise(.success(Void()))
             }
         }.receive(on: RunLoop.main)
+            .map {
+                self.loading = false
+            }
             .eraseToAnyPublisher()
     }
 
@@ -135,14 +147,17 @@ class OrgChartGenerator: ObservableObject {
     func loadImages() -> AnyPublisher<Void, Never> {
         Future { promise in
             DispatchQueue.global(qos: .userInitiated).async {
+                guard let path = self.state.path, let renderContext = self.state.renderContext else {
+                    preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an render context")
+                }
+                
+                DispatchQueue.main.sync {
+                    self.loading = true
+                }
                 self.progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.imagesLoaded
                 self.progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.imagesLoaded)
                 defer {
                     self.progress.resignCurrent()
-                }
-                
-                guard let path = self.state.path, let renderContext = self.state.renderContext else {
-                    preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an render context")
                 }
                 
                 renderContext.loadImages()
@@ -152,6 +167,9 @@ class OrgChartGenerator: ObservableObject {
                 promise(.success(Void()))
             }
         }.receive(on: RunLoop.main)
+            .map {
+                self.loading = false
+            }
             .eraseToAnyPublisher()
     }
     
@@ -163,6 +181,9 @@ class OrgChartGenerator: ObservableObject {
                     preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an render context")
                 }
                 
+                DispatchQueue.main.sync {
+                    self.loading = true
+                }
                 self.progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.imagesCropped
                 self.progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.imagesCropped)
                 defer {
@@ -177,6 +198,9 @@ class OrgChartGenerator: ObservableObject {
                 promise(.success(Void()))
             }
         }.receive(on: RunLoop.main)
+            .map {
+                self.loading = false
+            }
             .eraseToAnyPublisher()
     }
     
@@ -188,6 +212,7 @@ class OrgChartGenerator: ObservableObject {
                     preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an OrgChart")
                 }
                 
+                self.loading = true
                 self.progress.completedUnitCount = OrgChartGeneratorState.ProcessCompletedUnitCount.orgChartRendered
                 self.progress.becomeCurrent(withPendingUnitCount: OrgChartGeneratorState.ProcessFraction.orgChartRendered)
                 defer {
@@ -206,6 +231,9 @@ class OrgChartGenerator: ObservableObject {
                 }
             }
         }.receive(on: RunLoop.main)
+            .map {
+                self.loading = false
+            }
             .eraseToAnyPublisher()
     }
 }

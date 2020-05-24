@@ -11,7 +11,7 @@ import OrgChart
 
 
 struct BoxView: View {
-    var box: Box
+    @State var box: Box
     
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
@@ -20,8 +20,8 @@ struct BoxView: View {
                     .font(.system(size: 27, weight: .semibold))
             }
             HStack(alignment: .center, spacing: 8) {
-                ForEach(box.members, id: \.hashValue) { member in
-                    MemberView(member: member,
+                ForEach(box.members.indices) { memberIndex in
+                    MemberView(member: self.$box.members[memberIndex],
                                accentColor: self.box.background?.color ?? .clear)
                 }
             }

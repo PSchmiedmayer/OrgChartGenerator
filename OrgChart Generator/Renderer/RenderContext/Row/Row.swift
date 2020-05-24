@@ -17,8 +17,8 @@ struct Row {
     let id: Int
     let heading: String?
     let background: Background?
-    private(set) var teams: [Team]
-    private(set) var management: Management?
+    var teams: [Team]
+    var management: Management?
     
     
     init(id: Int, heading: String? = nil, background: Background? = nil, teams: [Team], management: Management? = nil) {

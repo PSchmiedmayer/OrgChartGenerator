@@ -13,7 +13,7 @@ struct Box {
     let id: UUID = UUID()
     let title: String?
     let background: Background?
-    private(set) var members: [Member]
+    var members: [Member]
     
     
     init(title: String? = nil, background: Background? = nil, members: [Member]) {

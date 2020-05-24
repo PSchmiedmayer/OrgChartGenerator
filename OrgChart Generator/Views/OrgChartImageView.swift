@@ -15,9 +15,18 @@ import Combine
 struct OrgChartImageView: View {
     @EnvironmentObject var generator: OrgChartGenerator
     
-    var displayMode: ImageDisplayMode = .scaleToFill
-    var imageState: ImageState
+    @State var displayMode: ImageDisplayMode = .scaleToFill
+    @Binding var imageState: ImageState
     
+    
+    var loading: Bool {
+        switch imageState {
+        case .cropped, .cloudNotBeLoaded:
+            return false
+        default:
+            return generator.loading
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -33,8 +42,10 @@ struct OrgChartImageView: View {
     }
 }
 
-struct LoadableImageView_Previews: PreviewProvider {
+struct OrgChartImageView_Previews: PreviewProvider {
+    @State static var imageState = OrgChartRenderContext.mock.topLeft!.members.first!.imageState
+    
     static var previews: some View {
-        OrgChartImageView(imageState: OrgChartRenderContext.mock.topLeft!.members.first!.imageState)
+        OrgChartImageView(imageState: $imageState)
     }
 }

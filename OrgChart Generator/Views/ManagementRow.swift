@@ -11,24 +11,46 @@ import SwiftUI
 
 struct ManagementRow: View {
     @Binding var headingHeight: CGFloat
-    let row: Row
+    @State var row: Row
+    
+    
+    var unsafeManagementBinding: Binding<Management> {
+        Binding(get: {
+            self.row.management!
+        }) { newManagement in
+            self.row.management = newManagement
+        }
+    }
     
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
-            row.management.map { management in
-                ForEach(management.members, id: \.hashValue) { member in
-                    VStack(spacing: 0) {
-                        self.row.heading.map { heading in
-                            Color.clear
-                                .frame(height: self.headingHeight)
-                        }
-                        MemberView(member: member, accentColor: .black)
-                            .padding(.horizontal, 16)
-                    }
-                }
+            if row.management != nil {
+                ManagementBox(management: self.unsafeManagementBinding,
+                              headingHeight: self.$headingHeight,
+                              color: self.row.background?.border?.color ?? .clear)
+            } else {
+                EmptyView()
             }
         }.modifier(WidthReader(preferenceKey: ManagementRowWidthPreferenceKey.self))
             .fixedSize(horizontal: true, vertical: true)
+    }
+}
+
+struct ManagementBox: View {
+    @Binding var management: Management
+    @Binding var headingHeight: CGFloat
+    var color: NSColor
+    
+    var body: some View {
+        ForEach(management.members.indices) { memberIndex in
+            VStack(spacing: 0) {
+                Color.clear
+                    .frame(height: self.headingHeight)
+                MemberView(member: self.$management.members[memberIndex],
+                           accentColor: self.color)
+                    .padding(.horizontal, 16)
+            }
+        }
     }
 }
 
