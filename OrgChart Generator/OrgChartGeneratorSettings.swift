@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ArgumentParser
 
 
 class OrgChartGeneratorSettings: ObservableObject {
@@ -33,6 +34,7 @@ class OrgChartGeneratorSettings: ObservableObject {
          compressionRate: Double = Defaults.compressionRate,
          cropFaces: Bool = Defaults.cropFaces,
          autogenerate: Bool = Defaults.autogenerate) {
+        self.path = path
         self.orgChartName = orgChartName
         self.imageSize = imageSize
         self.compressionRate = compressionRate
@@ -42,15 +44,20 @@ class OrgChartGeneratorSettings: ObservableObject {
     
     convenience init() {
         do {
-            let arguments = try OrgChartArguments.parse()
-            self.init(path: arguments.path,
-                      orgChartName: arguments.orgChartName,
-                      imageSize: arguments.imageSize,
-                      compressionRate: arguments.compressionRate,
-                      cropFaces: arguments.cropFaces,
-                      autogenerate: arguments.autogenerate)
+            var arguments = CommandLine.arguments
+            arguments.removeFirst()
+            arguments.removeAll(where: { $0 == "-NSDocumentRevisionsDebugMode" }) // Default if running in XCode
+            arguments.removeAll(where: { $0 == "YES" }) // Default if running in XCode
+            
+            let parsedArguments = try OrgChartArguments.parse(arguments)
+            self.init(path: URL(fileURLWithPath: parsedArguments.path),
+                      orgChartName: parsedArguments.orgChartName,
+                      imageSize: parsedArguments.imageSize,
+                      compressionRate: parsedArguments.compressionRate,
+                      cropFaces: parsedArguments.cropFaces,
+                      autogenerate: parsedArguments.autogenerate)
         } catch {
-            print("Could not be loaded from the launch arguments. Using the default values for launching the Org Chart Generator.")
+            print("Could not be loaded from the launch arguments \"\(error)\". Using the default values for launching the Org Chart Generator.")
             print(OrgChartArguments.helpMessage())
             self.init(path: nil)
         }

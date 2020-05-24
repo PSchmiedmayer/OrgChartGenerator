@@ -22,8 +22,8 @@ class OrgChartGenerator: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     
     
-    init(path: URL? = nil, settings: OrgChartGeneratorSettings? = nil) {
-        self.settings = settings ?? OrgChartGeneratorSettings()
+    init(path: URL? = nil, settings: OrgChartGeneratorSettings = OrgChartGeneratorSettings()) {
+        self.settings = settings
         
         self.progress = Progress(totalUnitCount: 100)
         progress.publisher(for: \.fractionCompleted)
@@ -33,20 +33,27 @@ class OrgChartGenerator: ObservableObject {
             }
             .store(in: &cancellables)
         
-        if let path = path ?? settings?.path {
-            self.readOrgChart(from: path)
-            
-            // Autogenerate
-            if settings?.autogenerate == true {
-                self.autogenerate(from: path)
-                    .sink(receiveCompletion: { completion in
-                            switch completion {
-                            case let .failure(error):
-                                print("Could not generate the orgChart: \(error)")
-                            case .finished: break
-                            }
-                        }, receiveValue: { })
-                    .store(in: &cancellables)
+        if let path = path ?? settings.path {
+            DispatchQueue.main.async {
+                self.readOrgChart(from: path)
+                .flatMap { _ -> AnyPublisher<Void, OrgChartError> in
+                    if settings.autogenerate == true {
+                        return self.autogenerate(from: path)
+                            .eraseToAnyPublisher()
+                    } else {
+                        return Just(Void())
+                            .setFailureType(to: OrgChartError.self)
+                            .eraseToAnyPublisher()
+                    }
+                }
+                .sink(receiveCompletion: { completion in
+                        switch completion {
+                        case let .failure(error):
+                            print("Could not generate the orgChart: \(error)")
+                        case .finished: break
+                        }
+                    }, receiveValue: { })
+                .store(in: &self.cancellables)
             }
         }
         
@@ -64,11 +71,8 @@ class OrgChartGenerator: ObservableObject {
     }
     
     func autogenerate(from path: URL) -> AnyPublisher<Void, OrgChartError> {
-        self.readOrgChart(from: path)
-            .flatMap {
-                self.parseOrgChart()
-                    .setFailureType(to: OrgChartError.self)
-            }
+        self.parseOrgChart()
+            .setFailureType(to: OrgChartError.self)
             .flatMap {
                 self.loadImages()
                     .setFailureType(to: OrgChartError.self)
