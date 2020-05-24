@@ -26,8 +26,8 @@ struct OrgChartArguments: ParsableCommand {
     @Flag(default: true, inversion: .prefixedEnableDisable, help: "Crop the images of the members of the OrgChart so thier faces are centered")
     var cropFaces: Bool
     
-    @Flag(default: true, inversion: .prefixedNo, help: "Exit the application when the PDF was exported")
-    var exitOnPDFExport: Bool
+    @Flag(default: true, inversion: .prefixedNo, help: "Autogenerate the OrgChart without user interaction needed and exit the application when the PDF was exported")
+    var autogenerate: Bool
 }
 
 extension URL: ExpressibleByArgument {

@@ -16,6 +16,7 @@ class OrgChartGenerator: ObservableObject {
     @Published var loading: Bool = false
     @Published var fractionCompleted: Double = 0.0
     @Published var settings: OrgChartGeneratorSettings
+    @Published var generatePDF: Bool = false
     
     private var progress: Progress
     private var cancellables: Set<AnyCancellable> = []
@@ -32,8 +33,21 @@ class OrgChartGenerator: ObservableObject {
             }
             .store(in: &cancellables)
         
-        if let path = path {
+        if let path = path ?? settings?.path {
             self.readOrgChart(from: path)
+            
+            // Autogenerate
+            if settings?.autogenerate == true {
+                self.autogenerate(from: path)
+                    .sink(receiveCompletion: { completion in
+                            switch completion {
+                            case let .failure(error):
+                                print("Could not generate the orgChart: \(error)")
+                            case .finished: break
+                            }
+                        }, receiveValue: { })
+                    .store(in: &cancellables)
+            }
         }
         
         $state
@@ -47,6 +61,27 @@ class OrgChartGenerator: ObservableObject {
         for cancellable in cancellables {
             cancellable.cancel()
         }
+    }
+    
+    func autogenerate(from path: URL) -> AnyPublisher<Void, OrgChartError> {
+        self.readOrgChart(from: path)
+            .flatMap {
+                self.parseOrgChart()
+                    .setFailureType(to: OrgChartError.self)
+            }
+            .flatMap {
+                self.loadImages()
+                    .setFailureType(to: OrgChartError.self)
+            }
+            .flatMap {
+                self.cropImages()
+                    .setFailureType(to: OrgChartError.self)
+            }
+            .map {
+                self.generatePDF = true
+            }
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
     }
     
     
@@ -212,7 +247,7 @@ class OrgChartGenerator: ObservableObject {
                 self.loading = false
             }
             .map {
-                if self.settings.exitOnPDFExport {
+                if self.settings.autogenerate {
                     exit(0)
                 }
             }

@@ -15,7 +15,7 @@ class OrgChartGeneratorSettings: ObservableObject {
         static let imageSize: Int = 250
         static let compressionRate: Double = 0.6
         static let cropFaces: Bool = true
-        static let exitOnPDFExport: Bool = false
+        static let autogenerate: Bool = false
     }
     
     
@@ -24,7 +24,7 @@ class OrgChartGeneratorSettings: ObservableObject {
     @Published var imageSize: Int
     @Published var compressionRate: Double
     @Published var cropFaces: Bool
-    @Published var exitOnPDFExport: Bool
+    @Published var autogenerate: Bool
     
     
     init(path: URL?,
@@ -32,12 +32,12 @@ class OrgChartGeneratorSettings: ObservableObject {
          imageSize: Int = Defaults.imageSize,
          compressionRate: Double = Defaults.compressionRate,
          cropFaces: Bool = Defaults.cropFaces,
-         exitOnPDFExport: Bool = Defaults.exitOnPDFExport) {
+         autogenerate: Bool = Defaults.autogenerate) {
         self.orgChartName = orgChartName
         self.imageSize = imageSize
         self.compressionRate = compressionRate
         self.cropFaces = cropFaces
-        self.exitOnPDFExport = exitOnPDFExport
+        self.autogenerate = autogenerate
     }
     
     convenience init() {
@@ -48,9 +48,9 @@ class OrgChartGeneratorSettings: ObservableObject {
                       imageSize: arguments.imageSize,
                       compressionRate: arguments.compressionRate,
                       cropFaces: arguments.cropFaces,
-                      exitOnPDFExport: arguments.exitOnPDFExport)
+                      autogenerate: arguments.autogenerate)
         } catch {
-            print("Could not be loaded from the launch arguments. Using the default values.")
+            print("Could not be loaded from the launch arguments. Using the default values for launching the Org Chart Generator.")
             print(OrgChartArguments.helpMessage())
             self.init(path: nil)
         }

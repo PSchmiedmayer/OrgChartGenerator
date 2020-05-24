@@ -12,9 +12,16 @@ import Combine
 
 struct ContentView: View {
     @ObservedObject var generator = OrgChartGenerator()
-    @State var renderAsPDF: Bool = false
     @State var pdfCancellable: AnyCancellable?
     
+    
+    var generatePDFBinding: Binding<Bool> {
+        Binding(get: {
+            self.generator.generatePDF
+        }) { newGeneratePDF in
+            self.generator.generatePDF = newGeneratePDF
+        }
+    }
     
     var unsafeRenderContextBinding: Binding<OrgChartRenderContext> {
         Binding(get: {
@@ -58,7 +65,7 @@ struct ContentView: View {
     func onlyControlView(_ message: String) -> AnyView {
         return AnyView(
             VStack {
-                ControlView(renderPDF: $renderAsPDF)
+                ControlView(renderPDF: generatePDFBinding)
                 Text(message)
             }
         )
@@ -67,10 +74,10 @@ struct ContentView: View {
     func orgChartVisible(_ renderContext: Binding<OrgChartRenderContext>) -> AnyView {
         AnyView(
             VStack {
-                ControlView(renderPDF: $renderAsPDF)
+                ControlView(renderPDF: generatePDFBinding)
                 ScrollView([.horizontal, .vertical], showsIndicators: true) {
                     PDFExportView(view: OrgChartView(context: renderContext),
-                                  renderAsPDF: $renderAsPDF) { pdf in
+                                  renderAsPDF: generatePDFBinding) { pdf in
                         self.pdfCancellable = self.generator.rendered(pdf)
                             .sink(receiveCompletion: { _ in }, receiveValue: { })
                     }
