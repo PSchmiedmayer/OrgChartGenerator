@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		650EC316247519C3008A3D4D /* PDFExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650EC315247519C3008A3D4D /* PDFExportView.swift */; };
+		65139E48247AFF6500D7247B /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 65139E47247AFF6500D7247B /* ArgumentParser */; };
+		65139E4A247B045F00D7247B /* OrgChartArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65139E49247B045F00D7247B /* OrgChartArguments.swift */; };
+		65139E4C247B046700D7247B /* OrgChartGeneratorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65139E4B247B046700D7247B /* OrgChartGeneratorSettings.swift */; };
 		6575CC6C24758E250009E92A /* OrgChartBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6575CC6B24758E250009E92A /* OrgChartBody.swift */; };
 		6575CC6E247595190009E92A /* MemberRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6575CC6D247595190009E92A /* MemberRow.swift */; };
 		6575CC7024759B200009E92A /* ManagementRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6575CC6F24759B200009E92A /* ManagementRow.swift */; };
@@ -58,6 +61,8 @@
 
 /* Begin PBXFileReference section */
 		650EC315247519C3008A3D4D /* PDFExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PDFExportView.swift; path = "OrgChart Generator/Renderer/PDFExportView.swift"; sourceTree = SOURCE_ROOT; };
+		65139E49247B045F00D7247B /* OrgChartArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartArguments.swift; sourceTree = "<group>"; };
+		65139E4B247B046700D7247B /* OrgChartGeneratorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartGeneratorSettings.swift; sourceTree = "<group>"; };
 		6575CC6B24758E250009E92A /* OrgChartBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartBody.swift; sourceTree = "<group>"; };
 		6575CC6D247595190009E92A /* MemberRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRow.swift; sourceTree = "<group>"; };
 		6575CC6F24759B200009E92A /* ManagementRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagementRow.swift; sourceTree = "<group>"; };
@@ -113,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65139E48247AFF6500D7247B /* ArgumentParser in Frameworks */,
 				65994D9124744DE9000D566E /* OrgChart in Frameworks */,
 				65FCC79E2477D7D80078B643 /* ImageProcessor in Frameworks */,
 			);
@@ -188,6 +194,8 @@
 				65994D79247442AB000D566E /* AppDelegate.swift */,
 				65994D7B247442AB000D566E /* ContentView.swift */,
 				6587856724751CDE0071F4C7 /* OrgChartGenerator.swift */,
+				65139E4B247B046700D7247B /* OrgChartGeneratorSettings.swift */,
+				65139E49247B045F00D7247B /* OrgChartArguments.swift */,
 				6587856D247532CE0071F4C7 /* OrgChartGeneratorState.swift */,
 				65FCC7962476E0A70078B643 /* PrintableViews */,
 				650EC31F24751A2C008A3D4D /* Views */,
@@ -307,6 +315,7 @@
 			packageProductDependencies = (
 				65994D9024744DE9000D566E /* OrgChart */,
 				65FCC79D2477D7D80078B643 /* ImageProcessor */,
+				65139E47247AFF6500D7247B /* ArgumentParser */,
 			);
 			productName = "OrgChart Generator";
 			productReference = 65994D76247442AB000D566E /* OrgChart Generator.app */;
@@ -336,6 +345,9 @@
 				Base,
 			);
 			mainGroup = 65994D6D247442AB000D566E;
+			packageReferences = (
+				65139E46247AFF6500D7247B /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+			);
 			productRefGroup = 65994D77247442AB000D566E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -399,8 +411,10 @@
 				65FCC7B22478210F0078B643 /* Member.swift in Sources */,
 				65C149FB24756FFA00DE0B19 /* MemberView.swift in Sources */,
 				6587856E247532CE0071F4C7 /* OrgChartGeneratorState.swift in Sources */,
+				65139E4C247B046700D7247B /* OrgChartGeneratorSettings.swift in Sources */,
 				6575CC6C24758E250009E92A /* OrgChartBody.swift in Sources */,
 				65FCC7A824781D2A0078B643 /* Background.swift in Sources */,
+				65139E4A247B045F00D7247B /* OrgChartArguments.swift in Sources */,
 				65FCC7932476B1790078B643 /* TeamHeaderView.swift in Sources */,
 				65FCC7B5247822E20078B643 /* Row.swift in Sources */,
 				65FCC78D2476A5070078B643 /* HeightReader.swift in Sources */,
@@ -604,7 +618,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		65139E46247AFF6500D7247B /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		65139E47247AFF6500D7247B /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65139E46247AFF6500D7247B /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
 		65994D9024744DE9000D566E /* OrgChart */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = OrgChart;

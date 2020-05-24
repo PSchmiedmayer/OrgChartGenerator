@@ -1,0 +1,41 @@
+//
+//  OrgChartArguments.swift
+//  OrgChart Generator
+//
+//  Created by Paul Schmiedmayer on 5/24/20.
+//  Copyright © 2020 Paul Schmiedmayer. All rights reserved.
+//
+
+import Foundation
+import ArgumentParser
+
+
+struct OrgChartArguments: ParsableCommand {
+    @Argument(help: "The root folder of the directory structure that should be used to generate the OrgChart")
+    var path: URL
+    
+    @Option(name: .shortAndLong, default: "OrgChart", help: "The name of the OrgChart PDF that should be generated.")
+    var orgChartName: String
+
+    @Option(name: .shortAndLong, default: 500, help: "The size of the quadratic images in the OrgChart should be cropped at.")
+    var imageSize: Int
+
+    @Option(name: .shortAndLong, default: 0.6, help: "The compresssion rate (1-100) that should be applied to the JEPG images that are rendered in the OrgChart.")
+    var compressionRate: Double
+    
+    @Flag(default: true, inversion: .prefixedEnableDisable, help: "Crop the images of the members of the OrgChart so thier faces are centered")
+    var cropFaces: Bool
+    
+    @Flag(default: true, inversion: .prefixedNo, help: "Exit the application when the PDF was exported")
+    var exitOnPDFExport: Bool
+}
+
+extension URL: ExpressibleByArgument {
+    public init?(argument: String) {
+        self.init(string: argument)
+    }
+
+    public var defaultValueDescription: String {
+        "FilePath"
+    }
+}
