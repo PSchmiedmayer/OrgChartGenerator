@@ -43,6 +43,7 @@ struct OrgChartRenderContext: ImageLoadable {
             }
         
         // Rows
+        let test = Set(orgChart.teams.flatMap({ $0.members.keys }))
         let positions = Set(orgChart.teams.flatMap({ $0.members.keys })).sorted()
         self.rows = positions
             .map { position in

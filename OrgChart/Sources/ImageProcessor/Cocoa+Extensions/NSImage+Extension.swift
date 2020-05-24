@@ -19,7 +19,7 @@ extension NSImage {
     }
     
     func scale(toSize size: CGSize) -> NSImage {
-        return transform(partOfImage: CGRect(origin: .zero, size: self.size),
+        return transform(partOfImage: CGRect(origin: .zero, size: self.representations.first?.size ?? self.size),
                          intoRect: CGRect(origin: .zero, size: size))
     }
     
@@ -45,10 +45,16 @@ extension NSImage {
         bitmapRep.size = targetRect.size
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmapRep)
-        self.draw(in: NSRect(origin: .zero, size: targetRect.size),
-                  from: partOfImage,
-                  operation: .copy,
-                  fraction: 1.0)
+        
+        guard let imageRepresentation = self.representations.first else {
+            return self
+        }
+        imageRepresentation.draw(in: NSRect(origin: .zero, size: targetRect.size),
+                                 from: partOfImage,
+                                 operation: .copy,
+                                 fraction: 1.0,
+                                 respectFlipped: true,
+                                 hints: nil)
         
         let croppedImage = NSImage(size: targetRect.size)
         croppedImage.addRepresentation(bitmapRep)

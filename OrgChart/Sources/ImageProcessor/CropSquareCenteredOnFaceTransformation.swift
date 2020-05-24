@@ -23,21 +23,22 @@ public struct CropSquareCenteredOnFaceTransformation: ImageTransformation {
             
             func faceRectanglesRequestCompletionHandler(request: VNRequest, error: Error?) {
                 guard let faceObservations = request.results as? [VNFaceObservation],
-                      let face = faceObservations.first else {
+                      let face = faceObservations.first,
+                      let imageRepresentation = image.representations.first else {
                     promise(.success(image))
                     return
                 }
                 
-                let faceRect = CGRect(x: face.boundingBox.origin.x * image.size.width,
-                                      y: (face.boundingBox.origin.y + face.boundingBox.height * 0.15) * image.size.height,
-                                      width: face.boundingBox.width * image.size.width,
-                                      height: (face.boundingBox.height * 1.15) * image.size.height)
+                let faceRect = CGRect(x: face.boundingBox.origin.x * imageRepresentation.size.width,
+                                      y: (face.boundingBox.origin.y + face.boundingBox.height * 0.15) * imageRepresentation.size.height,
+                                      width: face.boundingBox.width * imageRepresentation.size.width,
+                                      height: (face.boundingBox.height * 1.15) * imageRepresentation.size.height)
                 let faceSquareSize = max(faceRect.size.width, faceRect.size.height)
                 
-                let squareSize = min(min(image.size.width, image.size.height),
+                let squareSize = min(min(imageRepresentation.size.width, imageRepresentation.size.height),
                                      faceSquareSize * 1.6)
-                let center = CGPoint(x: min(max(faceRect.center.x, squareSize/2), image.size.width - squareSize/2),
-                                     y: min(max(faceRect.center.y, squareSize/2), image.size.height - squareSize/2))
+                let center = CGPoint(x: min(max(faceRect.center.x, squareSize/2), imageRepresentation.size.width - squareSize/2),
+                                     y: min(max(faceRect.center.y, squareSize/2), imageRepresentation.size.height - squareSize/2))
                 
                 promise(.success(image.crop(CGRect(center: center, size: squareSize))))
             }
