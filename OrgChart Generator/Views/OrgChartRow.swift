@@ -46,7 +46,7 @@ struct OrgChartRow: View {
                                 .font(.system(size: 27, weight: .semibold))
                                 .fixedSize(horizontal: true, vertical: false)
                                 .padding(.horizontal, 32)
-                                .frame(height: headingHeight)
+                                .frame(height: 100)
                         }.fixedSize(horizontal: true, vertical: true)
                     }
                 }.modifier(WidthReader(preferenceKey: ManagementWidthPreferenceKey.self))
