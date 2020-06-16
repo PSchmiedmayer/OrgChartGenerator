@@ -10,7 +10,7 @@ import SwiftUI
 
 
 struct MemberRow: View {
-    @Binding var row: Row
+    @ObservedObject var row: Row
     
     var body: some View {
         HStack(alignment: .top, spacing: 32) {
@@ -26,7 +26,7 @@ struct MemberRow: View {
                     }
                     VStack(spacing: 16) {
                         ForEach(self.row.teams[teamMembersIndex].indices) { memberIndex in
-                            MemberView(member: self.$row.teams[teamMembersIndex][memberIndex],
+                            MemberView(member: self.row.teams[teamMembersIndex][memberIndex],
                                        accentColor: self.row.background?.border?.color ?? .clear)
                                 .padding(.horizontal, 16)
                         }
@@ -39,10 +39,8 @@ struct MemberRow: View {
 
 
 struct MemberRow_Previews: PreviewProvider {
-    @State static var row: Row = OrgChartRenderContext.mock.rows[3]
-    
     static var previews: some View {
-        MemberRow(row: $row)
+        MemberRow(row: OrgChartRenderContext.mock.rows[3])
             .background(Color.white)
     }
 }

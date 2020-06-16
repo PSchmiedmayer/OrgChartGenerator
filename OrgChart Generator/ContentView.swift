@@ -23,15 +23,6 @@ struct ContentView: View {
         }
     }
     
-    var unsafeRenderContextBinding: Binding<OrgChartRenderContext> {
-        Binding(get: {
-            self.generator.state.renderContext!
-        }) { newRenderContext in
-            self.generator.state = OrgChartGeneratorState.set(renderContext: newRenderContext,
-                                                              on: self.generator.state)
-        }
-    }
-    
     var body: some View {
         chooseMainView()
             .environmentObject(generator)
@@ -45,17 +36,17 @@ struct ContentView: View {
         if case let .pathProvided(path, orgChart) = generator.state {
             return onlyControlView("Loading the OrgChart \"\(orgChart.title)\" found at \(path)")
         }
-        if case .orgChartParsed = generator.state {
-            return orgChartVisible(unsafeRenderContextBinding)
+        if case let .orgChartParsed(_, renderContext) = generator.state {
+            return orgChartVisible(renderContext)
         }
-        if case .imagesLoaded = generator.state {
-            return orgChartVisible(unsafeRenderContextBinding)
+        if case let .imagesLoaded(_, renderContext) = generator.state {
+            return orgChartVisible(renderContext)
         }
-        if case .imagesCropped = generator.state {
-            return orgChartVisible(unsafeRenderContextBinding)
+        if case let .imagesCropped(_, renderContext) = generator.state {
+            return orgChartVisible(renderContext)
         }
-        if case .orgChartRendered = generator.state {
-            return orgChartVisible(unsafeRenderContextBinding)
+        if case let .orgChartRendered(_, renderContext, _) = generator.state {
+            return orgChartVisible(renderContext)
         }
         return AnyView(
             Text("Unknown State")
@@ -71,7 +62,7 @@ struct ContentView: View {
         )
     }
     
-    func orgChartVisible(_ renderContext: Binding<OrgChartRenderContext>) -> AnyView {
+    func orgChartVisible(_ renderContext: OrgChartRenderContext) -> AnyView {
         AnyView(
             VStack {
                 ControlView(renderPDF: generatePDFBinding)

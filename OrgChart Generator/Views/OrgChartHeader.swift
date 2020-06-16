@@ -10,7 +10,7 @@ import SwiftUI
 import OrgChart
 
 struct OrgChartHeader: View {
-    @Binding var context: OrgChartRenderContext
+    @ObservedObject var context: OrgChartRenderContext
     
     var unsafeTopLeftBinding: Binding<Box> {
         Binding(get: {
@@ -30,26 +30,24 @@ struct OrgChartHeader: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            if context.topLeft != nil {
-                BoxView(box: unsafeTopLeftBinding)
+            context.topLeft.map { topLeft in
+                BoxView(box: topLeft)
             }
             Spacer(minLength: 120)
             Text(context.title)
                 .font(.system(size: 120, weight: .medium))
                 .fixedSize(horizontal: true, vertical: true)
             Spacer(minLength: 120)
-            if context.topRight != nil {
-                BoxView(box: unsafeTopRightBinding)
+            context.topRight.map { topRight in
+                BoxView(box: topRight)
             }
         }
     }
 }
 
 struct OrgChartHeader_Previews: PreviewProvider {
-    @State static var renderContext = OrgChartRenderContext.mock
-    
     static var previews: some View {
-        OrgChartHeader(context: $renderContext)
+        OrgChartHeader(context: OrgChartRenderContext.mock)
             .background(Color.white)
     }
 }

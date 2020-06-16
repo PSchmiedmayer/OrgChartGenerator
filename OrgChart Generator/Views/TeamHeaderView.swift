@@ -11,13 +11,12 @@ import OrgChart
 
 
 struct TeamHeaderView: View {
-    var teams: [Team]
-    
+    @ObservedObject var context: OrgChartRenderContext
     @Binding var managementWidth: CGFloat
     
     
     var body: some View {
-        TeamView(managementWidth: $managementWidth, data: teams) { team in
+        TeamView(managementWidth: $managementWidth, data: context.teams) { team in
             ZStack {
                 Color.white
                 self.background(for: team.header)
@@ -59,7 +58,7 @@ struct TeamHeaderView_Previews: PreviewProvider {
     @State static var managementWidth: CGFloat = 64
     
     static var previews: some View {
-        TeamHeaderView(teams: OrgChartRenderContext.mock.teams,
+        TeamHeaderView(context: OrgChartRenderContext.mock,
                        managementWidth: $managementWidth)
             .previewLayout(.fixed(width: 6000, height: 100))
             .background(Color.white)

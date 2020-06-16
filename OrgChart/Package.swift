@@ -14,6 +14,9 @@ let package = Package(
         .library(
             name: "ImageProcessor",
             targets: ["ImageProcessor"]),
+        .library(
+            name: "OrgChartRenderContext",
+            targets: ["OrgChartRenderContext"]),
     ],
     targets: [
         .target(
@@ -21,12 +24,27 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "OrgChartTests",
-            dependencies: ["OrgChart"]),
+            dependencies: [
+                .target(name: "OrgChart")
+            ]),
         .target(
             name: "ImageProcessor",
             dependencies: []),
         .testTarget(
             name: "ImageProcessorTests",
-            dependencies: ["ImageProcessor"]),
+            dependencies: [
+                .target(name: "ImageProcessor")
+            ]),
+        .target(
+            name: "OrgChartRenderContext",
+            dependencies: [
+                .target(name: "OrgChart"),
+                .target(name: "ImageProcessor")
+            ]),
+        .testTarget(
+            name: "OrgChartRenderContextTests",
+            dependencies: [
+                .target(name: "OrgChartRenderContext")
+            ]),
     ]
 )

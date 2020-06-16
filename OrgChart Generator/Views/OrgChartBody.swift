@@ -14,7 +14,7 @@ struct ManagementWidthPreferenceKey: WidthPreferenceKey {}
 
 
 struct OrgChartBody: View {
-    @Binding var context: OrgChartRenderContext
+    @ObservedObject var context: OrgChartRenderContext
     @State var managementWidth: CGFloat = .zero
     
     
@@ -23,7 +23,7 @@ struct OrgChartBody: View {
             TeamBackgroundView(teams: context.teams,
                                managementWidth: $managementWidth)
             VStack(alignment: .leading) {
-                TeamHeaderView(teams: context.teams,
+                TeamHeaderView(context: context,
                                managementWidth: $managementWidth)
                 ForEach(context.rows.indices) { rowIndex in
                     OrgChartRow(row: self.$context.rows[rowIndex])
@@ -40,10 +40,8 @@ struct OrgChartBody: View {
 
 
 struct OrgChartBody_Previews: PreviewProvider {
-    @State static var renderContext = OrgChartRenderContext.mock
-    
     static var previews: some View {
-        OrgChartBody(context: $renderContext)
+        OrgChartBody(context: OrgChartRenderContext.mock)
             .background(Color.white)
     }
 }
