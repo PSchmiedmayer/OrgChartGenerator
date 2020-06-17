@@ -8,6 +8,7 @@
 
 import Foundation
 import OrgChart
+import OrgChartRenderContext
 import Combine
 
 
@@ -77,13 +78,13 @@ class OrgChartGenerator: ObservableObject {
                 self.loadImages()
                     .setFailureType(to: OrgChartError.self)
             }
-//            .flatMap {
-//                self.cropImages()
-//                    .setFailureType(to: OrgChartError.self)
-//            }
-//            .map {
-//                self.generatePDF = true
-//            }
+            .flatMap {
+                self.cropImages()
+                    .setFailureType(to: OrgChartError.self)
+            }
+            .map {
+                self.generatePDF = true
+            }
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }

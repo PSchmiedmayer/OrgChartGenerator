@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import OrgChart
+import OrgChartRenderContext
 
 
 struct ManagementWidthPreferenceKey: WidthPreferenceKey {}
@@ -26,7 +26,7 @@ struct OrgChartBody: View {
                 TeamHeaderView(context: context,
                                managementWidth: $managementWidth)
                 ForEach(context.rows.indices) { rowIndex in
-                    OrgChartRow(row: self.$context.rows[rowIndex])
+                    OrgChartRow(row: self.context.rows[rowIndex])
                 }
             }
                 .onPreferenceChange(ManagementWidthPreferenceKey.self) { managementWidth in

@@ -11,15 +11,15 @@ import OrgChart
 import Combine
 
 
-class Row: ObservableObject {
-    typealias Team = [Member]
+public class Row: ObservableObject {
+    public typealias Team = [Member]
     
     
-    let id: Int
-    let heading: String?
-    let background: Background?
-    @Published var teams: [Team]
-    @Published var management: Management?
+    public let id: Int
+    public let heading: String?
+    public let background: Background?
+    @Published public private(set) var teams: [Team]
+    @Published public private(set) var management: Management?
     
     
     init(id: Int, heading: String? = nil, background: Background? = nil, teams: [Team], management: Management? = nil) {
@@ -30,7 +30,7 @@ class Row: ObservableObject {
         self.management =  management
     }
     
-    init(_ orgChart: OrgChart, position: Position) {
+    convenience init(_ orgChart: OrgChart, position: Position) {
         guard case let .row(id) = position else {
             preconditionFailure("Cross Team for a row must have a row index")
         }
@@ -107,7 +107,7 @@ extension Row: ImageHandler {
 
 
 extension Row: Equatable {
-    static func == (lhs: OrgChartRenderContext, rhs: OrgChartRenderContext) -> Bool {
+    public static func == (lhs: Row, rhs: Row) -> Bool {
         lhs.id == rhs.id
             && lhs.heading == rhs.heading
             && lhs.background == rhs.background
@@ -118,7 +118,7 @@ extension Row: Equatable {
 
 
 extension Row: Hashable {
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(heading)
         hasher.combine(background)

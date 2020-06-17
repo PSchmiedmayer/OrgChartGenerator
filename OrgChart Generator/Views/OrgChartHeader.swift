@@ -7,26 +7,11 @@
 //
 
 import SwiftUI
-import OrgChart
+import OrgChartRenderContext
+
 
 struct OrgChartHeader: View {
     @ObservedObject var context: OrgChartRenderContext
-    
-    var unsafeTopLeftBinding: Binding<Box> {
-        Binding(get: {
-            self.context.topLeft!
-        }) { newTopLeft in
-            self.context.topLeft = newTopLeft
-        }
-    }
-    
-    var unsafeTopRightBinding: Binding<Box> {
-        Binding(get: {
-            self.context.topRight!
-        }) { newTopRight in
-            self.context.topRight = newTopRight
-        }
-    }
     
     var body: some View {
         HStack(spacing: 0) {

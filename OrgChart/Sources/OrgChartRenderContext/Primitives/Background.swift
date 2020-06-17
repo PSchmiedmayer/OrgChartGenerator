@@ -9,9 +9,9 @@
 import AppKit
 
 
-struct Background {
-    let color: NSColor
-    let border: Border?
+public struct Background {
+    public let color: NSColor
+    public let border: Border?
     
     init(color: NSColor, border: Border? = nil) {
         self.color = color

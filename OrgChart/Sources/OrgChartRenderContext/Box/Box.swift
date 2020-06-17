@@ -11,11 +11,11 @@ import OrgChart
 import Combine
 
 
-class Box: ObservableObject {
-    let id: UUID = UUID()
-    let title: String?
-    let background: Background?
-    @Published var members: [Member]
+public class Box: ObservableObject {
+    public let id: UUID = UUID()
+    public let title: String?
+    public let background: Background?
+    @Published public private(set) var members: [Member]
     
     
     init(title: String? = nil, background: Background? = nil, members: [Member]) {
@@ -59,7 +59,7 @@ extension Box: ImageHandler {
 
 
 extension Box: Equatable {
-    static func == (lhs: Box, rhs: Box) -> Bool {
+    public static func == (lhs: Box, rhs: Box) -> Bool {
         lhs.id == rhs.id
             && lhs.title == rhs.title
             && lhs.background == rhs.background
@@ -70,7 +70,7 @@ extension Box: Equatable {
 
 
 extension Box: Hashable {
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(title)
         hasher.combine(background)

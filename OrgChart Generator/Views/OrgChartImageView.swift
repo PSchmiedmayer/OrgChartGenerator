@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import OrgChart
+import OrgChartRenderContext
 import ImageProcessor
 import Combine
 

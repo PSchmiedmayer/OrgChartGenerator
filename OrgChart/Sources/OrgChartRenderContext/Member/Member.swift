@@ -12,12 +12,12 @@ import OrgChart
 import ImageProcessor
 
 
-class Member: ObservableObject {
-    let id: UUID = UUID()
-    let name: String
-    let role: String?
-    @Published var imageState: ImageState
-    @Published var loading: Bool = false
+public class Member: ObservableObject {
+    public let id: UUID = UUID()
+    public let name: String
+    public let role: String?
+    @Published public var imageState: ImageState
+    @Published public private(set) var loading: Bool = false
     
     
     var picture: NSImage? {
@@ -41,22 +41,31 @@ class Member: ObservableObject {
 
 extension Member: ImageHandler {
     func loadImages() {
-        loading = true
+        DispatchQueue.main.async {
+            self.loading = true
+        }
         if case let .success(image) = imageState.loadImage() {
-            self.imageState = .loaded(image)
-            loading = false
+            DispatchQueue.main.async {
+                self.imageState = .loaded(image)
+                self.loading = false
+            }
         }
     }
     
     func cropImages(cropFaces: Bool, size: CGSize)  -> AnyPublisher<Void, Never> {
-        loading = true
+        DispatchQueue.main.async {
+            self.loading = true
+        }
+        
         return Just(Void())
             .flatMap { _ in
                 self.imageState
                     .cropImages(cropFaces: cropFaces, size: size)
                     .map { image in
-                        self.imageState = .cropped(image)
-                        self.loading = false
+                        DispatchQueue.main.async {
+                            self.imageState = .cropped(image)
+                            self.loading = false
+                        }
                     }
                     .replaceError(with: Void())
             }
@@ -65,7 +74,7 @@ extension Member: ImageHandler {
 }
 
 extension Member: Equatable {
-    static func == (lhs: Member, rhs: Member) -> Bool {
+    public static func == (lhs: Member, rhs: Member) -> Bool {
         lhs.id == rhs.id
             && lhs.name == rhs.name
             && lhs.role == rhs.role
@@ -76,7 +85,7 @@ extension Member: Equatable {
 
 
 extension Member: Hashable {
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(name)
         hasher.combine(role)

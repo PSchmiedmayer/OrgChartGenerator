@@ -11,18 +11,18 @@ import ImageProcessor
 import Combine
 
 
-enum ImageStateError: Error {
+public enum ImageStateError: Error {
     case couldNotBeLoaded
 }
 
-enum ImageState: Hashable {
+public enum ImageState: Hashable {
     case notLoaded(URL)
     case cloudNotBeLoaded
     case loaded(NSImage)
     case cropped(NSImage)
     
     
-    var image: NSImage? {
+    public var image: NSImage? {
         switch self {
         case .notLoaded, .cloudNotBeLoaded:
             return nil

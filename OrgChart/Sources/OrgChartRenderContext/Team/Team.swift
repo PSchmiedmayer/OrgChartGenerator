@@ -10,10 +10,10 @@ import Foundation
 import OrgChart
 
 
-class Team: ObservableObject {
-    let id: UUID = UUID()
-    @Published private(set) var header: TeamHeader
-    let background: Background
+public class Team: ObservableObject {
+    public let id: UUID = UUID()
+    @Published public private(set) var header: TeamHeader
+    public let background: Background
     
     
     init(_ team: OrgChartTeam) {
@@ -30,7 +30,7 @@ extension Team: ImageLoadable {
 }
 
 extension Team: Equatable {
-    static func == (lhs: Team, rhs: Team) -> Bool {
+    public static func == (lhs: Team, rhs: Team) -> Bool {
         lhs.id == rhs.id
             && lhs.header == rhs.header
             && lhs.background == rhs.background
@@ -40,7 +40,7 @@ extension Team: Equatable {
 
 
 extension Team: Hashable {
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(header)
         hasher.combine(background)

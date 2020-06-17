@@ -7,7 +7,8 @@
 //
 
 import SwiftUI
-import OrgChart
+import OrgChartRenderContext
+
 
 struct OrgChartView: View {
     @ObservedObject var context: OrgChartRenderContext

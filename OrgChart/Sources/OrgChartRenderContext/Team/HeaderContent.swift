@@ -8,7 +8,7 @@
 
 import AppKit
 
-enum HeaderContent {
+public enum HeaderContent {
     case image(ImageState)
     case text(String)
 }
