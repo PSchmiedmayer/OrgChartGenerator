@@ -9,6 +9,7 @@
 import SwiftUI
 import Combine
 import OrgChart
+import OrgChartRenderContext
 
 
 struct GeneratorError: Error {

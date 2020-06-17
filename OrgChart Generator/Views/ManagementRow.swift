@@ -7,25 +7,17 @@
 //
 
 import SwiftUI
+import OrgChartRenderContext
 
 
 struct ManagementRow: View {
     @Binding var headingHeight: CGFloat
-    @Binding var row: Row
-    
-    
-    var unsafeManagementBinding: Binding<Management> {
-        Binding(get: {
-            self.row.management!
-        }) { newManagement in
-            self.row.management = newManagement
-        }
-    }
+    @ObservedObject var row: Row
     
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             if row.management != nil {
-                ManagementBox(management: self.unsafeManagementBinding,
+                ManagementBox(management: row.management!,
                               headingHeight: self.$headingHeight,
                               color: self.row.background?.border?.color ?? .clear)
             } else {
@@ -37,7 +29,7 @@ struct ManagementRow: View {
 }
 
 struct ManagementBox: View {
-    @Binding var management: Management
+    @ObservedObject var management: Management
     @Binding var headingHeight: CGFloat
     var color: NSColor
     
@@ -46,7 +38,7 @@ struct ManagementBox: View {
             VStack(spacing: 0) {
                 Color.clear
                     .frame(height: self.headingHeight)
-                MemberView(member: self.$management.members[memberIndex],
+                MemberView(member: self.management.members[memberIndex],
                            accentColor: self.color)
                     .padding(.horizontal, 16)
             }
@@ -56,12 +48,11 @@ struct ManagementBox: View {
 
 
 struct ManagementRow_Previews: PreviewProvider {
-    @State static var row: Row = OrgChartRenderContext.mock.rows[3]
     @State static var headingHeight: CGFloat = 64
     
     static var previews: some View {
         ManagementRow(headingHeight: $headingHeight,
-                      row: $row)
+                      row: OrgChartRenderContext.mock.rows[3])
             .background(Color.white)
     }
 }

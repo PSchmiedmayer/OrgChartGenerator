@@ -9,9 +9,9 @@
 import AppKit
 
 
-struct Border {
-    let color: NSColor
-    let width: CGFloat
+public struct Border {
+    public let color: NSColor
+    public let width: CGFloat
 }
 
 

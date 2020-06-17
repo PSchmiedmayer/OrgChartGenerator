@@ -7,11 +7,11 @@
 //
 
 import SwiftUI
-import OrgChart
+import OrgChartRenderContext
 
 
 struct BoxView: View {
-    @Binding var box: Box
+    @ObservedObject var box: Box
     
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
@@ -21,7 +21,7 @@ struct BoxView: View {
             }
             HStack(alignment: .center, spacing: 8) {
                 ForEach(box.members.indices) { memberIndex in
-                    MemberView(member: self.$box.members[memberIndex],
+                    MemberView(member: self.box.members[memberIndex],
                                accentColor: self.box.background?.color ?? .clear)
                 }
             }
@@ -33,10 +33,8 @@ struct BoxView: View {
 }
 
 struct BoxView_Previews: PreviewProvider {
-    @State static var box: Box = OrgChartRenderContext.mock.topLeft!
-    
     static var previews: some View {
-        BoxView(box: $box)
+        BoxView(box: OrgChartRenderContext.mock.topLeft!)
             .previewLayout(.sizeThatFits)
     }
 }

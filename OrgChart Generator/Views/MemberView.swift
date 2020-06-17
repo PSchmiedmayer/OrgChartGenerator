@@ -8,10 +8,11 @@
 
 import SwiftUI
 import ImageProcessor
+import OrgChartRenderContext
 
 
 struct MemberView: View {
-    @Binding var member: Member
+    @ObservedObject var member: Member
     var accentColor: NSColor
     
     var body: some View {
@@ -36,10 +37,8 @@ struct MemberView: View {
 }
 
 struct MemberView_Previews: PreviewProvider {
-    @State static var member = OrgChartRenderContext.mock.topLeft!.members.first!
-    
     static var previews: some View {
-        MemberView(member: $member,
+        MemberView(member: OrgChartRenderContext.mock.topLeft!.members.first!,
                    accentColor: .systemBlue)
             .previewLayout(.sizeThatFits)
     }

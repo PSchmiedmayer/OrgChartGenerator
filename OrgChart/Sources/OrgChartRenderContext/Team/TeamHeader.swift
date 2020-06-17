@@ -8,16 +8,19 @@
 
 import AppKit
 import OrgChart
+import Combine
 
 
-class TeamHeader {
-    let background: Background
+public class TeamHeader {
+    public let background: Background
     
-    private var imageState: ImageState
+    @Published public private(set) var loading: Bool = false
+    @Published public private(set) var imageState: ImageState
+    
     private let fallbackName: String
     
     
-    var content: HeaderContent {
+    public var content: HeaderContent {
         switch imageState {
         case .cloudNotBeLoaded, .notLoaded:
             return .text(fallbackName)
@@ -45,18 +48,18 @@ class TeamHeader {
 
 extension TeamHeader: ImageLoadable {
     func loadImages() {
-        guard case let .notLoaded(pictureURL) = imageState,
-              let image = NSImage(contentsOfFile: pictureURL.path) else {
-            return
-        }
+        loading = true
         
-        self.imageState = .loaded(image)
+        if case let .success(image) = imageState.loadImage() {
+            self.imageState = .loaded(image)
+            loading = false
+        }
     }
 }
 
 
 extension TeamHeader: Equatable {
-    static func == (lhs: TeamHeader, rhs: TeamHeader) -> Bool {
+    public static func == (lhs: TeamHeader, rhs: TeamHeader) -> Bool {
         lhs.background == rhs.background
             && lhs.imageState == rhs.imageState
             && lhs.fallbackName == rhs.fallbackName
@@ -66,7 +69,7 @@ extension TeamHeader: Equatable {
 
 
 extension TeamHeader: Hashable {
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(background)
         hasher.combine(imageState)
         hasher.combine(fallbackName)

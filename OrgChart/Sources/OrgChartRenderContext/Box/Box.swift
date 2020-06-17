@@ -11,11 +11,11 @@ import OrgChart
 import Combine
 
 
-struct Box {
-    let id: UUID = UUID()
-    let title: String?
-    let background: Background?
-    var members: [Member]
+public class Box: ObservableObject {
+    public let id: UUID = UUID()
+    public let title: String?
+    public let background: Background?
+    @Published public private(set) var members: [Member]
     
     
     init(title: String? = nil, background: Background? = nil, members: [Member]) {
@@ -24,7 +24,7 @@ struct Box {
         self.members = members
     }
     
-    init(_ crossTeamRole: CrossTeamRole) {
+    convenience init(_ crossTeamRole: CrossTeamRole) {
         let color = crossTeamRole.background.color
         let background = Background(color: color.withAlphaComponent(Constants.Box.backgroundAlpha),
                                     border: Border(color: color.withAlphaComponent(Constants.Box.borderAlpha),
@@ -58,7 +58,26 @@ extension Box: ImageHandler {
 }
 
 
-extension Box: Hashable { }
+extension Box: Equatable {
+    public static func == (lhs: Box, rhs: Box) -> Bool {
+        lhs.id == rhs.id
+            && lhs.title == rhs.title
+            && lhs.background == rhs.background
+            && lhs.members == rhs.members
+        
+    }
+}
+
+
+extension Box: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(title)
+        hasher.combine(background)
+        hasher.combine(members)
+    }
+}
+
 
 
 extension Box: Identifiable { }

@@ -7,25 +7,24 @@
 //
 
 import SwiftUI
-import OrgChart
+import OrgChartRenderContext
+
 
 struct OrgChartView: View {
-    @Binding var context: OrgChartRenderContext
+    @ObservedObject var context: OrgChartRenderContext
     
     var body: some View {
         VStack(spacing: 64) {
-            OrgChartHeader(context: $context)
-            OrgChartBody(context: $context)
+            OrgChartHeader(context: context)
+            OrgChartBody(context: context)
         }.padding(32)
             .printableBackground(.white)
     }
 }
 
 struct OrgChartView_Previews: PreviewProvider {
-    @State static var renderContext = OrgChartRenderContext.mock
-    
     static var previews: some View {
-        OrgChartView(context: $renderContext)
+        OrgChartView(context: OrgChartRenderContext.mock)
             .background(Color(.white))
     }
 }

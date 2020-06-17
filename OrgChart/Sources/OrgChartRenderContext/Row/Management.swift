@@ -10,9 +10,9 @@ import Foundation
 import Combine
 
 
-struct Management {
-    let title: String?
-    var members: [Member]
+public class Management: ObservableObject {
+    public let title: String?
+    @Published public private(set) var members: [Member]
     
     
     init(title: String? = nil, members: [Member]) {
@@ -42,4 +42,18 @@ extension Management: ImageHandler {
 }
 
 
-extension Management: Hashable { }
+extension Management: Equatable {
+    public static func == (lhs: Management, rhs: Management) -> Bool {
+        lhs.title == rhs.title
+            && lhs.members == rhs.members
+        
+    }
+}
+
+
+extension Management: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+        hasher.combine(members)
+    }
+}

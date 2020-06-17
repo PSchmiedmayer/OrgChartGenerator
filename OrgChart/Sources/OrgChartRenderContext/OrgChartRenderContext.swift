@@ -11,15 +11,15 @@ import AppKit
 import Combine
 
 
-struct OrgChartRenderContext: ImageLoadable {
-    let title: String
-    var topLeft: Box?
-    var topRight: Box?
-    var teams: [Team]
-    var rows: [Row]
+public class OrgChartRenderContext: ImageLoadable, ObservableObject {
+    public let title: String
+    @Published public private(set) var topLeft: Box?
+    @Published public private(set) var topRight: Box?
+    @Published public private(set) var teams: [Team]
+    @Published public private(set) var rows: [Row]
     
     
-    init(_ orgChart: OrgChart) {
+    public init(_ orgChart: OrgChart) {
         self.title = orgChart.title
         
         // Top Left
@@ -51,7 +51,7 @@ struct OrgChartRenderContext: ImageLoadable {
     }
     
     
-    func loadImages() {
+    public func loadImages() {
         topLeft?.loadImages()
         topRight?.loadImages()
         
@@ -64,7 +64,7 @@ struct OrgChartRenderContext: ImageLoadable {
         }
     }
     
-    func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never> {
+    public func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never> {
         var publishers : [AnyPublisher<Void, Never>] = [
             topLeft?.cropImages(cropFaces: cropFaces, size: size) ?? Just(Void()).eraseToAnyPublisher(),
             topRight?.cropImages(cropFaces: cropFaces, size: size) ?? Just(Void()).eraseToAnyPublisher(),
@@ -81,5 +81,27 @@ struct OrgChartRenderContext: ImageLoadable {
             .collect()
             .map { _ in }
             .eraseToAnyPublisher()
+    }
+}
+
+
+extension OrgChartRenderContext: Equatable {
+    public static func == (lhs: OrgChartRenderContext, rhs: OrgChartRenderContext) -> Bool {
+        lhs.title == rhs.title
+            && lhs.topLeft == rhs.topLeft
+            && lhs.topRight == rhs.topRight
+            && lhs.teams == rhs.teams
+            && lhs.rows == rhs.rows
+    }
+}
+
+
+extension OrgChartRenderContext: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(title)
+        hasher.combine(topLeft)
+        hasher.combine(topRight)
+        hasher.combine(teams)
+        hasher.combine(rows)
     }
 }
