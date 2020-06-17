@@ -11,7 +11,7 @@ import OrgChart
 import Combine
 
 
-public class TeamHeader {
+public class TeamHeader: ObservableObject {
     public let background: Background
     
     @Published public private(set) var loading: Bool = false
@@ -48,11 +48,15 @@ public class TeamHeader {
 
 extension TeamHeader: ImageLoadable {
     func loadImages() {
-        loading = true
+        DispatchQueue.main.async {
+            self.loading = true
+        }
         
         if case let .success(image) = imageState.loadImage() {
-            self.imageState = .loaded(image)
-            loading = false
+            DispatchQueue.main.async {
+                self.imageState = .loaded(image)
+                self.loading = false
+            }
         }
     }
 }

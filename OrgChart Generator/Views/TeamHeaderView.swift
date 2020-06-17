@@ -20,7 +20,7 @@ struct TeamHeaderView: View {
             ZStack {
                 Color.white
                 self.background(for: team.header)
-                self.headerView(for: team.header.content)
+                HeaderView(teamHeader: team.header)
             }.frame(height: 120)
                 .padding(6)
         }
@@ -36,21 +36,6 @@ struct TeamHeaderView: View {
             PrintableRectangle(color: teamHeader.background.color)
                 .printableBorder(border.color, width: border.width)
         )
-    }
-    
-    func headerView(for headerContent: HeaderContent) -> AnyView {
-        switch headerContent {
-        case let .image(imageState):
-            let binding = Binding(get: {
-                return imageState
-            }, set: { _ in })
-            return AnyView(PrintableImage(imageState: binding, mode: .scaleToFit))
-        case let .text(text):
-            return AnyView(
-                Text(text)
-                    .font(.system(size: 50, weight: .medium))
-            )
-        }
     }
 }
 
