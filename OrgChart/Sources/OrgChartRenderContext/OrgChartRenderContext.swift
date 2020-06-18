@@ -77,6 +77,13 @@ public class OrgChartRenderContext: ImageLoadable, ObservableObject {
                 }
         )
         
+        publishers.append(contentsOf:
+            teams.indices
+                .map { index in
+                    teams[index].cropImages(cropFaces: false, size: size, compressionFactor: compressionFactor)
+                }
+        )
+        
         return Publishers.MergeMany(publishers)
             .collect()
             .map { _ in }

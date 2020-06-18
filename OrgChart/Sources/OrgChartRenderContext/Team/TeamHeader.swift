@@ -17,7 +17,7 @@ public class TeamHeader: ObservableObject {
     @Published public private(set) var loading: Bool = false
     @Published public private(set) var imageState: ImageState
     
-    private var compressedImage: NSImage?
+    @Published private var compressedImage: NSImage?
     private let fallbackName: String
     
     
@@ -47,7 +47,7 @@ public class TeamHeader: ObservableObject {
 }
 
 
-extension TeamHeader: ImageLoadable {
+extension TeamHeader: ImageHandler {
     func loadImages() {
         DispatchQueue.main.async {
             self.loading = true
@@ -59,6 +59,26 @@ extension TeamHeader: ImageLoadable {
                 self.loading = false
             }
         }
+    }
+    
+    func cropImages(cropFaces: Bool, size: CGSize, compressionFactor: CGFloat) -> AnyPublisher<Void, Never> {
+        DispatchQueue.main.async {
+            self.loading = true
+        }
+        
+        guard let image = imageState.image else {
+            return Just(Void()).eraseToAnyPublisher()
+        }
+        
+        return Just(image.compress(compressionFactor: compressionFactor, useHEIF: true) as NSImage?)
+            .map { compressedImage in
+                DispatchQueue.main.async {
+                   self.imageState = .cropped(image)
+                   self.compressedImage = compressedImage
+                   self.loading = false
+               }
+            }
+            .eraseToAnyPublisher()
     }
 }
 

@@ -28,19 +28,36 @@ extension NSImage {
                          intoRect: rect)
     }
     
-     public func compress(compressionFactor: CGFloat) -> Data? {
-        guard let tiff = self.tiffRepresentation, let imageRep = NSBitmapImageRep(data: tiff) else {
-            return nil
+    public func compress(compressionFactor: CGFloat, useHEIF: Bool = false) -> Data? {
+        if useHEIF {
+            guard let ciImage = ciImage else {
+                return nil
+            }
+            
+            let context = CIContext(options: nil)
+            let options = NSDictionary(dictionary: [kCGImageDestinationLossyCompressionQuality: compressionFactor]) as! [CIImageRepresentationOption : Any]
+
+            return context.heifRepresentation(of: ciImage,
+                                              format: CIFormat.ARGB8,
+                                              colorSpace: ciImage.colorSpace!,
+                                              options: options)
+        } else {
+            guard let tiff = self.tiffRepresentation, let imageRep = NSBitmapImageRep(data: tiff) else {
+                return nil
+            }
+            return imageRep.representation(using: .jpeg, properties: [.compressionFactor : compressionFactor])
         }
-        
-        return imageRep.representation(using: .jpeg, properties: [.compressionFactor : compressionFactor])
     }
     
-    public func compress(compressionFactor: CGFloat) -> NSImage? {
-        guard let compressedData: Data = compress(compressionFactor: compressionFactor) else {
+    public func compress(compressionFactor: CGFloat, useHEIF: Bool = false) -> NSImage? {
+        guard let compressedData: Data = compress(compressionFactor: compressionFactor, useHEIF: useHEIF) else {
             return nil
         }
-        return NSImage(data: compressedData)
+        let image = NSImage(data: compressedData)
+        if image == nil {
+            print("IMAGE IS NIL")
+        }
+        return image
     }
     
     public func compress(underMegabytes megabytes: CGFloat) -> NSImage? {

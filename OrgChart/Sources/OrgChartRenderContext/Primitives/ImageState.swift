@@ -31,10 +31,6 @@ public enum ImageState: Hashable {
         }
     }
     
-    public var compressedImage: NSImage? {
-        image
-    }
-    
     
     func loadImage() -> Result<NSImage, Error> {
         if let image = self.image {

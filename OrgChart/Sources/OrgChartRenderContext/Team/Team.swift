@@ -8,6 +8,7 @@
 
 import Foundation
 import OrgChart
+import Combine
 
 
 public class Team: ObservableObject {
@@ -23,9 +24,13 @@ public class Team: ObservableObject {
 }
 
 
-extension Team: ImageLoadable {
+extension Team: ImageHandler {
     func loadImages() {
         header.loadImages()
+    }
+    
+    func cropImages(cropFaces: Bool, size: CGSize, compressionFactor: CGFloat) -> AnyPublisher<Void, Never> {
+        header.cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor)
     }
 }
 
