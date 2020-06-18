@@ -88,16 +88,16 @@ extension Row: ImageHandler {
         management?.loadImages()
     }
     
-    func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never> {
+    func cropImages(cropFaces: Bool, size: CGSize, compressionFactor: CGFloat) -> AnyPublisher<Void, Never> {
         var publishers: [AnyPublisher<Void, Never>] = []
         for teamIndex in teams.indices {
             for index in teams[teamIndex].indices {
                 publishers.append(
-                    teams[teamIndex][index].cropImages(cropFaces: cropFaces, size: size)
+                    teams[teamIndex][index].cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor)
                 )
             }
         }
-        publishers.append(management?.cropImages(cropFaces: cropFaces, size: size) ?? Just(Void()).eraseToAnyPublisher())
+        publishers.append(management?.cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor) ?? Just(Void()).eraseToAnyPublisher())
         return Publishers.MergeMany(publishers)
             .collect()
             .map { _ in }

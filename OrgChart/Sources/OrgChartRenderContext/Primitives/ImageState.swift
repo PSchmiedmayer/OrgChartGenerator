@@ -31,6 +31,10 @@ public enum ImageState: Hashable {
         }
     }
     
+    public var compressedImage: NSImage? {
+        image
+    }
+    
     
     func loadImage() -> Result<NSImage, Error> {
         if let image = self.image {
@@ -44,6 +48,8 @@ public enum ImageState: Hashable {
         
         return .success(image)
     }
+    
+    static var cropImagesCount: Int = 0
     
     func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<NSImage, ImageTransformationError>{
         if case let .cropped(image) = self {

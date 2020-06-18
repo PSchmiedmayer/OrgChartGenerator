@@ -19,5 +19,5 @@ protocol ImageLoadable {
 
 
 protocol ImageCropable {
-    mutating func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never>
+    mutating func cropImages(cropFaces: Bool, size: CGSize, compressionFactor: CGFloat) -> AnyPublisher<Void, Never>
 }

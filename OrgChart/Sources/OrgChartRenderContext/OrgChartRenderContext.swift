@@ -64,16 +64,16 @@ public class OrgChartRenderContext: ImageLoadable, ObservableObject {
         }
     }
     
-    public func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never> {
+    public func cropImages(cropFaces: Bool, size: CGSize, compressionFactor: CGFloat) -> AnyPublisher<Void, Never> {
         var publishers : [AnyPublisher<Void, Never>] = [
-            topLeft?.cropImages(cropFaces: cropFaces, size: size) ?? Just(Void()).eraseToAnyPublisher(),
-            topRight?.cropImages(cropFaces: cropFaces, size: size) ?? Just(Void()).eraseToAnyPublisher(),
+            topLeft?.cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor) ?? Just(Void()).eraseToAnyPublisher(),
+            topRight?.cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor) ?? Just(Void()).eraseToAnyPublisher(),
         ]
         
         publishers.append(contentsOf:
             rows.indices
                 .map { index in
-                    rows[index].cropImages(cropFaces: cropFaces, size: size)
+                    rows[index].cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor)
                 }
         )
         

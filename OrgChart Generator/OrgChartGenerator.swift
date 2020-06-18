@@ -204,7 +204,8 @@ class OrgChartGenerator: ObservableObject {
                 }
                 
                 renderContext.cropImages(cropFaces: self.settings.cropFaces,
-                                         size: CGSize(width: self.settings.imageSize, height: self.settings.imageSize))
+                                         size: CGSize(width: self.settings.imageSize, height: self.settings.imageSize),
+                                         compressionFactor: self.settings.compressionFactor)
                     .receive(on: RunLoop.main)
                     .sink(receiveValue: {
                         self.state = .imagesCropped(path: path, renderContext: renderContext)

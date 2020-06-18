@@ -24,7 +24,7 @@ public struct SizeTransformation: ImageTransformation {
     
     
     public func transform(_ image: NSImage) -> AnyPublisher<NSImage, ImageTransformationError> {
-        Future { promise in
+        return Future { promise in
             promise(.success(image.scale(toSize: self.size)))
         }.eraseToAnyPublisher()
     }

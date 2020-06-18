@@ -11,19 +11,18 @@ import ArgumentParser
 
 
 class OrgChartGeneratorSettings: ObservableObject {
-    private enum Defaults {
+    enum Defaults {
         static let orgChartName: String = "OrgChart"
-        static let imageSize: Int = 250
-        static let compressionRate: Double = 0.6
+        static let imageSize: Int = 500
+        static let compressionFactor: CGFloat = 0.5
         static let cropFaces: Bool = true
-        static let autogenerate: Bool = false
     }
     
     
     @Published var path: URL?
     @Published var orgChartName: String
     @Published var imageSize: Int
-    @Published var compressionRate: Double
+    @Published var compressionFactor: CGFloat
     @Published var cropFaces: Bool
     @Published var autogenerate: Bool
     
@@ -31,13 +30,13 @@ class OrgChartGeneratorSettings: ObservableObject {
     init(path: URL?,
          orgChartName: String = Defaults.orgChartName,
          imageSize: Int = Defaults.imageSize,
-         compressionRate: Double = Defaults.compressionRate,
+         compressionFactor: CGFloat = Defaults.compressionFactor,
          cropFaces: Bool = Defaults.cropFaces,
-         autogenerate: Bool = Defaults.autogenerate) {
+         autogenerate: Bool = false) {
         self.path = path
         self.orgChartName = orgChartName
         self.imageSize = imageSize
-        self.compressionRate = compressionRate
+        self.compressionFactor = compressionFactor
         self.cropFaces = cropFaces
         self.autogenerate = autogenerate
     }
@@ -53,7 +52,7 @@ class OrgChartGeneratorSettings: ObservableObject {
             self.init(path: URL(fileURLWithPath: parsedArguments.path),
                       orgChartName: parsedArguments.orgChartName,
                       imageSize: parsedArguments.imageSize,
-                      compressionRate: parsedArguments.compressionRate,
+                      compressionFactor: CGFloat(parsedArguments.compressionFactor),
                       cropFaces: parsedArguments.cropFaces,
                       autogenerate: parsedArguments.autogenerate)
         } catch {

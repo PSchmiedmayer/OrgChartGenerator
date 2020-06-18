@@ -17,7 +17,7 @@ struct MemberView: View {
     
     var body: some View {
         HStack(alignment: .center, spacing: 8.0) {
-            OrgChartImageView(imageState: $member.imageState)
+            OrgChartImageView(image: $member.picture, loading: $member.loading)
                 .frame(width: 100, height: 100)
                 .clipped()
                 .printableBorder(accentColor, width: 1.5)

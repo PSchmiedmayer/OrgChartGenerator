@@ -16,35 +16,26 @@ struct OrgChartImageView: View {
     @EnvironmentObject var generator: OrgChartGenerator
     
     @State var displayMode: ImageDisplayMode = .scaleToFill
-    @Binding var imageState: ImageState
-    
-    
-    var displayLoading: Bool {
-        switch imageState {
-        case .cropped, .cloudNotBeLoaded:
-            return false
-        default:
-            return generator.loading
-        }
-    }
+    @Binding var image: NSImage?
+    @Binding var loading: Bool
     
     var body: some View {
         ZStack {
-            if imageState.image == nil {
+            if image == nil {
                 Rectangle()
                     .foregroundColor(Color(.lightGray))
             }
-            PrintableImage(imageState: $imageState, mode: displayMode)
-            ActivityIndicator(loading: displayLoading)
+            PrintableImage(image: $image, mode: displayMode)
+            ActivityIndicator(loading: loading)
         }
     }
 }
 
 struct OrgChartImageView_Previews: PreviewProvider {
-    @State static var imageState = OrgChartRenderContext.mock.topLeft!.members.first!.imageState
+    @State static var image = OrgChartRenderContext.mock.topLeft!.members.first!.picture
     @State static var loading = true
     
     static var previews: some View {
-        OrgChartImageView(imageState: $imageState)
+        OrgChartImageView(image: $image, loading: $loading)
     }
 }

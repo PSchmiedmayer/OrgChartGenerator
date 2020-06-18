@@ -29,10 +29,10 @@ extension Management: ImageHandler {
         }
     }
     
-    func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<Void, Never> {
+    func cropImages(cropFaces: Bool, size: CGSize, compressionFactor: CGFloat) -> AnyPublisher<Void, Never> {
         let publisher = members.indices
             .map { index in
-                members[index].cropImages(cropFaces: cropFaces, size: size)
+                members[index].cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor)
             }
         return Publishers.MergeMany(publisher)
             .collect()

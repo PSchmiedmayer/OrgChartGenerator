@@ -18,14 +18,44 @@ extension NSImage {
         return ciImage
     }
     
-    func scale(toSize size: CGSize) -> NSImage {
+    public func scale(toSize size: CGSize) -> NSImage {
         return transform(partOfImage: CGRect(origin: .zero, size: self.representations.first?.size ?? self.size),
                          intoRect: CGRect(origin: .zero, size: size))
     }
     
-    func crop(_ rect: CGRect) -> NSImage {
+    public func crop(to rect: CGRect) -> NSImage {
         return transform(partOfImage: rect,
                          intoRect: rect)
+    }
+    
+     public func compress(compressionFactor: CGFloat) -> Data? {
+        guard let tiff = self.tiffRepresentation, let imageRep = NSBitmapImageRep(data: tiff) else {
+            return nil
+        }
+        
+        return imageRep.representation(using: .jpeg, properties: [.compressionFactor : compressionFactor])
+    }
+    
+    public func compress(compressionFactor: CGFloat) -> NSImage? {
+        guard let compressedData: Data = compress(compressionFactor: compressionFactor) else {
+            return nil
+        }
+        return NSImage(data: compressedData)
+    }
+    
+    public func compress(underMegabytes megabytes: CGFloat) -> NSImage? {
+        var compressionFactor: CGFloat = 1.0
+        var compressedData: Data?
+        while CGFloat(compressedData?.count ?? Int.max) > megabytes * 1024 * 1024 && compressionFactor > 0.4 {
+            compressedData = self.compress(compressionFactor: compressionFactor)
+            compressionFactor -= 0.1
+        }
+        
+        guard let data = compressedData else {
+            return nil
+        }
+        
+        return NSImage(data: data)
     }
     
     private func transform(partOfImage: CGRect, intoRect targetRect: CGRect) -> NSImage {

@@ -17,6 +17,7 @@ public class TeamHeader: ObservableObject {
     @Published public private(set) var loading: Bool = false
     @Published public private(set) var imageState: ImageState
     
+    private var compressedImage: NSImage?
     private let fallbackName: String
     
     
@@ -24,8 +25,8 @@ public class TeamHeader: ObservableObject {
         switch imageState {
         case .cloudNotBeLoaded, .notLoaded:
             return .text(fallbackName)
-        case .cropped, .loaded:
-            return .image(imageState)
+        case let .cropped(image), let .loaded(image):
+            return .image(compressedImage ?? image)
         }
     }
     

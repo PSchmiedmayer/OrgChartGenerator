@@ -17,12 +17,12 @@ enum ImageDisplayMode {
 
 
 struct PrintableImage: View {
-    @Binding var imageState: ImageState
+    @Binding var image: NSImage?
     @State var mode: ImageDisplayMode = .scaleToFill
 
     var body: some View {
         DrawableView { rect in
-            guard let image = self.imageState.image else {
+            guard let image = self.image else {
                 return
             }
             
