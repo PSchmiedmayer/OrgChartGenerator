@@ -17,11 +17,14 @@ public class Member: ObservableObject {
     public let name: String
     public let role: String?
     @Published public var imageState: ImageState
-    @Published public private(set) var loading: Bool = false
+    @Published public var loading: Bool = false
+    @Published private var compressedImage: NSImage?
     
-    
-    var picture: NSImage? {
-        imageState.image
+    public var picture: NSImage? {
+        get {
+            compressedImage ?? imageState.image
+        }
+        set {}
     }
     
     
@@ -52,7 +55,7 @@ extension Member: ImageHandler {
         }
     }
     
-    func cropImages(cropFaces: Bool, size: CGSize)  -> AnyPublisher<Void, Never> {
+    func cropImages(cropFaces: Bool, size: CGSize, compressionFactor: CGFloat)  -> AnyPublisher<Void, Never> {
         DispatchQueue.main.async {
             self.loading = true
         }
@@ -62,8 +65,10 @@ extension Member: ImageHandler {
                 self.imageState
                     .cropImages(cropFaces: cropFaces, size: size)
                     .map { image in
+                        let compressedImage: NSImage? = image.compress(compressionFactor: compressionFactor)
                         DispatchQueue.main.async {
                             self.imageState = .cropped(image)
+                            self.compressedImage = compressedImage
                             self.loading = false
                         }
                     }

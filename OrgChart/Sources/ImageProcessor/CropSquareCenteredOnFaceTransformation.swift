@@ -14,6 +14,7 @@ import Vision
 public struct CropSquareCenteredOnFaceTransformation: ImageTransformation {
     public init() { }
     
+    
     public func transform(_ image: NSImage) -> AnyPublisher<NSImage, ImageTransformationError> {
         Future { promise in
             guard let ciImage = image.ciImage else {
@@ -40,13 +41,13 @@ public struct CropSquareCenteredOnFaceTransformation: ImageTransformation {
                 let center = CGPoint(x: min(max(faceRect.center.x, squareSize/2), imageRepresentation.size.width - squareSize/2),
                                      y: min(max(faceRect.center.y, squareSize/2), imageRepresentation.size.height - squareSize/2))
                 
-                promise(.success(image.crop(CGRect(center: center, size: squareSize))))
+                promise(.success(image.crop(to: CGRect(center: center, size: squareSize))))
             }
             
             let faceDetectionRequest = VNDetectFaceRectanglesRequest(completionHandler: faceRectanglesRequestCompletionHandler)
             let imageRequestHandler = VNImageRequestHandler(ciImage: ciImage)
             
-            DispatchQueue.init(label: "...", qos: .userInitiated).async {
+            DispatchQueue.init(label: "CropSquareCenteredOnFaceTransformation", qos: .userInitiated).async {
                 do {
                     try imageRequestHandler.perform([faceDetectionRequest])
                 } catch {

@@ -9,7 +9,7 @@
 import AppKit
 
 public enum HeaderContent {
-    case image(ImageState)
+    case image(NSImage)
     case text(String)
 }
 

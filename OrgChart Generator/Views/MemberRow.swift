@@ -30,6 +30,7 @@ struct MemberRow: View {
                             MemberView(member: self.row.teams[teamMembersIndex][memberIndex],
                                        accentColor: self.row.background?.border?.color ?? .clear)
                                 .padding(.horizontal, 16)
+                                .padding(.trailing, 70)
                         }
                     }
                 }

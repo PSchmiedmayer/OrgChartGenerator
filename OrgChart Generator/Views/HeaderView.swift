@@ -16,12 +16,12 @@ struct HeaderView: View {
     
     var body: some View {
         switch teamHeader.content {
-        case let .image(imageState):
+        case let .image(image):
             let binding = Binding(get: {
-                return imageState
+                return image as NSImage?
             }, set: { _ in })
             return AnyView(
-                PrintableImage(imageState: binding, mode: .scaleToFit)
+                PrintableImage(image: binding, mode: .scaleToFit)
                     .padding(4)
             )
         case let .text(text):
