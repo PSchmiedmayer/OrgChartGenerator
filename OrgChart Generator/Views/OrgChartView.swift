@@ -25,6 +25,6 @@ struct OrgChartView: View {
 struct OrgChartView_Previews: PreviewProvider {
     static var previews: some View {
         OrgChartView(context: OrgChartRenderContext.mock)
-            .background(Color(.white))
+            .background(Color(NSColor.white))
     }
 }

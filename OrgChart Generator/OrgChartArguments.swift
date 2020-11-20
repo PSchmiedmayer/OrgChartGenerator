@@ -14,20 +14,20 @@ struct OrgChartArguments: ParsableCommand {
     @Argument(help: "The root folder of the directory structure that should be used to generate the OrgChart")
     var path: String
     
-    @Option(name: .shortAndLong, default: OrgChartGeneratorSettings.Defaults.orgChartName, help: "The name of the OrgChart PDF that should be generated.")
-    var orgChartName: String
+    @Option(name: .shortAndLong, help: "The name of the OrgChart PDF that should be generated.")
+    var orgChartName: String = OrgChartGeneratorSettings.Defaults.orgChartName
 
-    @Option(name: .shortAndLong, default: OrgChartGeneratorSettings.Defaults.imageSize, help: "The size of the quadratic images in the OrgChart should be cropped at.")
-    var imageSize: Int
+    @Option(name: .shortAndLong, help: "The size of the quadratic images in the OrgChart should be cropped at.")
+    var imageSize: Int = OrgChartGeneratorSettings.Defaults.imageSize
 
-    @Option(name: .shortAndLong, default: Double(OrgChartGeneratorSettings.Defaults.compressionFactor), help: "The compresssion rate (1-100) that should be applied to the JEPG images that are rendered in the OrgChart.")
-    var compressionFactor: Double
+    @Option(name: .shortAndLong, help: "The compresssion rate (1-100) that should be applied to the JEPG images that are rendered in the OrgChart.")
+    var compressionFactor: Double = Double(OrgChartGeneratorSettings.Defaults.compressionFactor)
     
-    @Flag(default: OrgChartGeneratorSettings.Defaults.cropFaces, inversion: .prefixedEnableDisable, help: "Crop the images of the members of the OrgChart so thier faces are centered")
-    var cropFaces: Bool
+    @Flag(inversion: .prefixedEnableDisable, help: "Crop the images of the members of the OrgChart so thier faces are centered")
+    var cropFaces: Bool = OrgChartGeneratorSettings.Defaults.cropFaces
     
-    @Flag(default: true, inversion: .prefixedNo, help: "Autogenerate the OrgChart without user interaction needed and exit the application when the PDF was exported")
-    var autogenerate: Bool
+    @Flag(inversion: .prefixedNo, help: "Autogenerate the OrgChart without user interaction needed and exit the application when the PDF was exported")
+    var autogenerate: Bool = true
 }
 
 extension URL: ExpressibleByArgument {
