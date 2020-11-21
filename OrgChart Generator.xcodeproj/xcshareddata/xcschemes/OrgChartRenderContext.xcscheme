@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "65994D75247442AB000D566E"
-               BuildableName = "OrgChart Generator.app"
-               BlueprintName = "OrgChart Generator"
-               ReferencedContainer = "container:OrgChart Generator.xcodeproj">
+               BlueprintIdentifier = "OrgChartRenderContext"
+               BuildableName = "OrgChartRenderContext"
+               BlueprintName = "OrgChartRenderContext"
+               ReferencedContainer = "container:OrgChart">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,6 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "OrgChartRenderContextTests"
+               BuildableName = "OrgChartRenderContextTests"
+               BlueprintName = "OrgChartRenderContextTests"
+               ReferencedContainer = "container:OrgChart">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -40,16 +50,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "65994D75247442AB000D566E"
-            BuildableName = "OrgChart Generator.app"
-            BlueprintName = "OrgChart Generator"
-            ReferencedContainer = "container:OrgChart Generator.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -57,16 +57,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "65994D75247442AB000D566E"
-            BuildableName = "OrgChart Generator.app"
-            BlueprintName = "OrgChart Generator"
-            ReferencedContainer = "container:OrgChart Generator.xcodeproj">
+            BlueprintIdentifier = "OrgChartRenderContext"
+            BuildableName = "OrgChartRenderContext"
+            BlueprintName = "OrgChartRenderContext"
+            ReferencedContainer = "container:OrgChart">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
