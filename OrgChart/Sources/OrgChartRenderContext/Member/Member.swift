@@ -13,7 +13,7 @@ import ImageProcessor
 
 
 public class Member: ObservableObject {
-    public let id: UUID = UUID()
+    public let id = UUID()
     public let name: String
     public let role: String?
     @Published public var imageState: ImageState
@@ -24,6 +24,7 @@ public class Member: ObservableObject {
         get {
             compressedImage ?? imageState.image
         }
+        // swiftlint:disable:next unused_setter_value
         set {}
     }
     
@@ -55,7 +56,7 @@ extension Member: ImageHandler {
         }
     }
     
-    func cropImages(cropFaces: Bool, size: CGSize, compressionFactor: CGFloat)  -> AnyPublisher<Void, Never> {
+    func cropImages(cropFaces: Bool, size: CGSize, compressionFactor: CGFloat) -> AnyPublisher<Void, Never> {
         DispatchQueue.main.async {
             self.loading = true
         }
@@ -84,7 +85,6 @@ extension Member: Equatable {
             && lhs.name == rhs.name
             && lhs.role == rhs.role
             && lhs.imageState == rhs.imageState
-        
     }
 }
 

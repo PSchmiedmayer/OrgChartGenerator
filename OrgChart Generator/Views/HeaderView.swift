@@ -18,7 +18,7 @@ struct HeaderView: View {
         switch teamHeader.content {
         case let .image(image):
             let binding = Binding(get: {
-                return image as NSImage?
+                image as NSImage?
             }, set: { _ in })
             return AnyView(
                 PrintableImage(image: binding, mode: .scaleToFit)

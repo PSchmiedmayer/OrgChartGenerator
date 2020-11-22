@@ -43,7 +43,7 @@ extension URL {
         let lastPathComponent = self.deletingPathExtension().lastPathComponent
         
         var imageComponents = lastPathComponent.split(omittingEmptySubsequences: false, whereSeparator: { $0 == "^" })
-        guard imageComponents.count > 0 && imageComponents.count <= 2 else {
+        guard !imageComponents.isEmpty && imageComponents.count <= 2 else {
             throw OrgChartError.impossibleToExtractInformation("Unexpected number of components \(imageComponents.count) when splitting \(self.lastPathComponent) to extract the image components.")
         }
         
@@ -55,13 +55,13 @@ extension URL {
             imageComponents.removeLast()
         }
         
-        var informationComponents = imageComponents.first!.split(omittingEmptySubsequences: false, whereSeparator: { $0 == "_" })
-        guard informationComponents.count > 0 && informationComponents.count <= 4 else {
+        guard var informationComponents = imageComponents.first?.split(omittingEmptySubsequences: false, whereSeparator: { $0 == "_" }),
+            !informationComponents.isEmpty && informationComponents.count <= 4 else {
             throw OrgChartError.impossibleToExtractInformation("Unexpected number of components \(imageComponents.count) when splitting \(self.lastPathComponent) to extract the information components.")
         }
         
         // Extract the POSITION
-        var position: Position? = nil
+        var position: Position?
         do {
             if informationComponents.count > 1, let potentialPosition = informationComponents.first {
                 position = try Position(potentialPosition)
@@ -72,7 +72,7 @@ extension URL {
         let name: String = informationComponents.first.flatMap(String.init) ?? lastPathComponent
         informationComponents.removeFirst()
         
-        var color: Background? = nil
+        var color: Background?
         do {
             color = try informationComponents.last.flatMap(Background.init(hexString:))
             if color != nil {
@@ -92,6 +92,8 @@ extension URL {
             throw OrgChartError.notADirectory(self)
         }
         
-        return directoryEnumerator.compactMap({ $0 as? URL }).sorted(by: { $0.path < $1.path })
+        return directoryEnumerator
+            .compactMap { $0 as? URL }
+            .sorted(by: { $0.path < $1.path })
     }
 }

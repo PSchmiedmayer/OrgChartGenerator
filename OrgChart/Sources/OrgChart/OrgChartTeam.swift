@@ -9,15 +9,20 @@
 import Foundation
 
 
+/// Trepresents an OrgChart team that can be parsed from a directory structure
 public final class OrgChartTeam {
+    /// The team name
     public let name: String
+    /// The team logo
     public let logo: URL
+    /// The background that should be used to render the team
     public let background: Background
+    /// The members of the team
     public var members: [Position: [OrgChartMember]]
     
     init(name: String, logo: URL, background: Background, members: [Position: [OrgChartMember]]) throws {
         for position in members.keys {
-            guard case .row(_) = position else {
+            guard case .row = position else {
                 throw OrgChartError.impossibleTeamPosition(position)
             }
         }
@@ -35,7 +40,7 @@ public final class OrgChartTeam {
         // Logo
         var content = try directory.content()
         guard let logoURL = try? content.first(where: { try $0.extractInformation().name == teamName }) else {
-            throw OrgChartError.noLogo(named: teamName, at: directory)
+            throw OrgChartError.noLogo(named: teamName, url: directory)
         }
         content.removeAll(where: { $0 == logoURL })
         
@@ -66,7 +71,9 @@ public final class OrgChartTeam {
 
 extension OrgChartTeam: CustomStringConvertible {
     public var description: String {
-        let membersDescription = members.keys.map({ "\t\t \($0.description): \(members[$0]?.description ?? "[]")"}).joined(separator: "\n")
+        let membersDescription = members.keys
+            .map { "\t\t \($0.description): \(members[$0]?.description ?? "[]")" }
+            .joined(separator: "\n")
         return #"""
         Name: "\#(name)"
         Logo: "\#(logo.lastPathComponent)" - Background: \#(background.description)
@@ -78,6 +85,6 @@ extension OrgChartTeam: CustomStringConvertible {
 
 extension OrgChartTeam: Identifiable {
     public var id: String {
-        return name
+        name
     }
 }

@@ -34,6 +34,8 @@ struct BoxView: View {
 
 struct BoxView_Previews: PreviewProvider {
     static var previews: some View {
+        // We allow force unwrapping in preview context
+        // swiftlint:disable:next force_unwrapping
         BoxView(box: OrgChartRenderContext.mock.topLeft!)
             .previewLayout(.sizeThatFits)
     }

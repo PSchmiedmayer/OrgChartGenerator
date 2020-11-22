@@ -8,9 +8,12 @@
 
 import AppKit
 
+
+/// Represents the Background of an OrgChart
 public struct Background {
     static let white = Background(.white)
     
+    /// The color of the background
     public let color: NSColor
     
     private init(_ color: NSColor) {
@@ -25,7 +28,7 @@ public struct Background {
         }
         
         func colorSegment(shift: Int8) -> CGFloat {
-            return CGFloat(Int(color >> shift) & 0xFF) / 255.0
+            CGFloat(Int(color >> shift) & 0xFF) / 255.0
         }
         
         self.color = NSColor(red: colorSegment(shift: hexString.count == 6 ? 16 : 24),
@@ -49,7 +52,7 @@ public struct Background {
 
 extension Background: CustomStringConvertible {
     public var description: String {
-        return hexString
+        hexString
     }
 }
 

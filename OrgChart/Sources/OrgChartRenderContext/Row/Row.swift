@@ -27,7 +27,7 @@ public class Row: ObservableObject {
         self.heading = heading
         self.background = background
         self.teams = teams
-        self.management =  management
+        self.management = management
     }
     
     convenience init(_ orgChart: OrgChart, position: Position) {
@@ -97,7 +97,10 @@ extension Row: ImageHandler {
                 )
             }
         }
-        publishers.append(management?.cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor) ?? Just(Void()).eraseToAnyPublisher())
+        
+        let cropImagesPublisher = management?.cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor)
+        publishers.append(cropImagesPublisher ?? Just(Void()).eraseToAnyPublisher())
+        
         return Publishers.MergeMany(publishers)
             .collect()
             .map { _ in }

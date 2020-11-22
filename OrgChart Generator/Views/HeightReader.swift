@@ -22,7 +22,7 @@ extension HeightPreferenceKey {
     }
 }
 
-struct HeightReader<K : PreferenceKey>: ViewModifier where K.Value == CGFloat {
+struct HeightReader<K: PreferenceKey>: ViewModifier where K.Value == CGFloat {
     var preferenceKey: K.Type
     
     

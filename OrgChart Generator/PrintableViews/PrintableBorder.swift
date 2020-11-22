@@ -39,7 +39,7 @@ struct PrintableBorder: View {
 }
 
 
-fileprivate struct PrintableBorderModifer: ViewModifier {
+private struct PrintableBorderModifer: ViewModifier {
     fileprivate enum Defaults {
         static let width: CGFloat = 1
         static let allignment: Alignment = .center

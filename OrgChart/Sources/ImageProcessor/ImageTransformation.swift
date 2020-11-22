@@ -10,6 +10,9 @@ import AppKit
 import Combine
 
 
+/// An abstraction for actors that can transfrom an image
 public protocol ImageTransformation {
+    /// Transform an image based on the input provided to the type conforming to `ImageTransformation`
+    /// - Parameter image: The `NSImage` that should be transformed
     func transform(_ image: NSImage) -> AnyPublisher<NSImage, ImageTransformationError>
 }

@@ -16,8 +16,8 @@ struct ManagementRow: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
-            if row.management != nil {
-                ManagementBox(management: row.management!,
+            if let management = row.management {
+                ManagementBox(management: management,
                               headingHeight: self.$headingHeight,
                               color: self.row.background?.border?.color ?? .clear)
             } else {

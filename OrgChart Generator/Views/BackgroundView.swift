@@ -16,7 +16,7 @@ extension Background {
             return AnyView(PrintableRectangle(color: color))
         }
         
-        return AnyView (
+        return AnyView(
             PrintableRectangle(color: color)
                 .printableBorder(border.color, width: border.width)
         )

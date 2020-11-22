@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "OrgChart",
     platforms: [
-        .macOS(.v10_15),
+        .macOS(.v10_15)
     ],
     products: [
         .library(
@@ -16,7 +16,7 @@ let package = Package(
             targets: ["ImageProcessor"]),
         .library(
             name: "OrgChartRenderContext",
-            targets: ["OrgChartRenderContext"]),
+            targets: ["OrgChartRenderContext"])
     ],
     targets: [
         .target(
@@ -45,6 +45,6 @@ let package = Package(
             name: "OrgChartRenderContextTests",
             dependencies: [
                 .target(name: "OrgChartRenderContext")
-            ]),
+            ])
     ]
 )

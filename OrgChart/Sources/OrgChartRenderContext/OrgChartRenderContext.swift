@@ -43,7 +43,7 @@ public class OrgChartRenderContext: ImageLoadable, ObservableObject {
             }
         
         // Rows
-        let positions = Set(orgChart.teams.flatMap({ $0.members.keys })).sorted()
+        let positions = Set(orgChart.teams.flatMap { $0.members.keys }).sorted()
         self.rows = positions
             .map { position in
                 Row(orgChart, position: position)
@@ -65,9 +65,9 @@ public class OrgChartRenderContext: ImageLoadable, ObservableObject {
     }
     
     public func cropImages(cropFaces: Bool, size: CGSize, compressionFactor: CGFloat) -> AnyPublisher<Void, Never> {
-        var publishers : [AnyPublisher<Void, Never>] = [
+        var publishers: [AnyPublisher<Void, Never>] = [
             topLeft?.cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor) ?? Just(Void()).eraseToAnyPublisher(),
-            topRight?.cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor) ?? Just(Void()).eraseToAnyPublisher(),
+            topRight?.cropImages(cropFaces: cropFaces, size: size, compressionFactor: compressionFactor) ?? Just(Void()).eraseToAnyPublisher()
         ]
         
         publishers.append(contentsOf:

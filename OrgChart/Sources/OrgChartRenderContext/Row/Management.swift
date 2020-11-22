@@ -46,7 +46,6 @@ extension Management: Equatable {
     public static func == (lhs: Management, rhs: Management) -> Bool {
         lhs.title == rhs.title
             && lhs.members == rhs.members
-        
     }
 }
 

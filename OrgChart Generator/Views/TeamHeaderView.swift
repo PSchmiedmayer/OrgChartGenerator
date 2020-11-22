@@ -32,7 +32,7 @@ struct TeamHeaderView: View {
             return AnyView(PrintableRectangle(color: teamHeader.background.color))
         }
         
-        return AnyView (
+        return AnyView(
             PrintableRectangle(color: teamHeader.background.color)
                 .printableBorder(border.color, width: border.width)
         )

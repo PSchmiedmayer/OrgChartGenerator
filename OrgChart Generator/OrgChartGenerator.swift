@@ -59,7 +59,7 @@ class OrgChartGenerator: ObservableObject {
         }
         
         $state
-            .sink { newState in
+            .sink { _ in
                 self.objectWillChange.send()
             }
             .store(in: &cancellables)
@@ -161,7 +161,7 @@ class OrgChartGenerator: ObservableObject {
         Future { promise in
             DispatchQueue.global(qos: .userInitiated).async {
                 guard let path = self.state.path, let renderContext = self.state.renderContext else {
-                    preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an render context")
+                    preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that doesn't include a path and a render context")
                 }
                 
                 DispatchQueue.main.sync {
@@ -191,7 +191,7 @@ class OrgChartGenerator: ObservableObject {
         Future { promise in
             DispatchQueue.global(qos: .userInitiated).async {
                 guard let path = self.state.path, let renderContext = self.state.renderContext else {
-                    preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that does not include a path and an render context")
+                    preconditionFailure("Could not parse the OrgChart from a OrgChartGeneratorState that doesn't include a path and a render context")
                 }
                 
                 DispatchQueue.main.sync {
@@ -245,7 +245,7 @@ class OrgChartGenerator: ObservableObject {
                     }
                     promise(.success(Void()))
                 } catch {
-                    promise(.failure(RenderError.couldNotWriteData(to: pdfPath)))
+                    promise(.failure(RenderError.couldNotWriteData(url: pdfPath)))
                 }
             }
         }.receive(on: RunLoop.main)

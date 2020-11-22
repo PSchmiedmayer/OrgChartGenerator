@@ -32,6 +32,8 @@ struct OrgChartImageView: View {
 }
 
 struct OrgChartImageView_Previews: PreviewProvider {
+    // We allow force unwrapping in preview context
+    // swiftlint:disable:next force_unwrapping
     @State static var image = OrgChartRenderContext.mock.topLeft!.members.first!.picture
     @State static var loading = true
     

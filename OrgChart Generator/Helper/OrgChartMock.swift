@@ -13,9 +13,10 @@ import OrgChartRenderContext
 
 extension OrgChartRenderContext {
     static let mock: OrgChartRenderContext = {
-        let orgChart = try! OrgChart(fromDirectory: URL(fileURLWithPath: "/Users/paulschmiedmayer/Downloads/ios1920-orgchart/iPraktikum 2019-20"))
+        guard let orgChart = try? OrgChart(fromDirectory: URL(fileURLWithPath: "")) else {
+            fatalError("You need to enter a valid file path to an OrgChart on your disk.")
+        }
         let renderContext = OrgChartRenderContext(orgChart)
         return renderContext
     }()
 }
-

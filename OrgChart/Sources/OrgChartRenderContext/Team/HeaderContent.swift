@@ -8,8 +8,12 @@
 
 import AppKit
 
+
+/// An enum to represent the content of a header in the OrgChart
 public enum HeaderContent {
+    /// The content is an image
     case image(NSImage)
+    /// The content is a text
     case text(String)
 }
 

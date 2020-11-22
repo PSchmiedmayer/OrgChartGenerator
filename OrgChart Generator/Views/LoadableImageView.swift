@@ -66,7 +66,7 @@ struct OrgChartImageView: View {
                 image = ImageProcessor.process(image: image,
                                                withTransformations: [
                     .cropSquareCenteredOnFace
-                ])
+                                               ])
                 
                 DispatchQueue.main.async {
                     self.imageState = .faceCropped
@@ -97,6 +97,8 @@ struct OrgChartImageView: View {
 
 struct LoadableImageView_Previews: PreviewProvider {
     static var previews: some View {
+        // We allow force unwrapping in preview context
+        // swiftlint:disable:next force_unwrapping
         OrgChartImageView(imagePath: OrgChart.mock.renderContext.topLeft!.members.first!.picture)
     }
 }

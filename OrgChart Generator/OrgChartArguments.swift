@@ -14,19 +14,24 @@ struct OrgChartArguments: ParsableCommand {
     @Argument(help: "The root folder of the directory structure that should be used to generate the OrgChart")
     var path: String
     
-    @Option(name: .shortAndLong, help: "The name of the OrgChart PDF that should be generated.")
+    @Option(name: .shortAndLong,
+            help: "The name of the OrgChart PDF that should be generated.")
     var orgChartName: String = OrgChartGeneratorSettings.Defaults.orgChartName
 
-    @Option(name: .shortAndLong, help: "The size of the quadratic images in the OrgChart should be cropped at.")
+    @Option(name: .shortAndLong,
+            help: "The size of the quadratic images in the OrgChart should be cropped at.")
     var imageSize: Int = OrgChartGeneratorSettings.Defaults.imageSize
 
-    @Option(name: .shortAndLong, help: "The compresssion rate (1-100) that should be applied to the JEPG images that are rendered in the OrgChart.")
-    var compressionFactor: Double = Double(OrgChartGeneratorSettings.Defaults.compressionFactor)
+    @Option(name: .shortAndLong,
+            help: "The compresssion rate (1-100) that should be applied to the JEPG images that are rendered in the OrgChart.")
+    var compressionFactor = Double(OrgChartGeneratorSettings.Defaults.compressionFactor)
     
-    @Flag(inversion: .prefixedEnableDisable, help: "Crop the images of the members of the OrgChart so thier faces are centered")
+    @Flag(inversion: .prefixedEnableDisable,
+          help: "Crop the images of the members of the OrgChart so thier faces are centered")
     var cropFaces: Bool = OrgChartGeneratorSettings.Defaults.cropFaces
     
-    @Flag(inversion: .prefixedNo, help: "Autogenerate the OrgChart without user interaction needed and exit the application when the PDF was exported")
+    @Flag(inversion: .prefixedNo,
+          help: "Autogenerate the OrgChart without user interaction needed and exit the application when the PDF was exported")
     var autogenerate: Bool = true
 }
 

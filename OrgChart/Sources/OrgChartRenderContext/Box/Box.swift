@@ -12,7 +12,7 @@ import Combine
 
 
 public class Box: ObservableObject {
-    public let id: UUID = UUID()
+    public let id = UUID()
     public let title: String?
     public let background: Background?
     @Published public private(set) var members: [Member]
@@ -64,7 +64,6 @@ extension Box: Equatable {
             && lhs.title == rhs.title
             && lhs.background == rhs.background
             && lhs.members == rhs.members
-        
     }
 }
 
@@ -77,7 +76,6 @@ extension Box: Hashable {
         hasher.combine(members)
     }
 }
-
 
 
 extension Box: Identifiable { }

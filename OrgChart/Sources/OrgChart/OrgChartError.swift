@@ -13,8 +13,8 @@ public enum OrgChartError: Error {
     case unknownPosition(String)
     case impossibleTeamPosition(Position)
     case impossibleToExtractInformation(String)
-    case noLogo(named: String, at: URL)
-    case couldNotWriteData(to: URL)
+    case noLogo(named: String, url: URL)
+    case couldNotWriteData(url: URL)
     case couldNotReadData(from: URL)
     
     public var localizedDescription: String {

@@ -47,7 +47,7 @@ public enum ImageState: Hashable {
     
     static var cropImagesCount: Int = 0
     
-    func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<NSImage, ImageTransformationError>{
+    func cropImages(cropFaces: Bool, size: CGSize) -> AnyPublisher<NSImage, ImageTransformationError> {
         if case let .cropped(image) = self {
             return Just(image)
                 .setFailureType(to: ImageTransformationError.self)

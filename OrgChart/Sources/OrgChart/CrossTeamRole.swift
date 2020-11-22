@@ -8,11 +8,17 @@
 
 import Foundation
 
+/// Represents a cross team role in the OrgChart
 public final class CrossTeamRole {
+    /// The title of the cross team role
     public let title: String
+    /// The heading that should used to represent the cross team role
     public let heading: String?
+    /// The position of the cross team role
     public let position: Position
+    /// The background that should be used to render the cross team role
     public let background: Background
+    /// The management of the cross team role
     public var management: [OrgChartMember]
     
     init(fromDirectory directory: URL) throws {
@@ -27,22 +33,23 @@ public final class CrossTeamRole {
         self.background = information.color ?? .white
         self.management = []
         
-        try directory.content().forEach({ fileURL in
-            guard !fileURL.hasDirectoryPath else {
-                return
+        try directory.content()
+            .forEach { fileURL in
+                guard !fileURL.hasDirectoryPath else {
+                    return
+                }
+                let memberInformation = try fileURL.extractInformation()
+                
+                management.append(OrgChartMember(name: memberInformation.name,
+                                                 picture: fileURL,
+                                                 role: memberInformation.role))
             }
-            let memberInformation = try fileURL.extractInformation()
-            
-            management.append(OrgChartMember(name: memberInformation.name,
-                                             picture: fileURL,
-                                             role: memberInformation.role))
-        })
     }
 }
 
 extension CrossTeamRole: Equatable {
     public static func == (lhs: CrossTeamRole, rhs: CrossTeamRole) -> Bool {
-        return lhs.position == rhs.position
+        lhs.position == rhs.position
     }
 }
 
@@ -60,7 +67,7 @@ extension CrossTeamRole: Identifiable {
 
 extension CrossTeamRole: CustomStringConvertible {
     public var description: String {
-        return #"""
+        #"""
         Cross Project Role: "\#(title)"
         Position: "\#(position)" - Background: \#(background.description)
         Management: \#(management)

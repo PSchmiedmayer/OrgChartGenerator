@@ -19,7 +19,7 @@ struct PrintableRectangle: View {
     }
 }
 
-fileprivate struct PrintableRectangleModifer: ViewModifier {
+private struct PrintableRectangleModifer: ViewModifier {
     fileprivate enum Defaults {
         static let allignment: Alignment = .center
     }

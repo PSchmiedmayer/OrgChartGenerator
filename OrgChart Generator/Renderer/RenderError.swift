@@ -10,9 +10,9 @@ import Foundation
 
 
 enum RenderError: Error {
-    case couldNotWriteData(to: URL)
+    case couldNotWriteData(url: URL)
     
-    public var localizedDescription: String {
+    var localizedDescription: String {
         switch self {
         case let .couldNotWriteData(url):
             return "Could not write data to (\(url))."

@@ -12,7 +12,7 @@ import Combine
 
 
 public class Team: ObservableObject {
-    public let id: UUID = UUID()
+    public let id = UUID()
     @Published public private(set) var header: TeamHeader
     public let background: Background
     
@@ -39,7 +39,6 @@ extension Team: Equatable {
         lhs.id == rhs.id
             && lhs.header == rhs.header
             && lhs.background == rhs.background
-        
     }
 }
 

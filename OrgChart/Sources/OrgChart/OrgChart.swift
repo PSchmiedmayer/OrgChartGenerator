@@ -9,11 +9,20 @@
 import Foundation
 import AppKit
 
+
+/// Represents an OrgChart that can be read from a directory structure
 public final class OrgChart {
+    /// The title of the OrgChart
     public let title: String
+    /// The teams that are represented in the OrgChart
     public var teams: [OrgChartTeam]
+    /// Cross project teams that can be part of the OrgChart
     public var crossTeamRoles: [CrossTeamRole]
     
+    
+    /// Initialize an OrgChart from a directory structure
+    /// - Parameter orgChartDirectory: The `URL` where the OrgChart should be loaded from
+    /// - Throws: Throws an error if the OrgChart could not be parsed from the directory structure
     public init(fromDirectory orgChartDirectory: URL) throws {
         guard orgChartDirectory.hasDirectoryPath else {
             throw OrgChartError.notADirectory(orgChartDirectory)
@@ -31,12 +40,12 @@ public final class OrgChart {
 
 extension OrgChart: CustomStringConvertible {
     public var description: String {
-        return #"""
+        #"""
         Orgchart: "\#(title)"
         Management:
-        \#(crossTeamRoles.map({ $0.description }).joined(separator: "\n"))
+        \#(crossTeamRoles.map { $0.description }.joined(separator: "\n"))
         Teams:
-        \#(teams.map({ $0.description }).joined(separator: "\n"))
+        \#(teams.map { $0.description }.joined(separator: "\n"))
         """#
     }
 }

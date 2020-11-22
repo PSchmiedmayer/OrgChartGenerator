@@ -12,7 +12,7 @@ import AppKit
 struct PDFExportView<PrintableView: View>: NSViewRepresentable {
     let view: PrintableView
     @Binding var renderAsPDF: Bool
-    let onPDFRender: (Data) -> ()
+    let onPDFRender: (Data) -> Void
     
     func makeNSView(context: Context) -> NSView {
         let printWrapperView = NSHostingView(rootView: view)

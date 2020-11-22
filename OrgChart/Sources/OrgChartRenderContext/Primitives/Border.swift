@@ -9,8 +9,11 @@
 import AppKit
 
 
+/// A structure to represent a border of the OrgChart
 public struct Border {
+    /// The color of the border
     public let color: NSColor
+    /// The width of the border
     public let width: CGFloat
 }
 

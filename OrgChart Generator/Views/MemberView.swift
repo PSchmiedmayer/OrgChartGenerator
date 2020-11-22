@@ -38,6 +38,8 @@ struct MemberView: View {
 
 struct MemberView_Previews: PreviewProvider {
     static var previews: some View {
+        // We allow force unwrapping in preview context
+        // swiftlint:disable:next force_unwrapping
         MemberView(member: OrgChartRenderContext.mock.topLeft!.members.first!,
                    accentColor: .systemBlue)
             .previewLayout(.sizeThatFits)

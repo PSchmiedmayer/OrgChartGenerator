@@ -32,13 +32,13 @@ extension OrgChartMember: CustomStringConvertible {
 
 extension OrgChartMember: Identifiable {
     public var id: URL {
-        return picture
+        picture
     }
 }
 
 extension Dictionary where Key == Position, Value == [OrgChartMember] {
     mutating func append(member: OrgChartMember, at position: Position) throws {
-        guard case .row(_) = position else {
+        guard case .row = position else {
             throw OrgChartError.impossibleTeamPosition(position)
         }
         
@@ -49,7 +49,7 @@ extension Dictionary where Key == Position, Value == [OrgChartMember] {
     }
     
     mutating func appendMembers(inDirectory directory: URL, atPosition position: Position, withDefaultRole role: String? = nil) throws {
-        try directory.content().forEach({ fileURL in
+        try directory.content().forEach { fileURL in
             guard !fileURL.hasDirectoryPath else {
                 return
             }
@@ -59,6 +59,6 @@ extension Dictionary where Key == Position, Value == [OrgChartMember] {
                                               picture: fileURL,
                                               role: memberInformation.role ?? role),
                        at: position)
-        })
+        }
     }
 }

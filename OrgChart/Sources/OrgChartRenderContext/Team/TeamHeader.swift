@@ -76,7 +76,7 @@ extension TeamHeader: ImageHandler {
                    self.imageState = .cropped(image)
                    self.compressedImage = compressedImage
                    self.loading = false
-               }
+                }
             }
             .eraseToAnyPublisher()
     }
@@ -88,7 +88,6 @@ extension TeamHeader: Equatable {
         lhs.background == rhs.background
             && lhs.imageState == rhs.imageState
             && lhs.fallbackName == rhs.fallbackName
-        
     }
 }
 

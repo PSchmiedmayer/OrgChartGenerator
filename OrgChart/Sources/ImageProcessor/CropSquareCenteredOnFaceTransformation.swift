@@ -38,8 +38,8 @@ public struct CropSquareCenteredOnFaceTransformation: ImageTransformation {
                 
                 let squareSize = min(min(imageRepresentation.size.width, imageRepresentation.size.height),
                                      faceSquareSize * 1.6)
-                let center = CGPoint(x: min(max(faceRect.center.x, squareSize/2), imageRepresentation.size.width - squareSize/2),
-                                     y: min(max(faceRect.center.y, squareSize/2), imageRepresentation.size.height - squareSize/2))
+                let center = CGPoint(x: min(max(faceRect.center.x, squareSize / 2), imageRepresentation.size.width - squareSize / 2),
+                                     y: min(max(faceRect.center.y, squareSize / 2), imageRepresentation.size.height - squareSize / 2))
                 
                 promise(.success(image.crop(to: CGRect(center: center, size: squareSize))))
             }
@@ -47,7 +47,7 @@ public struct CropSquareCenteredOnFaceTransformation: ImageTransformation {
             let faceDetectionRequest = VNDetectFaceRectanglesRequest(completionHandler: faceRectanglesRequestCompletionHandler)
             let imageRequestHandler = VNImageRequestHandler(ciImage: ciImage)
             
-            DispatchQueue.init(label: "CropSquareCenteredOnFaceTransformation", qos: .userInitiated).async {
+            DispatchQueue(label: "CropSquareCenteredOnFaceTransformation", qos: .userInitiated).async {
                 do {
                     try imageRequestHandler.perform([faceDetectionRequest])
                 } catch {

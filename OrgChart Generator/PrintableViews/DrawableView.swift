@@ -11,13 +11,14 @@ import SwiftUI
 
 struct DrawableView: NSViewRepresentable {
     class ColorView: NSView {
-        let drawFunction: (NSRect) -> ()
+        let drawFunction: (NSRect) -> Void
 
-        init(_ draw: @escaping (NSRect) -> ()) {
+        init(_ draw: @escaping (NSRect) -> Void) {
             self.drawFunction = draw
             super.init(frame: .zero)
         }
 
+        @available(*, unavailable)
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
@@ -30,9 +31,9 @@ struct DrawableView: NSViewRepresentable {
     }
 
 
-    let draw: (NSRect) -> ()
+    let draw: (NSRect) -> Void
 
-    init(_ draw: @escaping (NSRect) -> ()) {
+    init(_ draw: @escaping (NSRect) -> Void) {
         self.draw = draw
     }
 

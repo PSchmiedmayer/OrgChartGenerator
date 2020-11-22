@@ -39,7 +39,7 @@ struct OrgChartRow: View {
                     Spacer()
                     row.management?.title.map { title in
                         VStack(spacing: 0) {
-                            self.row.heading.map { heading in
+                            self.row.heading.map { _ in
                                 Color.clear
                                     .frame(height: self.headingHeight)
                             }

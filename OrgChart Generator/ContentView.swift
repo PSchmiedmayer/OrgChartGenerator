@@ -55,7 +55,7 @@ struct ContentView: View {
     }
     
     func onlyControlView(_ message: String) -> AnyView {
-        return AnyView(
+        AnyView(
             VStack {
                 ControlView(renderPDF: generatePDFBinding)
                 Text(message)

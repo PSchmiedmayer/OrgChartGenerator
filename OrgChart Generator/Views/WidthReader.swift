@@ -23,7 +23,7 @@ extension WidthPreferenceKey {
 }
 
 
-struct WidthReader<K : PreferenceKey>: ViewModifier where K.Value == CGFloat {
+struct WidthReader<K: PreferenceKey>: ViewModifier where K.Value == CGFloat {
     var preferenceKey: K.Type
     
     private var widthReaderView: some View {
