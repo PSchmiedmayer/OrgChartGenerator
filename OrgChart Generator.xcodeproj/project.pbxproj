@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		650EC316247519C3008A3D4D /* PDFExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650EC315247519C3008A3D4D /* PDFExportView.swift */; };
-		65139E48247AFF6500D7247B /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 65139E47247AFF6500D7247B /* ArgumentParser */; };
 		65139E4A247B045F00D7247B /* OrgChartArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65139E49247B045F00D7247B /* OrgChartArguments.swift */; };
 		65139E4C247B046700D7247B /* OrgChartGeneratorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65139E4B247B046700D7247B /* OrgChartGeneratorSettings.swift */; };
-		6572DAEF249990E900C4820D /* OrgChartRenderContext in Frameworks */ = {isa = PBXBuildFile; productRef = 6572DAEE249990E900C4820D /* OrgChartRenderContext */; };
 		6575CC6C24758E250009E92A /* OrgChartBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6575CC6B24758E250009E92A /* OrgChartBody.swift */; };
 		6575CC6E247595190009E92A /* MemberRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6575CC6D247595190009E92A /* MemberRow.swift */; };
 		6575CC7024759B200009E92A /* ManagementRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6575CC6F24759B200009E92A /* ManagementRow.swift */; };
@@ -22,13 +20,16 @@
 		65878573247537300071F4C7 /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65878572247537300071F4C7 /* ControlView.swift */; };
 		65878575247558520071F4C7 /* RenderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65878574247558520071F4C7 /* RenderError.swift */; };
 		65878577247567450071F4C7 /* OrgChartHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65878576247567450071F4C7 /* OrgChartHeader.swift */; };
+		659433F62569313500AC144E /* ImageProcessor in Frameworks */ = {isa = PBXBuildFile; productRef = 659433F52569313500AC144E /* ImageProcessor */; };
+		659433F82569313500AC144E /* OrgChart in Frameworks */ = {isa = PBXBuildFile; productRef = 659433F72569313500AC144E /* OrgChart */; };
+		659433FA2569313500AC144E /* OrgChartRenderContext in Frameworks */ = {isa = PBXBuildFile; productRef = 659433F92569313500AC144E /* OrgChartRenderContext */; };
+		659433FC2569313500AC144E /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 659433FB2569313500AC144E /* ArgumentParser */; };
 		6595A64E249A17E5005B8479 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6595A64D249A17E5005B8479 /* HeaderView.swift */; };
 		65994D7A247442AB000D566E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D79247442AB000D566E /* AppDelegate.swift */; };
 		65994D7C247442AB000D566E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D7B247442AB000D566E /* ContentView.swift */; };
 		65994D7E247442AF000D566E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65994D7D247442AF000D566E /* Assets.xcassets */; };
 		65994D81247442AF000D566E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65994D80247442AF000D566E /* Preview Assets.xcassets */; };
 		65994D84247442AF000D566E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65994D82247442AF000D566E /* Main.storyboard */; };
-		65994D9124744DE9000D566E /* OrgChart in Frameworks */ = {isa = PBXBuildFile; productRef = 65994D9024744DE9000D566E /* OrgChart */; };
 		65994D9A24745126000D566E /* PrintableBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9624745126000D566E /* PrintableBorder.swift */; };
 		65994D9B24745126000D566E /* DrawableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9724745126000D566E /* DrawableView.swift */; };
 		65994D9C24745126000D566E /* PrintableRectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65994D9824745126000D566E /* PrintableRectangle.swift */; };
@@ -45,7 +46,6 @@
 		65FCC7982476E0C00078B643 /* PrintableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC7972476E0C00078B643 /* PrintableImage.swift */; };
 		65FCC79A247703BF0078B643 /* OrgChartImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC799247703BF0078B643 /* OrgChartImageView.swift */; };
 		65FCC79C24772C400078B643 /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FCC79B24772C400078B643 /* ProgressIndicator.swift */; };
-		65FCC79E2477D7D80078B643 /* ImageProcessor in Frameworks */ = {isa = PBXBuildFile; productRef = 65FCC79D2477D7D80078B643 /* ImageProcessor */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,10 +95,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6572DAEF249990E900C4820D /* OrgChartRenderContext in Frameworks */,
-				65139E48247AFF6500D7247B /* ArgumentParser in Frameworks */,
-				65994D9124744DE9000D566E /* OrgChart in Frameworks */,
-				65FCC79E2477D7D80078B643 /* ImageProcessor in Frameworks */,
+				659433F82569313500AC144E /* OrgChart in Frameworks */,
+				659433F62569313500AC144E /* ImageProcessor in Frameworks */,
+				659433FC2569313500AC144E /* ArgumentParser in Frameworks */,
+				659433FA2569313500AC144E /* OrgChartRenderContext in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,10 +231,10 @@
 			);
 			name = "OrgChart Generator";
 			packageProductDependencies = (
-				65994D9024744DE9000D566E /* OrgChart */,
-				65FCC79D2477D7D80078B643 /* ImageProcessor */,
-				65139E47247AFF6500D7247B /* ArgumentParser */,
-				6572DAEE249990E900C4820D /* OrgChartRenderContext */,
+				659433F52569313500AC144E /* ImageProcessor */,
+				659433F72569313500AC144E /* OrgChart */,
+				659433F92569313500AC144E /* OrgChartRenderContext */,
+				659433FB2569313500AC144E /* ArgumentParser */,
 			);
 			productName = "OrgChart Generator";
 			productReference = 65994D76247442AB000D566E /* OrgChart Generator.app */;
@@ -467,7 +467,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"OrgChart Generator/Preview Content\"";
-				DEVELOPMENT_TEAM = 2PA7Y2WTWF;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "OrgChart Generator/Info.plist";
@@ -491,7 +491,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"OrgChart Generator/Preview Content\"";
-				DEVELOPMENT_TEAM = 2PA7Y2WTWF;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "OrgChart Generator/Info.plist";
@@ -541,22 +541,22 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		65139E47247AFF6500D7247B /* ArgumentParser */ = {
+		659433F52569313500AC144E /* ImageProcessor */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 65139E46247AFF6500D7247B /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
-			productName = ArgumentParser;
+			productName = ImageProcessor;
 		};
-		6572DAEE249990E900C4820D /* OrgChartRenderContext */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = OrgChartRenderContext;
-		};
-		65994D9024744DE9000D566E /* OrgChart */ = {
+		659433F72569313500AC144E /* OrgChart */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = OrgChart;
 		};
-		65FCC79D2477D7D80078B643 /* ImageProcessor */ = {
+		659433F92569313500AC144E /* OrgChartRenderContext */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ImageProcessor;
+			productName = OrgChartRenderContext;
+		};
+		659433FB2569313500AC144E /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 65139E46247AFF6500D7247B /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
