@@ -42,23 +42,18 @@ class OrgChartGeneratorSettings: ObservableObject {
     }
     
     convenience init() {
-        do {
-            var arguments = CommandLine.arguments
-            arguments.removeFirst()
-            arguments.removeAll(where: { $0 == "-NSDocumentRevisionsDebugMode" }) // Default if running in XCode
-            arguments.removeAll(where: { $0 == "YES" }) // Default if running in XCode
-            
-            let parsedArguments = try OrgChartArguments.parse(arguments)
-            self.init(path: URL(fileURLWithPath: parsedArguments.path),
-                      orgChartName: parsedArguments.orgChartName,
-                      imageSize: parsedArguments.imageSize,
-                      compressionFactor: CGFloat(parsedArguments.compressionFactor),
-                      cropFaces: parsedArguments.cropFaces,
-                      autogenerate: parsedArguments.autogenerate)
-        } catch {
-            print("Could not be loaded from the launch arguments \"\(error)\". Using the default values for launching the Org Chart Generator.")
-            print(OrgChartArguments.helpMessage())
-            self.init(path: nil)
-        }
+        var arguments = CommandLine.arguments
+        arguments.removeFirst()
+        arguments.removeAll(where: { $0 == "-NSDocumentRevisionsDebugMode" }) // Default if running in XCode
+        arguments.removeAll(where: { $0 == "YES" }) // Default if running in XCode
+        
+        let parsedArguments = OrgChartArguments.parseOrExit(arguments)
+        
+        self.init(path: parsedArguments.path.map { URL(fileURLWithPath: $0) },
+                  orgChartName: parsedArguments.orgChartName,
+                  imageSize: parsedArguments.imageSize,
+                  compressionFactor: CGFloat(parsedArguments.compressionFactor),
+                  cropFaces: parsedArguments.cropFaces,
+                  autogenerate: parsedArguments.path == nil ? false : parsedArguments.autogenerate)
     }
 }

@@ -12,7 +12,7 @@ import ArgumentParser
 
 struct OrgChartArguments: ParsableCommand {
     @Argument(help: "The root folder of the directory structure that should be used to generate the OrgChart")
-    var path: String
+    var path: String?
     
     @Option(name: .shortAndLong,
             help: "The name of the OrgChart PDF that should be generated.")

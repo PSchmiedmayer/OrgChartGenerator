@@ -37,25 +37,27 @@ class OrgChartGenerator: ObservableObject {
         if let path = path ?? settings.path {
             DispatchQueue.main.async {
                 self.readOrgChart(from: path)
-                .flatMap { _ -> AnyPublisher<Void, OrgChartError> in
-                    if settings.autogenerate == true {
-                        return self.autogenerate(from: path)
-                            .eraseToAnyPublisher()
-                    } else {
-                        return Just(Void())
-                            .setFailureType(to: OrgChartError.self)
-                            .eraseToAnyPublisher()
-                    }
-                }
-                .sink(receiveCompletion: { completion in
-                        switch completion {
-                        case let .failure(error):
-                            print("Could not generate the orgChart: \(error)")
-                        case .finished: break
+                    .flatMap { _ -> AnyPublisher<Void, OrgChartError> in
+                        if settings.autogenerate == true {
+                            return self.autogenerate(from: path)
+                                .eraseToAnyPublisher()
+                        } else {
+                            return Just(Void())
+                                .setFailureType(to: OrgChartError.self)
+                                .eraseToAnyPublisher()
                         }
-                    }, receiveValue: { })
-                .store(in: &self.cancellables)
+                    }
+                    .sink(receiveCompletion: { completion in
+                            switch completion {
+                            case let .failure(error):
+                                print("Could not generate the orgChart: \(error)")
+                            case .finished: break
+                            }
+                        }, receiveValue: { })
+                    .store(in: &self.cancellables)
             }
+        } else if settings.autogenerate == true {
+            exit(1)
         }
         
         $state
@@ -118,6 +120,12 @@ class OrgChartGenerator: ObservableObject {
         }.receive(on: RunLoop.main)
             .map {
                 self.loading = false
+            }
+            .mapError { (error: OrgChartError) in
+                if self.settings.autogenerate == true {
+                    exit(1)
+                }
+                return error
             }
             .eraseToAnyPublisher()
     }

@@ -35,6 +35,11 @@ public final class OrgChart {
         
         let crossTeamRolesDirectory = orgChartDirectory.appendingPathComponent("CrossTeamRoles", isDirectory: true)
         self.crossTeamRoles = try crossTeamRolesDirectory.content().map(CrossTeamRole.init)
+        
+        if teams.isEmpty && crossTeamRoles.isEmpty {
+            print("The OrgChart Generator could not load any teams and cross team roles.")
+            throw OrgChartError.couldNotReadData(from: orgChartDirectory)
+        }
     }
 }
 
