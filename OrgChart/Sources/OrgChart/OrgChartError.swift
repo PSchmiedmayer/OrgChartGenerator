@@ -36,3 +36,10 @@ public enum OrgChartError: Error {
         }
     }
 }
+
+
+extension OrgChartError: CustomStringConvertible {
+    public var description: String {
+        localizedDescription
+    }
+}

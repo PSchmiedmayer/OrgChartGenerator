@@ -112,8 +112,10 @@ class OrgChartGenerator: ObservableObject {
                     }
                     promise(.success(Void()))
                 } catch let error as OrgChartError {
+                    print(error)
                     promise(.failure(error))
                 } catch {
+                    print("Could not read data from \(path)")
                     promise(.failure(OrgChartError.couldNotReadData(from: path)))
                 }
             }

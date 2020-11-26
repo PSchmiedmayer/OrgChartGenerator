@@ -35,6 +35,22 @@ struct OrgChartArguments: ParsableCommand {
     var autogenerate: Bool = true
 }
 
+
+extension OrgChartArguments: CustomStringConvertible {
+    var description: String {
+        """
+        OrgChartArguments:
+            path: \(path ?? "-")
+            orgChartName: \(orgChartName)
+            imageSize: \(imageSize)
+            compressionFactor: \(compressionFactor)
+            cropFaces: \(cropFaces)
+            autogenerate: \(autogenerate)
+        """
+    }
+}
+
+
 extension URL: ExpressibleByArgument {
     public init?(argument: String) {
         self.init(string: argument)

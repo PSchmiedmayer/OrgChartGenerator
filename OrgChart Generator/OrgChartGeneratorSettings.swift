@@ -49,6 +49,8 @@ class OrgChartGeneratorSettings: ObservableObject {
         
         let parsedArguments = OrgChartArguments.parseOrExit(arguments)
         
+        print(parsedArguments)
+        
         self.init(path: parsedArguments.path.map { URL(fileURLWithPath: $0) },
                   orgChartName: parsedArguments.orgChartName,
                   imageSize: parsedArguments.imageSize,
