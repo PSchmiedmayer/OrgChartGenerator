@@ -15,7 +15,7 @@ class OrgChartGeneratorSettings: ObservableObject {
         static let orgChartName: String = "OrgChart"
         static let imageSize: Int = 500
         static let compressionFactor: CGFloat = 0.5
-        static let cropFaces: Bool = true
+        static let cropFaces = true
     }
     
     

@@ -14,7 +14,7 @@ import Combine
 public class TeamHeader: ObservableObject {
     public let background: Background
     
-    @Published public private(set) var loading: Bool = false
+    @Published public private(set) var loading = false
     @Published public private(set) var imageState: ImageState
     
     @Published private var compressedImage: NSImage?

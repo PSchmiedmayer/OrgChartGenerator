@@ -32,7 +32,7 @@ struct OrgChartArguments: ParsableCommand {
     
     @Flag(inversion: .prefixedNo,
           help: "Autogenerate the OrgChart without user interaction needed and exit the application when the PDF was exported")
-    var autogenerate: Bool = true
+    var autogenerate = true
 }
 
 

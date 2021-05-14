@@ -30,7 +30,7 @@ struct ControlView: View {
     }
     
     @EnvironmentObject var generator: OrgChartGenerator
-    @State var cropFaces: Bool = true
+    @State var cropFaces = true
     @Binding var renderPDF: Bool
     @State var errorMessage: ErrorMessage?
     @State var cancellable: AnyCancellable?
@@ -111,7 +111,7 @@ struct ControlView: View {
 }
 
 struct ControlView_Previews: PreviewProvider {
-    @State static var renderPDF: Bool = false
+    @State static var renderPDF = false
     
     static var previews: some View {
         ControlView(renderPDF: $renderPDF)

@@ -10,41 +10,44 @@ let package = Package(
     products: [
         .library(
             name: "OrgChart",
-            targets: ["OrgChart"]),
+            targets: ["OrgChart"]
+        ),
         .library(
             name: "ImageProcessor",
-            targets: ["ImageProcessor"]),
+            targets: ["ImageProcessor"]
+        ),
         .library(
             name: "OrgChartRenderContext",
-            targets: ["OrgChartRenderContext"])
+            targets: ["OrgChartRenderContext"]
+        )
     ],
     targets: [
-        .target(
-            name: "OrgChart",
-            dependencies: []),
+        .target(name: "OrgChart"),
         .testTarget(
             name: "OrgChartTests",
             dependencies: [
                 .target(name: "OrgChart")
-            ]),
-        .target(
-            name: "ImageProcessor",
-            dependencies: []),
+            ]
+        ),
+        .target(name: "ImageProcessor"),
         .testTarget(
             name: "ImageProcessorTests",
             dependencies: [
                 .target(name: "ImageProcessor")
-            ]),
+            ]
+        ),
         .target(
             name: "OrgChartRenderContext",
             dependencies: [
                 .target(name: "OrgChart"),
                 .target(name: "ImageProcessor")
-            ]),
+            ]
+        ),
         .testTarget(
             name: "OrgChartRenderContextTests",
             dependencies: [
                 .target(name: "OrgChartRenderContext")
-            ])
+            ]
+        )
     ]
 )

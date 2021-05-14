@@ -14,10 +14,10 @@ import Combine
 
 class OrgChartGenerator: ObservableObject {
     @Published var state: OrgChartGeneratorState = .initialized
-    @Published var loading: Bool = false
+    @Published var loading = false
     @Published var fractionCompleted: Double = 0.0
     @Published var settings: OrgChartGeneratorSettings
-    @Published var generatePDF: Bool = false
+    @Published var generatePDF = false
     
     private var progress: Progress
     private var cancellables: Set<AnyCancellable> = []

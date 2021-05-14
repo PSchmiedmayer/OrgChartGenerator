@@ -23,7 +23,7 @@ struct OrgChartImageView: View {
     @State private var data: Data?
     @State private var image: NSImage?
     @State private var imageState: ImageState?
-    @State private var loading: Bool = true
+    @State private var loading = true
     @State private var errorMessage: String?
     
     

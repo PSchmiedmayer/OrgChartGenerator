@@ -17,7 +17,7 @@ public class Member: ObservableObject {
     public let name: String
     public let role: String?
     @Published public var imageState: ImageState
-    @Published public var loading: Bool = false
+    @Published public var loading = false
     @Published private var compressedImage: NSImage?
     
     public var picture: NSImage? {
