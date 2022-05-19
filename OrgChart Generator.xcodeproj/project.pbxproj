@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BCDDEA22836ED4C00B4130C /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCDDEA12836ED4C00B4130C /* ColorScheme.swift */; };
 		650EC316247519C3008A3D4D /* PDFExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650EC315247519C3008A3D4D /* PDFExportView.swift */; };
 		65139E4A247B045F00D7247B /* OrgChartArguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65139E49247B045F00D7247B /* OrgChartArguments.swift */; };
 		65139E4C247B046700D7247B /* OrgChartGeneratorSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65139E4B247B046700D7247B /* OrgChartGeneratorSettings.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5BCDDEA12836ED4C00B4130C /* ColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorScheme.swift; sourceTree = "<group>"; };
 		650EC315247519C3008A3D4D /* PDFExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PDFExportView.swift; path = "OrgChart Generator/Renderer/PDFExportView.swift"; sourceTree = SOURCE_ROOT; };
 		65139E49247B045F00D7247B /* OrgChartArguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartArguments.swift; sourceTree = "<group>"; };
 		65139E4B247B046700D7247B /* OrgChartGeneratorSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrgChartGeneratorSettings.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				6587856B24751E4D0071F4C7 /* OrgChartMock.swift */,
+				5BCDDEA12836ED4C00B4130C /* ColorScheme.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				65C149FB24756FFA00DE0B19 /* MemberView.swift in Sources */,
 				6587856E247532CE0071F4C7 /* OrgChartGeneratorState.swift in Sources */,
 				65139E4C247B046700D7247B /* OrgChartGeneratorSettings.swift in Sources */,
+				5BCDDEA22836ED4C00B4130C /* ColorScheme.swift in Sources */,
 				6575CC6C24758E250009E92A /* OrgChartBody.swift in Sources */,
 				65139E4A247B045F00D7247B /* OrgChartArguments.swift in Sources */,
 				65FCC7932476B1790078B643 /* TeamHeaderView.swift in Sources */,

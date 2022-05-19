@@ -72,7 +72,7 @@ struct ContentView: View {
                                   renderAsPDF: generatePDFBinding) { pdf in
                         self.pdfCancellable = self.generator.rendered(pdf)
                             .sink(receiveCompletion: { _ in }, receiveValue: { })
-                    }
+                    }.preferredColorSchemeCompat(.light)
                 }
             }
         )
