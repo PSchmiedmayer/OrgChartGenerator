@@ -3,12 +3,10 @@ name: Build and Test
 on:
   push:
     branches:
-      - develop
-      - release
+      - main
   pull_request:
     branches:
-      - develop
-      - release
+      - main
 
 jobs:
   macos:
